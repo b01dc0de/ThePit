@@ -1,4 +1,7 @@
+# Dirs
 .vs/
 out/
 
-sokol/
+# Output files
+*.obj
+*.exe
