@@ -2,9 +2,9 @@
 
 project ("ThePit")
 
-set(SOURCE_DIR src)
-set(SOURCE_FILES ${SOURCE_DIR}/ThePit.cpp ${SOURCE_DIR}/ThePit.h)
-add_executable (ThePit ${SOURCE_FILES})
+set(SRC_DIR src)
+set(SRC_FILES ${SRC_DIR}/ThePit.cpp ${SRC_DIR}/ThePit.h ${SRC_DIR}/ThePit_Engine.cpp ${SRC_DIR}/ThePit_Engine.h)
+add_executable (ThePit ${SRC_FILES})
 
 set(LIB_SOKOL_DIR ../lib/sokol)
 target_include_directories(ThePit PUBLIC ${LIB_SOKOL_DIR})
