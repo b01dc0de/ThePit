@@ -17,11 +17,11 @@ extern sapp_desc sokol_main(int argc, char* argv[])
 
 	sapp_desc thepit_desc = {};
 	{
-		thepit_desc.user_data = &GlobalState;
-		thepit_desc.init_userdata_cb = thepit_init;
-		thepit_desc.frame_userdata_cb = thepit_frame;
-		thepit_desc.cleanup_userdata_cb = thepit_cleanup;
-		thepit_desc.event_userdata_cb = thepit_event;
+		thepit_desc.user_data = &thepit::GlobalState;
+		thepit_desc.init_userdata_cb = thepit::Init;
+		thepit_desc.frame_userdata_cb = thepit::Frame;
+		thepit_desc.cleanup_userdata_cb = thepit::Cleanup;
+		thepit_desc.event_userdata_cb = thepit::HandleEvent;
 		thepit_desc.width = ThePit_Width;
 		thepit_desc.height = ThePit_Height;
 		thepit_desc.sample_count = 1;

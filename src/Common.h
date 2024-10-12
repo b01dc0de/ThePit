@@ -1,5 +1,5 @@
-#ifndef THEPIT_COMMON_H
-#define THEPIT_COMMON_H
+#ifndef COMMON_H
+#define COMMON_H
 
 // CKA_TODO: Implement different printf
 #define LOGF(...) printf(__VA_ARGS__)

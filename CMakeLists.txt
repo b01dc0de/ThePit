@@ -3,7 +3,7 @@
 project ("ThePit")
 
 set(SRC_DIR src)
-set(SRC_FILES ${SRC_DIR}/ThePit.cpp ${SRC_DIR}/ThePit.h ${SRC_DIR}/ThePit_Engine.cpp ${SRC_DIR}/ThePit_Engine.h)
+set(SRC_FILES ${SRC_DIR}/Main.cpp)
 add_executable (ThePit ${SRC_FILES})
 
 set(LIB_SOKOL_DIR ./libs/sokol)

@@ -2,9 +2,9 @@
 
 #include "glsl/vxcolor.glsl.h"
 
-struct thepit_EngineState GlobalState;
+thepit::State thepit::GlobalState;
 
-void thepit_init(void* State)
+void thepit::Init(void* State)
 {
 	sg_desc graphics_desc = {};
 	graphics_desc.environment = sglue_environment();
@@ -36,7 +36,7 @@ void thepit_init(void* State)
 	GlobalState.pass_action = tri_pass_action;
 }
 
-void thepit_frame(void* State)
+void thepit::Frame(void* State)
 {
 	sg_pass tri_draw = {};
 	tri_draw.action = GlobalState.pass_action;
@@ -49,11 +49,11 @@ void thepit_frame(void* State)
 	sg_commit();
 }
 
-void thepit_cleanup(void* GlobalState)
+void thepit::Cleanup(void* GlobalState)
 {
 	sg_shutdown();
 }
 
-void thepit_event(const sapp_event* Event, void* GlobalState)
+void thepit::HandleEvent(const sapp_event* Event, void* GlobalState)
 {
 }
