@@ -7,7 +7,7 @@ struct thepit_EngineState
 	sg_bindings bind;
 	sg_pass_action pass_action;
 };
-extern struct thepit_state GlobalState;
+extern struct thepit_EngineState GlobalState;
 
 struct sapp_event;
 void thepit_init(void* State);
