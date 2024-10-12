@@ -5,7 +5,7 @@ struct thepit_state
 {
 	// TODO:
 };
-extern thepit_state GlobalState;
+extern struct thepit_state GlobalState;
 
 struct sapp_event;
 void thepit_init(void* State);

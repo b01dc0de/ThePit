@@ -2,15 +2,14 @@
 
 #include "glsl/thepit-triangle.glsl.h"
 
-thepit_state GlobalState;
+struct thepit_state GlobalState;
 
 struct AppState
 {
 	sg_pipeline pip;
 	sg_bindings bind;
 	sg_pass_action pass_action;
-};
-AppState state;
+} state;
 
 void thepit_init(void* State)
 {
@@ -40,7 +39,7 @@ void thepit_init(void* State)
 	state.pip = sg_make_pipeline(&tri_pipeline_desc);
 	sg_pass_action tri_pass_action;
 	tri_pass_action.colors[0].load_action = SG_LOADACTION_CLEAR;
-	tri_pass_action.colors[0].clear_value = {0.0f, 0.0f, 0.0f, 1.0f};
+	// tri_pass_action.colors[0].clear_value = {0.0f, 0.0f, 0.0f, 1.0f};
 	state.pass_action = tri_pass_action;
 }
 
