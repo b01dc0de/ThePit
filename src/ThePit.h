@@ -12,8 +12,8 @@
 	}
 #define THE_PIT_UNUSED(Var) (void)Var
 
-//#define SOKOL_IMPL
-#define SOKOL_APP_IMPL
+#define SOKOL_IMPL
+//#define SOKOL_APP_IMPL
 
 // Define graphics library:
 #define SOKOL_GLCORE
@@ -26,8 +26,8 @@
 		- SOKOL_NOAPI
 */
 
-#define SOKOL_ASSERT(c) THE_PIT_ASSERT(c)
-#define SOKOL_UNREACHABLE() THE_PIT_ASSERT(false)
+//#define SOKOL_ASSERT(c) THE_PIT_ASSERT(c)
+//#define SOKOL_UNREACHABLE() THE_PIT_ASSERT(false)
 /*
 	Undefined for now:
 		- SOKOL_WIN32_FORCE_MAIN 
@@ -39,7 +39,7 @@
 		- SOKOL_DLL
 */
 
-constexpr int ThePit_Width = 1280;
-constexpr int ThePit_Height = 720;
+constexpr int ThePit_Width = 720;
+constexpr int ThePit_Height = 480;
 
 #endif // THE_PIT_H
