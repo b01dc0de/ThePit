@@ -34,7 +34,7 @@
 	- SOKOL_DLL
 */
 
-constexpr int ThePit_Width = 720;
-constexpr int ThePit_Height = 480;
+const int ThePit_Width = 720;
+const int ThePit_Height = 480;
 
 #endif // THEPIT_COMMON_H

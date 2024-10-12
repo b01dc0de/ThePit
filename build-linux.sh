@@ -7,7 +7,7 @@
 SRC_FILES="src/Main.cpp"
 OUT_DIR=out/build/linux
 OUT_FILE=thepit
-LIB_DIR=../lib/sokol
+LIB_DIR=./libs/sokol
 LINK_LIBS="-lasound -lGL -lm -lXcursor -lXi -lX11"
 BUILD_FLAGS="-g -pthread"
 
