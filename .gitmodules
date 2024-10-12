@@ -1,3 +1,6 @@
 [submodule "libs/sokol"]
 	path = libs/sokol
 	url = https://github.com/floooh/sokol.git
+[submodule "libs/glm"]
+	path = libs/glm
+	url = https://github.com/icaven/glm
