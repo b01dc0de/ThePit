@@ -1,6 +1,6 @@
 #include "ThePit_Engine.h"
 
-#include "glsl/thepit-triangle.glsl.h"
+#include "glsl/thepit-vxcolor.glsl.h"
 
 thepit_state GlobalState;
 

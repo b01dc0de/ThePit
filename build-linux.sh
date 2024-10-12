@@ -15,7 +15,7 @@ mkdir -p $OUT_DIR
 
 SOKOL_SHDC=../sokol-tools-bin/bin/linux/sokol-shdc
 GLSL_DIR=src/glsl
-SHADER_FILE=$GLSL_DIR/thepit-triangle.glsl
+SHADER_FILE=$GLSL_DIR/thepit-vxcolor.glsl
 
 # Use Sokol shader compiler:
 $SOKOL_SHDC -i $SHADER_FILE -o $SHADER_FILE.h -l glsl410
