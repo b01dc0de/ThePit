@@ -1,6 +1,9 @@
 #ifndef THEPIT_ENGINE_H
 #define THEPIT_ENGINE_H
 
+#include "../libs/sokol/sokol_gfx.h"
+#include "../libs/sokol/sokol_glue.h"
+
 struct sapp_event;
 
 namespace thepit

@@ -1,5 +1,4 @@
 #include "Engine.h"
-
 #include "glsl/vxcolor.glsl.h"
 
 thepit::State thepit::GlobalState;
@@ -11,11 +10,12 @@ void thepit::Init(void* State)
 	sg_setup(&graphics_desc);
 
     float tri_vertices[] = {
-        // positions            // colors
+        // Positions            // Colors (RGBA)
          0.0f,  0.5f, 0.5f,     1.0f, 0.0f, 0.0f, 1.0f,
          0.5f, -0.5f, 0.5f,     0.0f, 1.0f, 0.0f, 1.0f,
         -0.5f, -0.5f, 0.5f,     0.0f, 0.0f, 1.0f, 1.0f
     };
+
 	sg_buffer_desc vbuffer_desc = {};
 	vbuffer_desc.data = SG_RANGE(tri_vertices);
 	vbuffer_desc.label = "tri vertices";
@@ -44,9 +44,9 @@ void thepit::Frame(void* State)
 	sg_begin_pass(&tri_draw);
 	sg_apply_pipeline(GlobalState.pip);
 	sg_apply_bindings(&GlobalState.bind);
-	sg_draw(0, 3, 1);
-	sg_end_pass();
-	sg_commit();
+    sg_draw(0, 3, 1);  // Draw 3 vertices (one triangle)
+    sg_end_pass();
+    sg_commit();
 }
 
 void thepit::Cleanup(void* GlobalState)

@@ -4,3 +4,12 @@
 [submodule "libs/glm"]
 	path = libs/glm
 	url = https://github.com/icaven/glm
+[submodule "libs/soloud"]
+	path = libs/soloud
+	url = https://github.com/jarikomppa/soloud.git
+[submodule "libs/sokol-tools-bin"]
+	path = libs/sokol-tools-bin
+	url = https://github.com/floooh/sokol-tools-bin.git
+[submodule "libs/stb"]
+	path = libs/stb
+	url = https://github.com/nothings/stb.git
