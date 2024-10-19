@@ -12,8 +12,6 @@
 	}
 #define THE_PIT_UNUSED(Var) (void)Var
 
-#define SOKOL_IMPL
-//#define SOKOL_APP_IMPL
 #define SOKOL_GLCORE
 /*	Other 3D graphics libs:
 	- SOKOL_GLES3
@@ -33,6 +31,14 @@
 	- SOKOL_DEBUG
 	- SOKOL_DLL
 */
+
+#include "sokol_app.h"
+#include "sokol_gfx.h"
+#include "sokol_time.h"
+#include "sokol_audio.h"
+#include "sokol_log.h"
+//#include "sokol_fetch.h"
+#include "sokol_glue.h"
 
 const int ThePit_Width = 720;
 const int ThePit_Height = 480;

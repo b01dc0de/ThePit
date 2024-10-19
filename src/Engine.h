@@ -1,7 +1,7 @@
 #ifndef THEPIT_ENGINE_H
 #define THEPIT_ENGINE_H
 
-struct sapp_event;
+#include "Common.h"
 
 namespace thepit
 {

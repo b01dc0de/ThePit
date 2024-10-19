@@ -1,14 +1,7 @@
-﻿#include "Common.h"
-
-#include "sokol_app.h"
-#include "sokol_gfx.h"
-#include "sokol_time.h"
-#include "sokol_audio.h"
-#include "sokol_log.h"
-//#include "sokol_fetch.h"
-#include "sokol_glue.h"
-
-#include "Engine.cpp"
+﻿#define SOKOL_IMPL
+//#define SOKOL_APP_IMPL
+#include "Common.h"
+#include "Engine.h"
 
 extern sapp_desc sokol_main(int argc, char* argv[])
 {
