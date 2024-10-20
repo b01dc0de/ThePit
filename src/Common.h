@@ -40,7 +40,7 @@
 //#include "sokol_fetch.h"
 #include "sokol_glue.h"
 
-const int ThePit_Width = 720;
+const int ThePit_Width = 640;
 const int ThePit_Height = 480;
 
 #endif // THEPIT_COMMON_H
