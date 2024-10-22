@@ -27,6 +27,7 @@ extern sapp_desc sokol_main(int argc, char* argv[])
 		thepit_desc.high_dpi = true;
 		thepit_desc.fullscreen = false;
 		thepit_desc.window_title = "DO NOT FALL IN THE PIT";
+		thepit_desc.logger.func = slog_func;
 	}
 	return thepit_desc;
 }

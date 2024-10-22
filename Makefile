@@ -105,6 +105,10 @@ shaders: $(OUT_SHADER)
 dirs:
 	@mkdir -p $(BIN)
 	@mkdir -p $(BIN)/src
+	@mkdir -p $(BIN)/src/engine
+	@mkdir -p $(BIN)/src/engine/geometry
+	@mkdir -p $(BIN)/src/engine/material
+	@mkdir -p $(BIN)/src/engine/mesh
 	@mkdir -p $(BIN)/util
 	@mkdir -p $(BIN)/lib
 

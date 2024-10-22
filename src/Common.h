@@ -1,6 +1,19 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#define SOKOL_DEBUG
+
+#include "../libs/sokol/sokol_gfx.h"
+#include "../libs/sokol/sokol_glue.h"
+#include "../libs/sokol/sokol_app.h"
+#include "../libs/sokol/sokol_time.h"
+#include "../libs/sokol/sokol_audio.h"
+#include "../libs/sokol/sokol_log.h"
+
+#include <stdint.h>
+#include <stdlib.h> 
+#include <string.h>
+
 // CKA_TODO: Implement different printf
 #define LOGF(...) printf(__VA_ARGS__)
 #define DBG_LOGF(...) LOGF(__VA_ARGS__)
