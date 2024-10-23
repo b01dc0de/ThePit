@@ -16,8 +16,8 @@ extern sapp_desc sokol_main(int argc, char* argv[])
 		thepit_desc.frame_userdata_cb = thepit::Frame;
 		thepit_desc.cleanup_userdata_cb = thepit::Cleanup;
 		thepit_desc.event_userdata_cb = thepit::HandleEvent;
-		thepit_desc.width = ThePit_Width;
-		thepit_desc.height = ThePit_Height;
+		thepit_desc.width = thepit::WindowWidth;
+		thepit_desc.height = thepit::WindowHeight;
 		thepit_desc.sample_count = 1;
 		thepit_desc.high_dpi = true;
 		thepit_desc.fullscreen = false;

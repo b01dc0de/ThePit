@@ -3,12 +3,15 @@
 
 #include "Common.h"
 
-// Struct to store material data
-typedef struct {
-    sg_shader shader;       // The shader program
-} Material;
+namespace thepit
+{
+    // Struct to store material data
+    struct Material
+    {
+        sg_shader shader;       // The shader program
+    };
 
-Material material();
-void material_bind(const Material* material);
+    Material InitCubeMaterial();
+}
 
 #endif

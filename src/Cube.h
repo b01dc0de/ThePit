@@ -2,7 +2,11 @@
 #define THEPIT_CUBE_H
 
 #include "Common.h"
+#include "Geometry.h"
 
-struct GeometryStruct cube_geometry();
+namespace thepit
+{
+    GeometryT GenCubeGeometry();
+}
 
 #endif

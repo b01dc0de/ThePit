@@ -1,8 +1,11 @@
 #include "Engine.h"
 #include "Cube.h"
-#include "glsl/cube-sapp.glsl.h"
+#include "glsl/cube-sapp.glsl.h" // TODO: Change this name once compiling
 
-thepit::State thepit::GlobalState;
+namespace thepit
+{
+    GlobalState_t GlobalState;
+}
 
 void thepit::Init(void* State)
 {
@@ -12,9 +15,9 @@ void thepit::Init(void* State)
     sg_setup(&setup);
 
     // Create cube geometry, material, and mesh
-    GeometryStruct cube = cube_geometry();  // Generate cube geometry
-    GlobalState.cube_material = material();  // Initialize the material
-    GlobalState.cube_mesh = mesh_init(&cube, &GlobalState.cube_material);  // Initialize mesh
+    GeometryT cube = GenCubeGeometry();  // Generate cube geometry
+    GlobalState.cube_material = InitCubeMaterial();  // Initialize the material
+    GlobalState.cube_mesh = InitMesh(&cube, &GlobalState.cube_material);  // Initialize mesh
 
     // Set the initial position of the cube
     GlobalState.cube_mesh.transform.position[0] = 0.0f;  // X

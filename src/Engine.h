@@ -7,7 +7,7 @@
 
 namespace thepit
 {
-	struct State
+	struct GlobalState_t
 	{
 		sg_pipeline pip;
 		sg_bindings bind;
@@ -16,12 +16,15 @@ namespace thepit
 		Mesh cube_mesh;
 		float rx, ry;
 	};
-	extern State GlobalState;
+	extern GlobalState_t GlobalState;
 
 	void Init(void* State);
 	void Frame(void* State);
 	void Cleanup(void* State);
 	void HandleEvent(const sapp_event* Event, void* State);
+
+    const int WindowWidth = 640;
+    const int WindowHeight = 480;
 }
 
 #endif // ENGINE_H

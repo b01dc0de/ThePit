@@ -6,6 +6,7 @@
 #include <string.h>
 
 // CKA_TODO: Implement different printf
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define LOGF(...) printf(__VA_ARGS__)
 #define DBG_LOGF(...) LOGF(__VA_ARGS__)
 #define DBG_BREAKPOINT() DebugBreak()
@@ -17,13 +18,7 @@
 #define THE_PIT_UNUSED(Var) (void)Var
 
 #define SOKOL_GLCORE
-/*	Other 3D graphics libs:
-	- SOKOL_GLES3
-	- SOKOL_D3D11
-	- SOKOL_METAL
-	- SOKOL_WGPU
-	- SOKOL_NOAPI
-*/
+/*	NOTE: Other Sokol graphics libs: SOKOL_GLES3, SOKOL_D3D11, SOKOL_METAL, SOKOL_WGPU, SOKOL_NOAPI */
 #define SOKOL_ASSERT(c) THE_PIT_ASSERT(c)
 #define SOKOL_DEBUG
 #define SOKOL_UNREACHABLE THE_PIT_ASSERT(false)
@@ -36,6 +31,8 @@
 	- SOKOL_DLL
 */
 
+/*-----BEGIN LIBS-----*/
+// Sokol
 #include "sokol_app.h"
 #include "sokol_gfx.h"
 #include "sokol_time.h"
@@ -43,10 +40,11 @@
 #include "sokol_log.h"
 //#include "sokol_fetch.h"
 #include "sokol_glue.h"
-
+// HandmadeMath
 #include "lib/HandmadeMath.h"
+/*------END  LIBS-----*/
 
-const int ThePit_Width = 640;
-const int ThePit_Height = 480;
+// ThePit 
+#include "Math.h"
 
 #endif // THEPIT_COMMON_H
