@@ -11,6 +11,38 @@
 
 ## C++ Style
 
+- Indentation/Bracing
+    - Use Allman indent style
+    - Always brace conditional blocks (`if, elif, else, switch, case, for, while, ...`)
+    - Example: ``
+        int ExampleFunc(int ex_param)
+        {
+            if (ex_param == 0)
+            {
+                DoSomething();
+            }
+            else
+            {
+                DoSomethingElse();
+            }
+        } ``
+    - Switch style: ``
+        switch (ex_param):
+        {
+            case 0:
+            {
+                HandleCase(0);
+            } break;
+            case 1:
+            {
+                HandleCase(1);
+            } break;
+            default:
+            {
+                HandleDefault();
+            } break;
+        } ``
+
 - Namespace: All engine code relating to ThePit should be within `namespace thepit {}`
 
 - Enforce spaces, not tabs
