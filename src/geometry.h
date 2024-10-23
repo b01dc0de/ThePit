@@ -1,5 +1,5 @@
-#ifndef THEPIT_ENGINE_GEOMETRY
-#define THEPIT_ENGINE_GEOMETRY
+#ifndef THEPIT_ENGINE_GEOMETRY_H
+#define THEPIT_ENGINE_GEOMETRY_H
  
 #include "Common.h"
 
@@ -11,4 +11,4 @@ struct GeometryStruct {
     sg_buffer index_buffer;
 };
 
-#endif
+#endif // THEPIT_ENGINE_GEOMETRY_H

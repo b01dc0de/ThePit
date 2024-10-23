@@ -1,15 +1,8 @@
 #define SOKOL_IMPL
 //#define SOKOL_APP_IMPL
+// TODO: What's the difference between SOKOL_IMPL and SOKOL_APP_IMPL?
 #include "Common.h"
 #include "Engine.h"
-
-//#include "../libs/sokol/sokol_app.h"
-//#include "../libs/sokol/sokol_time.h"
-//#include "../libs/sokol/sokol_audio.h"
-//#include "../libs/sokol/sokol_log.h"
-
-// #include "../libs/sokol/sokol_gfx.h"
-//#include "sokol_fetch.h"
 
 extern sapp_desc sokol_main(int argc, char* argv[])
 {

@@ -1,15 +1,6 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#define SOKOL_DEBUG
-
-#include "../libs/sokol/sokol_gfx.h"
-#include "../libs/sokol/sokol_glue.h"
-#include "../libs/sokol/sokol_app.h"
-#include "../libs/sokol/sokol_time.h"
-#include "../libs/sokol/sokol_audio.h"
-#include "../libs/sokol/sokol_log.h"
-
 #include <stdint.h>
 #include <stdlib.h> 
 #include <string.h>
@@ -34,6 +25,7 @@
 	- SOKOL_NOAPI
 */
 #define SOKOL_ASSERT(c) THE_PIT_ASSERT(c)
+#define SOKOL_DEBUG
 #define SOKOL_UNREACHABLE THE_PIT_ASSERT(false)
 /* Undefined for now:
 	- SOKOL_WIN32_FORCE_MAIN 
@@ -41,7 +33,6 @@
 	- SOKOL_APP_API_DECL 
 	- SOKOL_API_DECL 
 	- SOKOL_API_IMPL 
-	- SOKOL_DEBUG
 	- SOKOL_DLL
 */
 
@@ -52,6 +43,8 @@
 #include "sokol_log.h"
 //#include "sokol_fetch.h"
 #include "sokol_glue.h"
+
+#include "lib/HandmadeMath.h"
 
 const int ThePit_Width = 640;
 const int ThePit_Height = 480;

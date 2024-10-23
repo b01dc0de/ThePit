@@ -33,13 +33,8 @@
 #define ATTR_vs_position (0)
 #define ATTR_vs_color0 (1)
 #define SLOT_vs_params (0)
-#pragma pack(push,1)
 
-#include "../../HandmadeMath.h"
-SOKOL_SHDC_ALIGN(16) typedef struct vs_params_t {
-    hmm_mat4 mvp;
-} vs_params_t;
-#pragma pack(pop)
+#include "../Math.h"
 /*
     #version 410
 

@@ -2,9 +2,9 @@
 #define THEPIT_ENGINE_MESH_H
 
 #include "Common.h"
-#include "../material/material.h"
-#include "../geometry/geometry.h"
-#include "../material/cube-sapp.glsl.h"
+#include "material.h"
+#include "geometry.h"
+#include "glsl/cube-sapp.glsl.h"
 
 
 // Struct to represent a 3D transformation

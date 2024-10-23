@@ -50,20 +50,18 @@ struct GeometryStruct cube_geometry() {
     geometry.indices = cube_indices;
     geometry.vertex_count = 36;
 
-    sg_buffer_desc vertex_buffer = (sg_buffer_desc){
-        .data = SG_RANGE(cube_vertices),
-        .type = SG_BUFFERTYPE_VERTEXBUFFER,
-        .usage = SG_USAGE_IMMUTABLE,  // We assume this geometry won't change
-    };
+    sg_buffer_desc vertex_buffer = {};
+    vertex_buffer.data = SG_RANGE(cube_vertices);
+    vertex_buffer.type = SG_BUFFERTYPE_VERTEXBUFFER;
+    vertex_buffer.usage = SG_USAGE_IMMUTABLE;  // We assume this geometry won't change
 
     // Set up the vertex buffer description
     geometry.vertex_buffer = sg_make_buffer(&vertex_buffer);
 
-    sg_buffer_desc index_buffer = (sg_buffer_desc){
-        .data = SG_RANGE(cube_indices),
-        .type = SG_BUFFERTYPE_INDEXBUFFER,
-        .usage = SG_USAGE_IMMUTABLE,  // We assume this geometry won't change
-    };
+    sg_buffer_desc index_buffer = {};
+    index_buffer.data = SG_RANGE(cube_indices);
+    index_buffer.type = SG_BUFFERTYPE_INDEXBUFFER;
+    index_buffer.usage = SG_USAGE_IMMUTABLE;  // We assume this geometry won't change
 
     geometry.index_buffer = sg_make_buffer(&index_buffer);
 

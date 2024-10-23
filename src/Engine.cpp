@@ -1,16 +1,14 @@
-#define HANDMADE_MATH_IMPLEMENTATION
-#define HANDMADE_MATH_NO_SSE
 #include "Engine.h"
-#include "./engine/material/cube-sapp.glsl.h"
+#include "cube.h"
+#include "glsl/cube-sapp.glsl.h"
 
 thepit::State thepit::GlobalState;
 
 void thepit::Init(void* State)
 {
-    auto setup = (sg_desc){
-        .environment = sglue_environment(),
-        .logger.func = slog_func,
-    };
+    sg_desc setup = {};
+    setup.environment = sglue_environment();
+    setup.logger.func = slog_func;
     sg_setup(&setup);
 
     // Create cube geometry, material, and mesh
@@ -26,8 +24,6 @@ void thepit::Init(void* State)
 
     GlobalState.pip = GlobalState.cube_mesh.pipeline;
     GlobalState.bind = GlobalState.cube_mesh.bindings;
-
-
 }
 
 void thepit::Frame(void* State) {
@@ -36,30 +32,26 @@ void thepit::Frame(void* State) {
     const float w = sapp_widthf();
     const float h = sapp_heightf();
     const float t = (float)(sapp_frame_duration() * 60.0);
-    hmm_mat4 proj = HMM_Perspective(60.0f, w/h, 0.01f, 10.0f);
-    hmm_mat4 view = HMM_LookAt(HMM_Vec3(0.0f, 1.5f, 6.0f), HMM_Vec3(0.0f, 0.0f, 0.0f), HMM_Vec3(0.0f, 1.0f, 0.0f));
-    hmm_mat4 view_proj = HMM_MultiplyMat4(proj, view);
+    HMM_Mat4 proj = HMM_Perspective_RH_ZO(61.0f, w/h, 0.01f, 10.0f);
+    HMM_Mat4 view = HMM_LookAt_RH(HMM_Vec3{0.0f, 1.5f, 6.0f}, HMM_Vec3{0.0f, 0.0f, 0.0f}, HMM_Vec3{0.0f, 1.0f, 0.0f});
+    HMM_Mat4 view_proj = HMM_Mul(proj, view);
     GlobalState.rx += 1.0f * t; GlobalState.ry += 2.0f * t;
-    hmm_mat4 rxm = HMM_Rotate(GlobalState.rx, HMM_Vec3(1.0f, 0.0f, 0.0f));
-    hmm_mat4 rym = HMM_Rotate(GlobalState.ry, HMM_Vec3(0.0f, 1.0f, 0.0f));
-    hmm_mat4 model = HMM_MultiplyMat4(rxm, rym);
-    vs_params.mvp = HMM_MultiplyMat4(view_proj, model);
+    HMM_Mat4 rxm = HMM_Rotate_RH(GlobalState.rx, HMM_Vec3{1.0f, 0.0f, 0.0f});
+    HMM_Mat4 rym = HMM_Rotate_RH(GlobalState.ry, HMM_Vec3{0.0f, 1.0f, 0.0f});
+    HMM_Mat4 model = HMM_Mul(rxm, rym);
+    vs_params.mvp = HMM_Mul(view_proj, model);
 
-    auto pass = (sg_pass){
-        .action = {
-            .colors[0] = {
-                .load_action = SG_LOADACTION_CLEAR,
-                .clear_value = { 0.25f, 0.5f, 0.75f, 1.0f }
-            },
-        },
-        .swapchain = sglue_swapchain()
-    };
+    sg_pass pass = {};
+    pass.action.colors[0].load_action = SG_LOADACTION_CLEAR;
+    pass.action.colors[0].clear_value = { 0.25f, 0.5f, 0.75f, 1.0f };
+    pass.swapchain = sglue_swapchain();
+
     sg_begin_pass(&pass);
     sg_apply_pipeline(GlobalState.pip);
     sg_apply_bindings(&GlobalState.bind);
     auto r = SG_RANGE(vs_params);
     sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, &r);
-    sg_draw(0, 36, 1);
+    sg_draw(0, 36, 1); // TODO: Fix magic number 36
     sg_end_pass();
     sg_commit();
 }
