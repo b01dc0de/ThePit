@@ -10,6 +10,9 @@ namespace thepit
 		sg_pipeline pip;
 		sg_bindings bind;
 		sg_pass_action pass_action;
+    	Material cube_material;
+		Mesh cube_mesh;
+		float rx, ry;
 	};
 	extern State GlobalState;
 

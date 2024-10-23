@@ -1,7 +1,15 @@
-﻿#define SOKOL_IMPL
+#define SOKOL_IMPL
 //#define SOKOL_APP_IMPL
 #include "Common.h"
 #include "Engine.h"
+
+//#include "../libs/sokol/sokol_app.h"
+//#include "../libs/sokol/sokol_time.h"
+//#include "../libs/sokol/sokol_audio.h"
+//#include "../libs/sokol/sokol_log.h"
+
+// #include "../libs/sokol/sokol_gfx.h"
+//#include "sokol_fetch.h"
 
 extern sapp_desc sokol_main(int argc, char* argv[])
 {
@@ -21,6 +29,7 @@ extern sapp_desc sokol_main(int argc, char* argv[])
 		thepit_desc.high_dpi = true;
 		thepit_desc.fullscreen = false;
 		thepit_desc.window_title = "DO NOT FALL IN THE PIT";
+		thepit_desc.logger.func = slog_func;
 	}
 	return thepit_desc;
 }
