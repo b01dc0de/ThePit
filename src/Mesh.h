@@ -1,9 +1,9 @@
-#ifndef THEPIT_ENGINE_MESH_H
-#define THEPIT_ENGINE_MESH_H
+#ifndef THEPIT_MESH_H
+#define THEPIT_MESH_H
 
 #include "Common.h"
-#include "material.h"
-#include "geometry.h"
+#include "Material.h"
+#include "Geometry.h"
 #include "glsl/cube-sapp.glsl.h"
 
 

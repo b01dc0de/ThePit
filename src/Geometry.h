@@ -1,5 +1,5 @@
-#ifndef THEPIT_ENGINE_GEOMETRY_H
-#define THEPIT_ENGINE_GEOMETRY_H
+#ifndef THEPIT_GEOMETRY_H
+#define THEPIT_GEOMETRY_H
  
 #include "Common.h"
 

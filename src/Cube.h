@@ -1,5 +1,5 @@
-#ifndef THEPIT_ENGINE_CUBE_H
-#define THEPIT_ENGINE_CUBE_H
+#ifndef THEPIT_CUBE_H
+#define THEPIT_CUBE_H
 
 #include "Common.h"
 

@@ -1,4 +1,4 @@
-#include "mesh.h"
+#include "Mesh.h"
 #define SOKOL_DEBUG
 
 Mesh mesh_init(const GeometryStruct* geometry, const Material* material)

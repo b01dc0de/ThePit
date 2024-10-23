@@ -2,8 +2,8 @@
 #define THEPIT_ENGINE_H
 
 #include "Common.h"
-#include "material.h"
-#include "mesh.h"
+#include "Material.h"
+#include "Mesh.h"
 
 namespace thepit
 {

@@ -1,5 +1,5 @@
-#ifndef THEPIT_ENGINE_MATERIAL_H
-#define THEPIT_ENGINE_MATERIAL_H
+#ifndef THEPIT_MATERIAL_H
+#define THEPIT_MATERIAL_H
 
 #include "Common.h"
 

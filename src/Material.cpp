@@ -1,4 +1,4 @@
-#include "material.h"
+#include "Material.h"
 #include "glsl/cube-sapp.glsl.h"
 
 // Initialize the material by creating the shader and pipeline

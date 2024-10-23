@@ -1,5 +1,5 @@
-#include "cube.h"
-#include "geometry.h"
+#include "Cube.h"
+#include "Geometry.h"
 
 static const float cube_vertices[] = {
         -1.0, -1.0, -1.0,   1.0, 0.0, 0.0, 1.0,

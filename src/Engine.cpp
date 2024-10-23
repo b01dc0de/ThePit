@@ -1,5 +1,5 @@
 #include "Engine.h"
-#include "cube.h"
+#include "Cube.h"
 #include "glsl/cube-sapp.glsl.h"
 
 thepit::State thepit::GlobalState;
@@ -33,7 +33,9 @@ void thepit::Frame(void* State) {
     const float h = sapp_heightf();
     const float t = (float)(sapp_frame_duration() * 60.0);
     HMM_Mat4 proj = HMM_Perspective_RH_ZO(61.0f, w/h, 0.01f, 10.0f);
-    HMM_Mat4 view = HMM_LookAt_RH(HMM_Vec3{0.0f, 1.5f, 6.0f}, HMM_Vec3{0.0f, 0.0f, 0.0f}, HMM_Vec3{0.0f, 1.0f, 0.0f});
+    const HMM_Vec3 Origin{ 0.0f, 0.0f, 0.0f };
+    const HMM_Vec3 WorldUp{ 0.0f, 1.0f, 0.0f };
+    HMM_Mat4 view = HMM_LookAt_RH(HMM_Vec3{0.0f, 1.5f, 6.0f}, Origin, WorldUp);
     HMM_Mat4 view_proj = HMM_Mul(proj, view);
     GlobalState.rx += 1.0f * t; GlobalState.ry += 2.0f * t;
     HMM_Mat4 rxm = HMM_Rotate_RH(GlobalState.rx, HMM_Vec3{1.0f, 0.0f, 0.0f});
