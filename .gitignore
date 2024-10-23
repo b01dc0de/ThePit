@@ -3,5 +3,17 @@
 out/
 
 # Output files
-*.obj
 *.exe
+*.obj
+*.pdb
+
+# CMake-related
+CMakeFiles/
+ThePit.dir/
+x64/
+*.recipe
+# VisualStudio-related
+*.filters
+*.sln
+*.vcxproj
+
