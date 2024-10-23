@@ -11,6 +11,10 @@
 
 ## C++ Style
 
+- Generally: C++11 as spec
+- NOTE: We cannot use C99 designated initializers, they are not supported in C++
+    - There is _very limited_ support for them in C++20
+
 - Indentation/Bracing
     - Use Allman indent style
     - Always brace conditional blocks (`if, elif, else, switch, case, for, while, ...`)
