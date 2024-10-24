@@ -4,6 +4,7 @@
 #include "Common.h"
 #include "Material.h"
 #include "Mesh.h"
+#include "DrawState.h"
 
 namespace thepit
 {
@@ -15,6 +16,9 @@ namespace thepit
 
 		Material* cube_material = nullptr;
 		Mesh* cube_mesh = nullptr;
+
+		MeshDrawT* texcube_geometry = nullptr;
+		DrawStateT* tex_drawstate = nullptr;
 	};
 	extern GlobalState_t GlobalState;
 

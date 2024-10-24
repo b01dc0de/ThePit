@@ -6,9 +6,8 @@
 
 namespace thepit
 {
-    extern const int cube_element_count;
-
-    GeometryT* InitNewCubeGeometry();
+    GeometryT* InitNewCubeColorGeometry();
+    GeometryT* InitNewCubeTexGeometry();
 }
 
 #endif

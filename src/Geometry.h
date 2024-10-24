@@ -7,21 +7,34 @@ namespace thepit
 {
     // Vertex format for v3 position + v4 color
 #pragma pack(push, 1)
+    struct PosT
+    {
+        float x;
+        float y;
+        float z;
+    };
+    struct ColorT
+    {
+        float r;
+        float g;
+        float b;
+        float a;
+    };
+    struct TexUVT
+    {
+        float u;
+        float v;
+    };
+
     struct VxColor
     {
-        struct PosT
-        {
-            float x;
-            float y;
-            float z;
-        } pos;
-        struct ColorT
-        {
-            float r;
-            float g;
-            float b;
-            float a;
-        } color;
+        PosT pos;
+        ColorT color;
+    };
+    struct VxTexture
+    {
+        PosT pos;
+        TexUVT uv;
     };
 #pragma pack(pop)
 
