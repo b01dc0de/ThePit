@@ -3,17 +3,27 @@
 
 namespace thepit
 {
-    Mesh InitMesh(const GeometryT* geometry, const Material* material)
+    Transform InitDefaultTransform()
     {
-        Mesh mesh = {};
-        mesh.geometry = geometry;
-        mesh.material = material;
-        mesh.bindings.vertex_buffers[0] = geometry->vertex_buffer;
-        mesh.bindings.index_buffer = geometry->index_buffer;
+        Transform result;
+        result.position = { 0.0f, 0.0f, 0.0f };
+        result.rotation = { 0.0f, 0.0f, 0.0f };
+        result.scale = { 1.0f, 1.0f, 1.0f };
+        return result;
+    }
+
+    Mesh* InitNewMesh(const GeometryT* geometry, const Material* material)
+    {
+        Mesh* pmesh = new Mesh{};
+        pmesh->geometry = geometry;
+        pmesh->material = material;
+        pmesh->bindings = {};
+        pmesh->bindings.vertex_buffers[0] = geometry->vertex_buffer;
+        pmesh->bindings.index_buffer = geometry->index_buffer;
 
         sg_pipeline_desc shader_pip = {};
         /* test to provide buffer stride, but no attr offsets */
-        shader_pip.layout.buffers[0].stride = 28;
+        shader_pip.layout.buffers[0].stride = sizeof(v3) + sizeof(v4);
         shader_pip.layout.attrs[ATTR_vs_position].format = SG_VERTEXFORMAT_FLOAT3;
         shader_pip.layout.attrs[ATTR_vs_color0].format = SG_VERTEXFORMAT_FLOAT4;
         shader_pip.shader = material->shader;
@@ -22,24 +32,11 @@ namespace thepit
         shader_pip.depth.write_enabled = true;
         shader_pip.depth.compare = SG_COMPAREFUNC_LESS_EQUAL;
         shader_pip.label = "cube-pipeline";
-        mesh.pipeline = sg_make_pipeline(&shader_pip);
+        pmesh->pipeline = sg_make_pipeline(&shader_pip);
 
-        { // TODO: Clean this up
-            mesh.transform = {};
-            mesh.transform.position[0] = 0.0f;
-            mesh.transform.position[1] = 0.0f;
-            mesh.transform.position[2] = 0.0f;
+        pmesh->transform = InitDefaultTransform();
 
-            mesh.transform.rotation[0] = 0.0f;
-            mesh.transform.rotation[1] = 0.0f;
-            mesh.transform.rotation[2] = 0.0f;
-
-            mesh.transform.scale[0] = 1.0f;
-            mesh.transform.scale[1] = 1.0f;
-            mesh.transform.scale[2] = 1.0f;
-        }
-
-        return mesh;
+        return pmesh;
     }
 
     void DrawMesh(const Mesh* mesh)
@@ -55,6 +52,6 @@ namespace thepit
         sg_apply_bindings(mesh->bindings);
 
         // Apply bindings and draw the geometry
-        sg_draw(0, mesh->geometry->vertex_count, 1);
+        sg_draw(0, mesh->geometry->element_count, 1);
     }
 }

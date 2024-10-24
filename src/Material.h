@@ -11,7 +11,7 @@ namespace thepit
         sg_shader shader;       // The shader program
     };
 
-    Material InitCubeMaterial();
+    Material* InitNewCubeMaterial();
 }
 
 #endif

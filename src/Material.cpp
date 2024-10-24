@@ -4,8 +4,8 @@
 namespace thepit
 {
     // Initialize the material by creating the shader and pipeline
-    Material InitCubeMaterial()
+    Material* InitNewCubeMaterial()
     {
-        return Material{ sg_make_shader(cube_shader_desc(sg_query_backend())) };
+        return new Material{ sg_make_shader(cube_shader_desc(sg_query_backend())) };
     }
 }

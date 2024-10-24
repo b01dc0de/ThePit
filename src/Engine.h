@@ -9,19 +9,19 @@ namespace thepit
 {
 	struct GlobalState_t
 	{
-		sg_pipeline pip;
-		sg_bindings bind;
-		sg_pass_action pass_action;
-    	Material cube_material;
-		Mesh cube_mesh;
-		float rx, ry;
+		sg_pipeline pip = {};
+		sg_bindings bind = {};
+		sg_pass_action pass_action = {};
+
+		Material* cube_material = nullptr;
+		Mesh* cube_mesh = nullptr;
 	};
 	extern GlobalState_t GlobalState;
 
-	void Init(void* State);
-	void Frame(void* State);
-	void Cleanup(void* State);
-	void HandleEvent(const sapp_event* Event, void* State);
+	void Init();
+	void Frame();
+	void Cleanup();
+	void HandleEvent(const sapp_event* Event);
 
     const int WindowWidth = 640;
     const int WindowHeight = 480;

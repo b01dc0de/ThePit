@@ -6,7 +6,9 @@
 
 namespace thepit
 {
-    GeometryT GenCubeGeometry();
+    extern const int cube_element_count;
+
+    GeometryT* InitNewCubeGeometry();
 }
 
 #endif
