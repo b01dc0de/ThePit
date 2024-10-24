@@ -1,7 +1,6 @@
-# Dirs
-.vs/
+# Output dirs
 out/
-
+bin/
 # Output files
 *.exe
 *.obj
@@ -13,7 +12,11 @@ ThePit.dir/
 x64/
 *.recipe
 # VisualStudio-related
+.vscode/
+.vs/
 *.filters
 *.sln
 *.vcxproj
 
+# Test assets
+assets/test/
