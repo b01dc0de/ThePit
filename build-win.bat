@@ -1,6 +1,6 @@
 @mkdir out\build\win
 
-@set SRC_FILES=src\Main.cpp src\Cube.cpp src\Engine.cpp src\Geometry.cpp src\Material.cpp src\Mesh.cpp
+@set SRC_FILES=src\Main.cpp src\Cube.cpp src\DrawState.cpp src\Engine.cpp src\Geometry.cpp src\Material.cpp src\Mesh.cpp
 @set OUT_DIR=out\build\win\
 @set INC_LIBS=/I libs\sokol\ /I libs\
 
