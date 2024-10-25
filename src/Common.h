@@ -3,6 +3,35 @@
 
 #include "Platform.h"
 
+/*----- BEGIN PLATFORM INCLUDES -----*/
+#if THEPIT_PLATFORM_WINDOWS()
+	// NOTE: N/A for now
+#elif THEPIT_PLATFORM_MACOS()
+    #include <signal.h>
+#elif THEPIT_PLATFORM_LINUX()
+    #include <signal.h>
+#endif // PLATFORM INLCUDES
+/*----- BEGIN PLATFORM INCLUDES -----*/
+/* ----- BEGIN PLATFORM SPECIFIC DEFINES ----- */
+// TODO: Define?
+#if THEPIT_PLATFORM_WINDOWS()
+#elif THEPIT_PLATFORM_MACOS()
+#elif THEPIT_PLATFORM_LINUX()
+#endif
+/* -----  END  PLATFORM SPECIFIC DEFINES ----- */
+/* ----- BEGIN COMPILER SPECIFIC DEFINES ----- */
+#if THEPIT_COMPILER_MSVC()
+    #define PLATFORM_DBG_BREAKPOINT() __debugbreak()
+#elif THEPIT_COMPILER_CLANG()
+    #define PLATFORM_DBG_BREAKPOINT() raise(SIGTRAP)
+#elif THEPIT_COMPILER_GCC()
+    #define PLATFORM_DBG_BREAKPOINT() raise(SIGTRAP)
+#else
+    #error "No THEPIT_COMPILER_ defined"
+#endif
+/* -----  END  COMPILER SPECIFIC DEFINES ----- */
+
+
 // CKA_TODO: Implement different printf
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define LOGF(...) printf(__VA_ARGS__)
@@ -47,15 +76,6 @@
 #include <stdlib.h> 
 #include <string.h>
 /*------END  STD LIBS-----*/
-/*----- BEGIN PLATFORM INCLUDES -----*/
-#if THEPIT_PLATFORM_WINDOWS()
-	// NOTE: N/A for now
-#elif THEPIT_PLATFORM_MACOS()
-    #include <signal.h>
-#elif THEPIT_PLATFORM_LINUX()
-    #include <signal.h>
-#endif // PLATFORM INLCUDES
-/*----- BEGIN PLATFORM INCLUDES -----*/
 
 // ThePit 
 #include "Math.h"

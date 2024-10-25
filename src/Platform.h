@@ -57,24 +57,4 @@
 #endif // Multiple compilers defined check
 /* -----  END  ERROR HANDLING ----- */
 
-/* ----- BEGIN PLATFORM SPECIFIC DEFINES ----- */
-// TODO: Define?
-#if THEPIT_PLATFORM_WINDOWS()
-#elif THEPIT_PLATFORM_MACOS()
-#elif THEPIT_PLATFORM_LINUX()
-#endif
-/* -----  END  PLATFORM SPECIFIC DEFINES ----- */
-
-/* ----- BEGIN COMPILER SPECIFIC DEFINES ----- */
-#if THEPIT_COMPILER_MSVC()
-    #define PLATFORM_DBG_BREAKPOINT() __debugbreak()
-#elif THEPIT_COMPILER_CLANG()
-    #define PLATFORM_DBG_BREAKPOINT() raise(SIGTRAP)
-#elif THEPIT_COMPILER_GCC()
-    #define PLATFORM_DBG_BREAKPOINT() raise(SIGTRAP)
-#else
-    #error "No THEPIT_COMPILER_ defined"
-#endif
-/* -----  END  COMPILER SPECIFIC DEFINES ----- */
-
 #endif // THEPIT_PLATFORM_H
