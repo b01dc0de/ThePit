@@ -15,11 +15,11 @@ namespace thepit
     // State needed for a GL draw call
     struct DrawStateT
     {
-        sg_pass_action pass;
         sg_pipeline pip;
         sg_bindings bind;
     };
 
+    sg_pass* GetDefaultSGPass();
     DrawStateT* InitNewTexturePipeline();
     DrawStateT* InitNewColorPipeline();
     void Draw(DrawStateT* InState, MeshDrawT* InMesh, sg_range& in_vsparams_range);

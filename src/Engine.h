@@ -19,6 +19,8 @@ namespace thepit
 
 		MeshDrawT* texcube_geometry = nullptr;
 		DrawStateT* tex_drawstate = nullptr;
+		MeshDrawT* colcube_geometry = nullptr;
+		DrawStateT* col_drawstate = nullptr;
 	};
 	extern GlobalState_t GlobalState;
 

@@ -33,11 +33,14 @@
 #define ATTR_vs_position (0)
 #define ATTR_vs_color0 (1)
 #define SLOT_vs_params (0)
+#if !defined(VS_PARAMS_T_DECL)
+#define VS_PARAMS_T_DECL
 #pragma pack(push,1)
 SOKOL_SHDC_ALIGN(16) typedef struct vs_params_t {
     HMM_Mat4 mvp;
 } vs_params_t;
 #pragma pack(pop)
+#endif // !defined(VS_PARAMS_T_DECL)
 /*
     #version 410
 
@@ -53,7 +56,7 @@ SOKOL_SHDC_ALIGN(16) typedef struct vs_params_t {
     }
 
 */
-static const uint8_t vs_source_glsl410[284] = {
+static const uint8_t colcube_vs_source_glsl410[284] = {
     0x23,0x76,0x65,0x72,0x73,0x69,0x6f,0x6e,0x20,0x34,0x31,0x30,0x0a,0x0a,0x75,0x6e,
     0x69,0x66,0x6f,0x72,0x6d,0x20,0x76,0x65,0x63,0x34,0x20,0x76,0x73,0x5f,0x70,0x61,
     0x72,0x61,0x6d,0x73,0x5b,0x34,0x5d,0x3b,0x0a,0x6c,0x61,0x79,0x6f,0x75,0x74,0x28,
@@ -85,7 +88,7 @@ static const uint8_t vs_source_glsl410[284] = {
     }
 
 */
-static const uint8_t fs_source_glsl410[135] = {
+static const uint8_t colcube_fs_source_glsl410[135] = {
     0x23,0x76,0x65,0x72,0x73,0x69,0x6f,0x6e,0x20,0x34,0x31,0x30,0x0a,0x0a,0x6c,0x61,
     0x79,0x6f,0x75,0x74,0x28,0x6c,0x6f,0x63,0x61,0x74,0x69,0x6f,0x6e,0x20,0x3d,0x20,
     0x30,0x29,0x20,0x6f,0x75,0x74,0x20,0x76,0x65,0x63,0x34,0x20,0x66,0x72,0x61,0x67,
@@ -104,14 +107,14 @@ static inline const sg_shader_desc* cube_shader_desc(sg_backend backend) {
             valid = true;
             desc.attrs[0].name = "position";
             desc.attrs[1].name = "color0";
-            desc.vs.source = (const char*)vs_source_glsl410;
+            desc.vs.source = (const char*)colcube_vs_source_glsl410;
             desc.vs.entry = "main";
             desc.vs.uniform_blocks[0].size = 64;
             desc.vs.uniform_blocks[0].layout = SG_UNIFORMLAYOUT_STD140;
             desc.vs.uniform_blocks[0].uniforms[0].name = "vs_params";
             desc.vs.uniform_blocks[0].uniforms[0].type = SG_UNIFORMTYPE_FLOAT4;
             desc.vs.uniform_blocks[0].uniforms[0].array_count = 4;
-            desc.fs.source = (const char*)fs_source_glsl410;
+            desc.fs.source = (const char*)colcube_fs_source_glsl410;
             desc.fs.entry = "main";
             desc.label = "cube_shader";
         }

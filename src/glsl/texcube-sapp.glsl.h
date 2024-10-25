@@ -46,11 +46,14 @@
 #define SLOT_vs_params (0)
 #define SLOT_tex (0)
 #define SLOT_smp (0)
+#if !defined(VS_PARAMS_T_DECL)
+#define VS_PARAMS_T_DECL
 #pragma pack(push,1)
 SOKOL_SHDC_ALIGN(16) typedef struct vs_params_t {
     HMM_Mat4 mvp;
 } vs_params_t;
 #pragma pack(pop)
+#endif // !defined(VS_PARAMS_T_DECL)
 /*
     #version 410
 
@@ -66,7 +69,7 @@ SOKOL_SHDC_ALIGN(16) typedef struct vs_params_t {
     }
 
 */
-static const uint8_t vs_source_glsl410[280] = {
+static const uint8_t texcube_vs_source_glsl410[280] = {
     0x23,0x76,0x65,0x72,0x73,0x69,0x6f,0x6e,0x20,0x34,0x31,0x30,0x0a,0x0a,0x75,0x6e,
     0x69,0x66,0x6f,0x72,0x6d,0x20,0x76,0x65,0x63,0x34,0x20,0x76,0x73,0x5f,0x70,0x61,
     0x72,0x61,0x6d,0x73,0x5b,0x34,0x5d,0x3b,0x0a,0x6c,0x61,0x79,0x6f,0x75,0x74,0x28,
@@ -100,7 +103,7 @@ static const uint8_t vs_source_glsl410[280] = {
     }
 
 */
-static const uint8_t fs_source_glsl410[175] = {
+static const uint8_t texcube_fs_source_glsl410[175] = {
     0x23,0x76,0x65,0x72,0x73,0x69,0x6f,0x6e,0x20,0x34,0x31,0x30,0x0a,0x0a,0x75,0x6e,
     0x69,0x66,0x6f,0x72,0x6d,0x20,0x73,0x61,0x6d,0x70,0x6c,0x65,0x72,0x32,0x44,0x20,
     0x74,0x65,0x78,0x5f,0x73,0x6d,0x70,0x3b,0x0a,0x0a,0x6c,0x61,0x79,0x6f,0x75,0x74,
@@ -121,14 +124,14 @@ static inline const sg_shader_desc* texcube_shader_desc(sg_backend backend) {
             valid = true;
             desc.attrs[0].name = "pos";
             desc.attrs[1].name = "texcoord0";
-            desc.vs.source = (const char*)vs_source_glsl410;
+            desc.vs.source = (const char*)texcube_vs_source_glsl410;
             desc.vs.entry = "main";
             desc.vs.uniform_blocks[0].size = 64;
             desc.vs.uniform_blocks[0].layout = SG_UNIFORMLAYOUT_STD140;
             desc.vs.uniform_blocks[0].uniforms[0].name = "vs_params";
             desc.vs.uniform_blocks[0].uniforms[0].type = SG_UNIFORMTYPE_FLOAT4;
             desc.vs.uniform_blocks[0].uniforms[0].array_count = 4;
-            desc.fs.source = (const char*)fs_source_glsl410;
+            desc.fs.source = (const char*)texcube_fs_source_glsl410;
             desc.fs.entry = "main";
             desc.fs.images[0].used = true;
             desc.fs.images[0].multisampled = false;
