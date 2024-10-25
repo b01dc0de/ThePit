@@ -10,7 +10,7 @@ namespace thepit
 
     const uint32_t px_width = 4;
     const uint32_t px_height = 4;
-    uint32_t pixels[px_width * px_height] = {
+    uint32_t default_texture_pixels[px_width * px_height] = {
         0xFFFFFFFF, 0xFF000000, 0xFFFFFFFF, 0xFF000000,
         0xFF000000, 0xFFFFFFFF, 0xFF000000, 0xFFFFFFFF,
         0xFFFFFFFF, 0xFF000000, 0xFFFFFFFF, 0xFF000000,
@@ -22,7 +22,7 @@ namespace thepit
         sg_image_desc img_desc = {};
         img_desc.width = px_width;
         img_desc.height = px_height;
-        img_desc.data.subimage[0][0] = SG_RANGE(pixels);
+        img_desc.data.subimage[0][0] = SG_RANGE(default_texture_pixels);
 
         // Default sampler state
         sg_sampler_desc sampler_desc = {};

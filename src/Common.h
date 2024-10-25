@@ -1,27 +1,26 @@
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef THEPIT_COMMON_H
+#define THEPIT_COMMON_H
 
-#include <stdint.h>
-#include <stdlib.h> 
-#include <string.h>
+#include "Platform.h"
 
 // CKA_TODO: Implement different printf
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define LOGF(...) printf(__VA_ARGS__)
 #define DBG_LOGF(...) LOGF(__VA_ARGS__)
-#define DBG_BREAKPOINT() DebugBreak()
-#define THE_PIT_ASSERT(Expr) \
+#define DBG_BREAKPOINT() PLATFORM_DBG_BREAKPOINT()
+#define THEPIT_ASSERT(Expr) \
 	if (!(Expr)) \
 	{ \
 		DBG_LOGF("ASSERT FAILED!\n\tExpression: %s\n\tFile: %s, Line: %d\n", #Expr, __FILE__, __LINE__); \
+		DBG_BREAKPOINT(); \
 	}
-#define THE_PIT_UNUSED(Var) (void)Var
+#define THEPIT_UNUSED(Var) (void)Var
 
 #define SOKOL_GLCORE
 /*	NOTE: Other Sokol graphics libs: SOKOL_GLES3, SOKOL_D3D11, SOKOL_METAL, SOKOL_WGPU, SOKOL_NOAPI */
-#define SOKOL_ASSERT(c) THE_PIT_ASSERT(c)
+#define SOKOL_ASSERT(c) THEPIT_ASSERT(c)
 #define SOKOL_DEBUG
-#define SOKOL_UNREACHABLE THE_PIT_ASSERT(false)
+#define SOKOL_UNREACHABLE THEPIT_ASSERT(false)
 /* Undefined for now:
 	- SOKOL_WIN32_FORCE_MAIN 
 	- SOKOL_NO_ENTRY 
@@ -43,6 +42,20 @@
 // HandmadeMath
 #include "lib/HandmadeMath.h"
 /*------END  LIBS-----*/
+/*-----BEGIN STD LIBS-----*/
+#include <stdint.h>
+#include <stdlib.h> 
+#include <string.h>
+/*------END  STD LIBS-----*/
+/*----- BEGIN PLATFORM INCLUDES -----*/
+#if THEPIT_PLATFORM_WINDOWS()
+	// NOTE: N/A for now
+#elif THEPIT_PLATFORM_MACOS()
+    #include <signal.h>
+#elif THEPIT_PLATFORM_LINUX()
+    #include <signal.h>
+#endif // PLATFORM INLCUDES
+/*----- BEGIN PLATFORM INCLUDES -----*/
 
 // ThePit 
 #include "Math.h"

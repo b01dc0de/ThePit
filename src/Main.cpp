@@ -6,8 +6,8 @@
 
 extern sapp_desc sokol_main(int argc, char* argv[])
 {
-	THE_PIT_UNUSED(argc);
-	THE_PIT_UNUSED(argv);
+	THEPIT_UNUSED(argc);
+	THEPIT_UNUSED(argv);
 
 	sapp_desc thepit_desc = {};
 	{

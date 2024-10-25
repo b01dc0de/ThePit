@@ -52,6 +52,6 @@ namespace thepit
         sg_apply_bindings(mesh->bindings);
 
         // Apply bindings and draw the geometry
-        sg_draw(0, mesh->geometry->element_count, 1);
+        sg_draw(0, (int)mesh->geometry->element_count, 1);
     }
 }
