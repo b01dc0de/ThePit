@@ -23,7 +23,7 @@ namespace thepit
 
             Result = new char[file_size + 1];
             size_t read_bytes = fread(Result, sizeof(char), file_size, glsl_file);
-	    THEPIT_ASSERT(read_bytes == file_size);
+            THEPIT_ASSERT(read_bytes == file_size);
             Result[file_size] = '\0';
 
             fclose(glsl_file);
