@@ -23,13 +23,23 @@ namespace thepit
 		DrawStateT* col_drawstate = nullptr;
 
 		GeometryT* singlecolorcube = nullptr;
+
+		sg_shader_desc test_vxcolor_desc;
+		sg_shader_desc test_vxtexture_desc;
+		//sg_shader_desc test_vxunicolor_desc;
 	};
 	extern GlobalState_t GlobalState;
+
+	extern int global_argc;
+	extern char** global_argv;
 
 	void Init();
 	void Frame();
 	void Cleanup();
 	void HandleEvent(const sapp_event* Event);
+
+	void HandleCmdLine(int argc, char** argv);
+	const char* GetProjectDir();
 
     const int WindowWidth = 640;
     const int WindowHeight = 480;

@@ -2,11 +2,15 @@
 #include "Cube.h"
 #include "DrawState.h"
 #include "Camera.h"
-#include "glsl/cube-sapp.glsl.h"
+#include "Shader.h"
+#include <string>
 
 namespace thepit
 {
     GlobalState_t GlobalState;
+
+	int global_argc = 0;
+	char** global_argv = nullptr;
 }
 
 void thepit::Init()
@@ -22,10 +26,9 @@ void thepit::Init()
     GlobalState.cube_mesh = InitNewMesh(cube, GlobalState.cube_material);  // Initialize mesh
 
     // Set the initial position of the cube
-    GlobalState.cube_mesh->transform.position = { 0.0f, 0.0f, -1.0f }; // (move back slightly)
-
-    GlobalState.pip = GlobalState.cube_mesh->pipeline;
-    GlobalState.bind = GlobalState.cube_mesh->bindings;
+    //GlobalState.cube_mesh->transform.position = { 0.0f, 0.0f, -1.0f }; // (move back slightly)
+    //GlobalState.pip = GlobalState.cube_mesh->pipeline;
+    //GlobalState.bind = GlobalState.cube_mesh->bindings;
 
     GlobalState.texcube_geometry = new MeshDrawT{ InitNewCubeTexGeometry() };
     GlobalState.tex_drawstate = InitNewTexturePipeline();
@@ -91,3 +94,26 @@ void thepit::Cleanup()
 void thepit::HandleEvent(const sapp_event* Event)
 {
 }
+
+void thepit::HandleCmdLine(int argc, char** argv)
+{
+	global_argc = argc;
+	global_argv = argv;
+}
+
+const char* thepit::GetProjectDir()
+{
+    static const char* project_name = "ThePit";
+    static const char* project_dir = nullptr;
+    static std::string project_dir_str;
+    if (!project_dir)
+    {
+        THEPIT_ASSERT(0 < global_argc);
+        project_dir_str = global_argv[0];
+        size_t ThePitDir = project_dir_str.find(project_name);
+        project_dir_str = project_dir_str.substr(0, ThePitDir + strlen(project_name));
+        project_dir = project_dir_str.c_str();
+    }
+    return project_dir;
+}
+

@@ -31,6 +31,15 @@
     #define THEPIT_COMPILER_GCC() (1)
 #endif // Define THEPIT_COMPILER
 
+// Define THEPIT_CONFIG
+#if defined(_DEBUG)
+    #define THEPIT_CONFIG_DEBUG() (1)
+    #define THEPIT_CONFIG_RELEASE() (0)
+#else
+    #define THEPIT_CONFIG_DEBUG() (0)
+    #define THEPIT_CONFIG_RELEASE() (1)
+#endif // Define THEPIT_CONFIG
+
 /* ----- BEGIN ERROR HANDLING ----- */
 // Check if at least 1 PLATFORM and 1 COMPILER are defined
 #if (!(THEPIT_PLATFORM_WINDOWS() || THEPIT_PLATFORM_MACOS() || THEPIT_PLATFORM_LINUX()))

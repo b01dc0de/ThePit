@@ -6,8 +6,7 @@
 
 extern sapp_desc sokol_main(int argc, char* argv[])
 {
-	THEPIT_UNUSED(argc);
-	THEPIT_UNUSED(argv);
+	thepit::HandleCmdLine(argc, argv);
 
 	sapp_desc thepit_desc = {};
 	{
@@ -25,4 +24,3 @@ extern sapp_desc sokol_main(int argc, char* argv[])
 	}
 	return thepit_desc;
 }
-

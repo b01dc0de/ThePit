@@ -1,6 +1,7 @@
 #include "DrawState.h"
-#include "glsl/cube-sapp.glsl.h"
-#include "glsl/texcube-sapp.glsl.h"
+#include "Shader.h"
+//#include "glsl/cube-sapp.glsl.h"
+//#include "glsl/texcube-sapp.glsl.h"
 
 namespace thepit
 {
@@ -28,15 +29,24 @@ namespace thepit
         return &default_pass;
     }
 
+    static const int SLOT_vs_params = 0;
+
     DrawStateT* InitNewColorPipeline()
     {
-        sg_shader col_shader = sg_make_shader(cube_shader_desc(sg_query_backend()));
+        //sg_shader col_shader = sg_make_shader(cube_shader_desc(sg_query_backend()));
+        sg_shader_desc vxcolor_desc = {};
+        GetVxColorShaderDesc(vxcolor_desc);
+        sg_shader vxcolor_shader = sg_make_shader(vxcolor_desc);
+
+        // Previously from sokol-generated .glsl.h
+        static const int ATTR_vs_position = 0;
+        static const int ATTR_vs_color0 = 1;
 
         sg_pipeline_desc pipeline_desc = {};
         pipeline_desc.layout.buffers[0].stride = sizeof(v3) + sizeof(v4);
         pipeline_desc.layout.attrs[ATTR_vs_position].format = SG_VERTEXFORMAT_FLOAT3;
         pipeline_desc.layout.attrs[ATTR_vs_color0].format = SG_VERTEXFORMAT_FLOAT4;
-        pipeline_desc.shader = col_shader;
+        pipeline_desc.shader = vxcolor_shader;
         pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
         pipeline_desc.cull_mode = SG_CULLMODE_BACK;
         pipeline_desc.depth.write_enabled = true;
@@ -45,6 +55,9 @@ namespace thepit
         DrawStateT* pnew_drawstate = new DrawStateT;
         pnew_drawstate->bind = {};
         pnew_drawstate->pip = sg_make_pipeline(&pipeline_desc);
+
+        delete[] vxcolor_desc.vs.source;
+        delete[] vxcolor_desc.fs.source;
 
         return pnew_drawstate;
     }
@@ -59,13 +72,22 @@ namespace thepit
         // Default sampler state
         sg_sampler_desc sampler_desc = {};
 
-        sg_shader texshader = sg_make_shader(texcube_shader_desc(sg_query_backend()));
+        //sg_shader texshader = sg_make_shader(texcube_shader_desc(sg_query_backend()));
+        sg_shader_desc vxtexture_desc = {};
+        GetVxTextureShaderDesc(vxtexture_desc);
+        sg_shader vxtexture_shader = sg_make_shader(vxtexture_desc);
+
+        // Previously from sokol-generated .glsl.h
+        static const int ATTR_vs_pos = 0;
+        static const int ATTR_vs_texcoord0 = 1;
+        static const int SLOT_tex = 0;
+        static const int SLOT_smp = 0;
 
         sg_pipeline_desc pipeline_desc = {};
         pipeline_desc.layout.buffers[0].stride = sizeof(v3) + sizeof(v2);
         pipeline_desc.layout.attrs[ATTR_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
         pipeline_desc.layout.attrs[ATTR_vs_texcoord0].format = SG_VERTEXFORMAT_FLOAT2;
-        pipeline_desc.shader = texshader;
+        pipeline_desc.shader = vxtexture_shader;
         pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
         pipeline_desc.cull_mode = SG_CULLMODE_BACK;
         pipeline_desc.depth.compare = SG_COMPAREFUNC_LESS_EQUAL;
@@ -77,6 +99,9 @@ namespace thepit
         pnew_drawstate->bind.fs.samplers[SLOT_smp] = sg_make_sampler(&sampler_desc);
 
         pnew_drawstate->pip = sg_make_pipeline(&pipeline_desc);
+
+        delete[] vxtexture_desc.vs.source;
+        delete[] vxtexture_desc.fs.source;
 
         return pnew_drawstate;
     }

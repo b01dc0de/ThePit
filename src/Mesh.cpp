@@ -1,5 +1,4 @@
 #include "Mesh.h"
-#include "glsl/cube-sapp.glsl.h"
 
 namespace thepit
 {
@@ -14,12 +13,20 @@ namespace thepit
 
     Mesh* InitNewMesh(const GeometryT* geometry, const Material* material)
     {
+        if (!geometry || !material)
+        {
+            return nullptr;
+        }
+
         Mesh* pmesh = new Mesh{};
         pmesh->geometry = geometry;
         pmesh->material = material;
         pmesh->bindings = {};
         pmesh->bindings.vertex_buffers[0] = geometry->vertex_buffer;
         pmesh->bindings.index_buffer = geometry->index_buffer;
+
+        static const int ATTR_vs_position = 0;
+        static const int ATTR_vs_color0 = 1;
 
         sg_pipeline_desc shader_pip = {};
         /* test to provide buffer stride, but no attr offsets */
