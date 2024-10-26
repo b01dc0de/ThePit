@@ -13,14 +13,11 @@ pkgs.mkShell
 # CKA_NOTE: Taken from the-nix-way/dev-templates: https://github.com/the-nix-way/dev-templates/blob/main/c-cpp/flake.nix
 		clang-tools
 		cmake
-		codespell
-		conan
-		cppcheck
-		doxygen
-		gtest
-		lcov
-		vcpkg
-		vcpkg-tool
+		#conan
+		#cppcheck
+		#lcov
+		#vcpkg
+		#vcpkg-tool
 	];
 	buildInputs = with pkgs; [
 # Libraries
