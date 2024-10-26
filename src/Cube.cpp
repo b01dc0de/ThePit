@@ -10,30 +10,30 @@ namespace thepit
         {{1.0,  1.0, -1.0},   {1.0, 0.0, 0.0, 1.0}},
         {{-1.0,  1.0, -1.0},   {1.0, 0.0, 0.0, 1.0}},
 
-        {{-1.0, -1.0,  1.0},   {0.0, 1.0, 0.0, 1.0}},
-        {{1.0, -1.0,  1.0},   {0.0, 1.0, 0.0, 1.0}},
-        {{1.0,  1.0,  1.0},   {0.0, 1.0, 0.0, 1.0}},
-        {{-1.0,  1.0,  1.0},   {0.0, 1.0, 0.0, 1.0}},
+        {{-1.0, -1.0, 1.0}, { 0.0, 1.0, 0.0, 1.0 }},
+        { {1.0, -1.0,  1.0},   {0.0, 1.0, 0.0, 1.0} },
+        { {1.0,  1.0,  1.0},   {0.0, 1.0, 0.0, 1.0} },
+        { {-1.0,  1.0,  1.0},   {0.0, 1.0, 0.0, 1.0} },
 
-        {{-1.0, -1.0, -1.0},   {0.0, 0.0, 1.0, 1.0}},
-        {{-1.0,  1.0, -1.0},   {0.0, 0.0, 1.0, 1.0}},
-        {{-1.0,  1.0,  1.0},   {0.0, 0.0, 1.0, 1.0}},
-        {{-1.0, -1.0,  1.0},   {0.0, 0.0, 1.0, 1.0}},
+        { {-1.0, -1.0, -1.0},   {0.0, 0.0, 1.0, 1.0} },
+        { {-1.0,  1.0, -1.0},   {0.0, 0.0, 1.0, 1.0} },
+        { {-1.0,  1.0,  1.0},   {0.0, 0.0, 1.0, 1.0} },
+        { {-1.0, -1.0,  1.0},   {0.0, 0.0, 1.0, 1.0} },
 
-        {{1.0, -1.0, -1.0},    {1.0, 0.5, 0.0, 1.0}},
-        {{1.0,  1.0, -1.0},    {1.0, 0.5, 0.0, 1.0}},
-        {{1.0,  1.0,  1.0},    {1.0, 0.5, 0.0, 1.0}},
-        {{1.0, -1.0,  1.0},    {1.0, 0.5, 0.0, 1.0}},
+        { {1.0, -1.0, -1.0},    {1.0, 0.5, 0.0, 1.0} },
+        { {1.0,  1.0, -1.0},    {1.0, 0.5, 0.0, 1.0} },
+        { {1.0,  1.0,  1.0},    {1.0, 0.5, 0.0, 1.0} },
+        { {1.0, -1.0,  1.0},    {1.0, 0.5, 0.0, 1.0} },
 
-        {{-1.0, -1.0, -1.0},   {0.0, 0.5, 1.0, 1.0}},
-        {{-1.0, -1.0,  1.0},   {0.0, 0.5, 1.0, 1.0}},
-        {{1.0, -1.0,  1.0},   {0.0, 0.5, 1.0, 1.0}},
-        {{1.0, -1.0, -1.0},   {0.0, 0.5, 1.0, 1.0}},
+        { {-1.0, -1.0, -1.0},   {0.0, 0.5, 1.0, 1.0} },
+        { {-1.0, -1.0,  1.0},   {0.0, 0.5, 1.0, 1.0} },
+        { {1.0, -1.0,  1.0},   {0.0, 0.5, 1.0, 1.0} },
+        { {1.0, -1.0, -1.0},   {0.0, 0.5, 1.0, 1.0} },
 
-        {{-1.0,  1.0, -1.0},   {1.0, 0.0, 0.5, 1.0}},
-        {{-1.0,  1.0,  1.0},   {1.0, 0.0, 0.5, 1.0}},
-        {{1.0,  1.0,  1.0},   {1.0, 0.0, 0.5, 1.0}},
-        {{1.0,  1.0, -1.0},   {1.0, 0.0, 0.5, 1.0}}
+        { {-1.0,  1.0, -1.0},   {1.0, 0.0, 0.5, 1.0} },
+        { {-1.0,  1.0,  1.0},   {1.0, 0.0, 0.5, 1.0} },
+        { {1.0,  1.0,  1.0},   {1.0, 0.0, 0.5, 1.0} },
+        { {1.0,  1.0, -1.0},   {1.0, 0.0, 0.5, 1.0} }
     };
 
     VxTexture cubetexture_vxs[] = {
@@ -102,6 +102,40 @@ namespace thepit
         index_buffer_desc.usage = SG_USAGE_IMMUTABLE;  // We assume this geometry won't change
 
         pnew_geometry->index_buffer = sg_make_buffer(&index_buffer_desc);
+
+        return pnew_geometry;
+    }
+
+    GeometryT* InitNewCubeSingleColorGeometry(const ColorT& in_color)
+    {
+        static VxColor cubesinglecolor_vxs[ARRAY_SIZE(cubecolor_vxs)];
+        static bool bcubesinglecolor_init = false;
+        if (!bcubesinglecolor_init)
+        {
+            for (int vx_idx = 0; vx_idx < ARRAY_SIZE(cubecolor_vxs); vx_idx++)
+            {
+                cubesinglecolor_vxs[vx_idx].pos = cubecolor_vxs[vx_idx].pos;
+                cubesinglecolor_vxs[vx_idx].color = in_color;
+            }
+            bcubesinglecolor_init = true;
+        }
+
+        GeometryT* pnew_geometry = new GeometryT;
+        pnew_geometry->vertices = (const float*)cubesinglecolor_vxs;
+        pnew_geometry->indices = cube_inds;
+        pnew_geometry->element_count = ARRAY_SIZE(cube_inds) * TriIdxCount;
+
+        pnew_geometry->vertex_buffer = MakeVxBuffer
+        (
+            (const float*)cubesinglecolor_vxs,
+            sizeof(VxColor),
+            ARRAY_SIZE(cubesinglecolor_vxs)
+        );
+        pnew_geometry->index_buffer = MakeIxBuffer
+        (
+            cube_inds,
+            ARRAY_SIZE(cube_inds)
+        );
 
         return pnew_geometry;
     }

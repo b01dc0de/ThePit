@@ -1,5 +1,7 @@
 # CKA_TODO
 
+- Debug / release configurations
+    - Different #defs based off configuration
 - Debug
     - [ ] Debug UI
     - [ ] Debug rendering
@@ -13,3 +15,6 @@
     - [ ] Reduce reliance on sokol-shdc
         - [ ] Implement "clean" glsl shader files
     - [ ] Implement uniform vxcolor.glsl
+- Refactoring
+    - Clean up graphics initialization / termination
+    - Clean up thepit Graphics API (as an interface for sokol)

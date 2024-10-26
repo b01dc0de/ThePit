@@ -54,6 +54,9 @@ namespace thepit
         sg_buffer vertex_buffer;
         sg_buffer index_buffer;
     };
+
+    sg_buffer MakeVxBuffer(const float* p_vxs, size_t vx_size, size_t vx_count);
+    sg_buffer MakeIxBuffer(const TriInds* p_inds, size_t ix_count);
 }
 
 #endif // THEPIT_ENGINE_GEOMETRY_H

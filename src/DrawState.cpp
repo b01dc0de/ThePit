@@ -49,7 +49,6 @@ namespace thepit
         return pnew_drawstate;
     }
 
-
     DrawStateT* InitNewTexturePipeline()
     {
         sg_image_desc img_desc = {};
