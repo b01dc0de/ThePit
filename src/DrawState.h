@@ -7,10 +7,7 @@
 namespace thepit
 {
     // State needed to draw a specific mesh
-    struct MeshDrawT
-    {
-        const GeometryT* geometry;
-    };
+    using MeshDrawT = GeometryT;
 
     // State needed for a GL draw call
     struct DrawStateT

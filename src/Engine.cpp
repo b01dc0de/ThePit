@@ -20,19 +20,11 @@ void thepit::Init()
     setup.logger.func = slog_func;
     sg_setup(&setup);
 
-    // Create cube geometry, material, and mesh
-    GeometryT* cube = InitNewCubeColorGeometry();  // Generate cube geometry
-    GlobalState.cube_material = InitNewCubeMaterial();  // Initialize the material
-    GlobalState.cube_mesh = InitNewMesh(cube, GlobalState.cube_material);  // Initialize mesh
+    GeometryT* cube = InitNewCubeColorGeometry();
 
-    // Set the initial position of the cube
-    //GlobalState.cube_mesh->transform.position = { 0.0f, 0.0f, -1.0f }; // (move back slightly)
-    //GlobalState.pip = GlobalState.cube_mesh->pipeline;
-    //GlobalState.bind = GlobalState.cube_mesh->bindings;
-
-    GlobalState.texcube_geometry = new MeshDrawT{ InitNewCubeTexGeometry() };
+    GlobalState.texcube_geometry = InitNewCubeTexGeometry();
     GlobalState.tex_drawstate = InitNewTexturePipeline();
-    GlobalState.colcube_geometry = new MeshDrawT{ cube };
+    GlobalState.colcube_geometry = cube;
     GlobalState.col_drawstate = InitNewColorPipeline();
 
     ColorT red_color = { 1.0f, 0.0f, 0.0f, 1.0f };
@@ -68,8 +60,7 @@ void thepit::Frame()
     }
     else if (bSingleColorTest)
     {
-        MeshDrawT test_singlecolormeshdraw{ GlobalState.singlecolorcube };
-        Draw(GlobalState.col_drawstate, &test_singlecolormeshdraw, mvp_range);
+        Draw(GlobalState.col_drawstate, GlobalState.singlecolorcube, mvp_range);
     }
     else
     {
@@ -87,7 +78,6 @@ void thepit::Cleanup()
 
     delete GlobalState.texcube_geometry;
     delete GlobalState.tex_drawstate;
-    delete GlobalState.colcube_geometry;
     delete GlobalState.col_drawstate;
 }
 

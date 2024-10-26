@@ -10,10 +10,6 @@ namespace thepit
 {
 	struct GlobalState_t
 	{
-		sg_pipeline pip = {};
-		sg_bindings bind = {};
-		sg_pass_action pass_action = {};
-
 		Material* cube_material = nullptr;
 		Mesh* cube_mesh = nullptr;
 
@@ -23,10 +19,6 @@ namespace thepit
 		DrawStateT* col_drawstate = nullptr;
 
 		GeometryT* singlecolorcube = nullptr;
-
-		sg_shader_desc test_vxcolor_desc;
-		sg_shader_desc test_vxtexture_desc;
-		//sg_shader_desc test_vxunicolor_desc;
 	};
 	extern GlobalState_t GlobalState;
 
