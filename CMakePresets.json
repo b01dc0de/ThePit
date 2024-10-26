@@ -50,7 +50,7 @@
                 "type": "equals",
                 "lhs": "${hostSystemName}",
                 "rhs": "Linux"
-            },
+            }
         },
         {
             "name": "macos-debug",
@@ -65,7 +65,7 @@
                 "type": "equals",
                 "lhs": "${hostSystemName}",
                 "rhs": "Darwin"
-            },
+            }
         }
     ]
 }
