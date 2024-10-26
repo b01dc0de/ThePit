@@ -97,14 +97,11 @@ void thepit::Cleanup()
 
 void thepit::HandleEvent(const sapp_event* Event)
 {
-    sapp_event_type type = Event->type;               // the event type, always valid
-    sapp_keycode key_code = Event->key_code;              // the virtual key code, only valid in KEY_UP, KEY_DOWN
-    bool key_repeat;                    // true if this is a key-repeat event, valid in KEY_UP, KEY_DOWN and CHAR
-    switch (type)
+    switch (Event->type)
     {
         case SAPP_EVENTTYPE_KEY_DOWN:
         {
-            if (0 == key_repeat && SAPP_KEYCODE_SPACE == key_code)
+            if (0 == Event->key_repeat && SAPP_KEYCODE_SPACE == Event->key_code)
             {
                 curr_drawpass = (DrawPassType)(((int)curr_drawpass + 1) % (int)DrawPassType::DRAWPASS_NUM);
             }
