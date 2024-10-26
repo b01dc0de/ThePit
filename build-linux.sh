@@ -4,7 +4,7 @@
 #		- ../sokol-tools-bin has been built in the parent directory
 #	Would like to change this in the future but we'll burn that bridge when we get there
 
-SRC_FILES="src/Main.cpp src/Cube.cpp src/DrawState.cpp src/Engine.cpp src/Geometry.cpp src/Material.cpp src/Mesh.cpp"
+SRC_FILES="src/Main.cpp src/Camera.cpp src/Cube.cpp src/DrawState.cpp src/Engine.cpp src/Geometry.cpp src/Material.cpp src/Mesh.cpp src/Shader.cpp"
 OUT_DIR=out/build/linux
 OUT_FILE=thepit
 LIB_DIR=./libs/sokol

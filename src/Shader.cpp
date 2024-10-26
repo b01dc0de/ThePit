@@ -7,13 +7,13 @@ namespace thepit
     {
         static const int max_len_filename = 256;
         char filename_buff[max_len_filename];
-        sprintf_s(filename_buff, "%s/%s", GetProjectDir(), glsl_filename);
+        sprintf(filename_buff, "%s/%s", GetProjectDir(), glsl_filename);
 
         // TODO: Handle this correctly without absolute path
         char* Result = nullptr;
 
         FILE* glsl_file = nullptr;
-        fopen_s(&glsl_file, filename_buff, "rb");
+        glsl_file = fopen(filename_buff, "rb");
         THEPIT_ASSERT(nullptr != glsl_file);
         if (glsl_file)
         {
@@ -22,7 +22,8 @@ namespace thepit
             fseek(glsl_file, 0, SEEK_SET);
 
             Result = new char[file_size + 1];
-            fread_s(Result, file_size + 1, sizeof(char), file_size, glsl_file);
+            size_t read_bytes = fread(Result, sizeof(char), file_size, glsl_file);
+	    THEPIT_ASSERT(read_bytes == file_size);
             Result[file_size] = '\0';
 
             fclose(glsl_file);

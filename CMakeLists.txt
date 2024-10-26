@@ -16,7 +16,16 @@ set(SRC_FILES
 		${SRC_DIR}/Material.cpp
 		${SRC_DIR}/Mesh.cpp
 		${SRC_DIR}/Shader.cpp)
-add_executable (ThePit ${SRC_FILES})
+
+add_executable(ThePit ${SRC_FILES})
 
 set(LIB_SOKOL_DIR ./libs/sokol)
 target_include_directories(ThePit PUBLIC ${LIB_SOKOL_DIR})
+
+if (WIN32)
+endif ()
+if (APPLE)
+endif ()
+if (UNIX AND NOT APPLE)
+	target_link_libraries(ThePit -lasound -lGL -lm -lXcursor -lXi -lX11)
+endif ()
