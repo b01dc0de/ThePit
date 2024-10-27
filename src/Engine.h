@@ -20,6 +20,7 @@ namespace thepit
 		DrawStateT* col_drawstate = nullptr;
 
 		GeometryT* singlecolorcube = nullptr;
+		GeometryT* floormesh = nullptr;
 
 		FPSView shooter;
 	};

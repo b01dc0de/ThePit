@@ -22,7 +22,7 @@ namespace thepit
             fseek(file_handle, 0, SEEK_SET);
 
             result_contents = new ByteT[file_size + 1];
-            size_t read_bytes = fread(result_contents, sizeof(char), file_size, file_handle);
+            size_t read_bytes = fread(result_contents, sizeof(ByteT), file_size, file_handle);
             THEPIT_ASSERT(read_bytes == file_size);
             result_contents[file_size] = '\0';
 

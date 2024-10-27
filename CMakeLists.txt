@@ -17,6 +17,7 @@ set(SRC_FILES
 		${SRC_DIR}/Input.cpp
 		${SRC_DIR}/Material.cpp
 		${SRC_DIR}/Mesh.cpp
+		${SRC_DIR}/MeshUtils.cpp
 		${SRC_DIR}/Shader.cpp)
 
 add_executable(ThePit ${SRC_FILES})

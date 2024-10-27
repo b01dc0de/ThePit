@@ -3,6 +3,7 @@
 #include "Cube.h"
 #include "DrawState.h"
 #include "Input.h"
+#include "MeshUtils.h"
 #include "Shader.h"
 #include <string>
 
@@ -33,6 +34,7 @@ void thepit::Init()
 
     ColorT red_color = { 1.0f, 0.0f, 0.0f, 1.0f };
     GlobalState.singlecolorcube = InitNewCubeSingleColorGeometry(red_color);
+    GlobalState.floormesh = InitNewFloorMesh();
 
     v3 fps_cam_pos{ 0.0f, -2.5f, -5.0f };
     v3 fps_init_lookdir{ 0.0f, 0.0f, 1.0f };
@@ -95,6 +97,11 @@ void thepit::Frame()
         {
             THEPIT_ASSERT(false);
         } break;
+    }
+    static bool bFloor = true;
+    if (bFloor)
+    {
+        Draw(GlobalState.tex_drawstate, GlobalState.floormesh, mvp_range);
     }
 
     Input::ClearMouseState();
