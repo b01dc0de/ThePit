@@ -112,7 +112,7 @@ void thepit::Cleanup()
     delete GlobalState.col_drawstate;
 }
 
-void thepit::HandleKeyEvent(const sapp_event* Event)
+void thepit::HandleEvent(const sapp_event* Event)
 {
     auto HandleDemoSpacebar = [&](const sapp_event* Event) -> void
     {

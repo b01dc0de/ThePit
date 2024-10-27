@@ -13,7 +13,7 @@ extern sapp_desc sokol_main(int argc, char* argv[])
 		thepit_desc.init_cb = thepit::Init;
 		thepit_desc.frame_cb = thepit::Frame;
 		thepit_desc.cleanup_cb = thepit::Cleanup;
-		thepit_desc.event_cb = thepit::HandleKeyEvent;
+		thepit_desc.event_cb = thepit::HandleEvent;
 		thepit_desc.width = thepit::WindowWidth;
 		thepit_desc.height = thepit::WindowHeight;
 		thepit_desc.sample_count = 1;
