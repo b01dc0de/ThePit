@@ -92,8 +92,9 @@ namespace thepit
         THEPIT_ASSERT(SAPP_EVENTTYPE_KEY_DOWN == in_event->type || SAPP_EVENTTYPE_KEY_UP == in_event->type);
         bool button_down = SAPP_EVENTTYPE_KEY_DOWN == in_event->type;
         sapp_keycode key = in_event->key_code;
+        bool key_state = GetButtonState(key);
         THEPIT_ASSERT(SAPP_KEYCODE_INVALID != key);
-        if (button_down)
+        if (button_down && !key_state)
         {
             for (int idx = 0; idx < max_active_buttons; idx++)
             {
@@ -105,7 +106,7 @@ namespace thepit
                 }
             }
         }
-        else
+        else if (key_state)
         {
             for (int idx = 0; idx < max_active_buttons; idx++)
             {

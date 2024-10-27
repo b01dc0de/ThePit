@@ -57,21 +57,15 @@ namespace thepit
         v3 left{ -right.X, 0.0f, -right.Z };
 
         // Update state from keyboard input
-        if (w_button_down)
+        if (w_button_down != s_button_down)
         {
-            cam_pos += forward * default_cam_move_speed;
+            if (w_button_down) { cam_pos += forward * default_cam_move_speed; }
+            else if (s_button_down) { cam_pos -= forward * default_cam_move_speed; }
         }
-        if (a_button_down)
+        if (a_button_down != d_button_down)
         {
-            cam_pos += left * default_cam_move_speed;
-        }
-        if (s_button_down)
-        {
-            cam_pos -= forward * default_cam_move_speed;
-        }
-        if (d_button_down)
-        {
-            cam_pos -= left * default_cam_move_speed;
+            if (a_button_down) { cam_pos += left * default_cam_move_speed; }
+            else if (d_button_down) { cam_pos -= left * default_cam_move_speed; }
         }
 
         // Update state from mouse input
