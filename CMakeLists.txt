@@ -13,6 +13,7 @@ set(SRC_FILES
 		${SRC_DIR}/DrawState.cpp
 		${SRC_DIR}/Engine.cpp
 		${SRC_DIR}/Geometry.cpp
+		${SRC_DIR}/Input.cpp
 		${SRC_DIR}/Material.cpp
 		${SRC_DIR}/Mesh.cpp
 		${SRC_DIR}/Shader.cpp)

@@ -1,7 +1,8 @@
 #include "Engine.h"
+#include "Camera.h"
 #include "Cube.h"
 #include "DrawState.h"
-#include "Camera.h"
+#include "Input.h"
 #include "Shader.h"
 #include <string>
 
@@ -33,8 +34,9 @@ void thepit::Init()
     ColorT red_color = { 1.0f, 0.0f, 0.0f, 1.0f };
     GlobalState.singlecolorcube = InitNewCubeSingleColorGeometry(red_color);
 
-    GlobalState.shooter.Init(v3{0.0f, -2.5f, -5.0f}, v3{0.0f, 0.0f, 1.0f});
-    //GlobalState.shooter.Init();
+    v3 fps_cam_pos{ 0.0f, -2.5f, -5.0f };
+    v3 fps_init_lookdir{ 0.0f, 0.0f, 1.0f };
+    GlobalState.shooter.Init(fps_cam_pos, fps_init_lookdir);
 
     sapp_lock_mouse(true);
 }
@@ -50,6 +52,9 @@ static DrawPassType curr_drawpass = DrawPassType::DRAWPASS_COLOR;
 
 void thepit::Frame()
 {
+    Input::UpdateButtonState();
+    GlobalState.shooter.UpdateState();
+
     const HMM_Vec3 UnitX{ 1.0f, 0.0f, 0.0f };
     const HMM_Vec3 UnitY{ 0.0f, 1.0f, 0.0f };
 
@@ -63,7 +68,7 @@ void thepit::Frame()
     camera_persp.LookAt(CamPos, Origin);
     HMM_Mat4 model = HMM_Rotate_RH(rx, UnitX) * HMM_Rotate_RH(ry, UnitY);
     HMM_Mat4 mvp = HMM_Mul(camera_persp.vp, model);
-    sg_range mvp_range = SG_RANGE(camera_persp.vp);
+    sg_range mvp_range = SG_RANGE(mvp);
     
     static bool bFPS = true;
     if (bFPS)
@@ -91,6 +96,8 @@ void thepit::Frame()
             THEPIT_ASSERT(false);
         } break;
     }
+
+    Input::ClearMouseState();
 }
 
 void thepit::Cleanup()
@@ -105,7 +112,7 @@ void thepit::Cleanup()
     delete GlobalState.col_drawstate;
 }
 
-void thepit::HandleEvent(const sapp_event* Event)
+void thepit::HandleKeyEvent(const sapp_event* Event)
 {
     auto HandleDemoSpacebar = [&](const sapp_event* Event) -> void
     {
@@ -121,7 +128,7 @@ void thepit::HandleEvent(const sapp_event* Event)
         case SAPP_EVENTTYPE_KEY_UP:
         {
             HandleDemoSpacebar(Event);
-            GlobalState.shooter.HandleKeyInput(Event);
+            Input::HandleKeyEvent(Event);
         } break;
         case SAPP_EVENTTYPE_MOUSE_MOVE:
         case SAPP_EVENTTYPE_MOUSE_ENTER:
@@ -130,7 +137,7 @@ void thepit::HandleEvent(const sapp_event* Event)
         case SAPP_EVENTTYPE_MOUSE_DOWN:
         case SAPP_EVENTTYPE_MOUSE_UP:
         {
-            GlobalState.shooter.HandleMouseInput(Event);
+            Input::HandleMouseEvent(Event);
         } break;
         default: { } break;
     }

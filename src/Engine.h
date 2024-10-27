@@ -31,7 +31,7 @@ namespace thepit
 	void Init();
 	void Frame();
 	void Cleanup();
-	void HandleEvent(const sapp_event* Event);
+	void HandleKeyEvent(const sapp_event* Event);
 
 	void HandleCmdLine(int argc, char** argv);
 	const char* GetProjectDir();

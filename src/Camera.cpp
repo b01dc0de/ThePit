@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include "Input.h"
 
 namespace thepit
 {
@@ -45,72 +46,52 @@ namespace thepit
         UpdateCamera();
     }
 
-    void FPSView::HandleMouseInput(const sapp_event* Event)
+    void FPSView::UpdateState()
     {
-        THEPIT_ASSERT(Event);
-        switch (Event->type)
+        bool w_button_down = Input::GetButtonState(SAPP_KEYCODE_W);
+        bool a_button_down = Input::GetButtonState(SAPP_KEYCODE_A);
+        bool s_button_down = Input::GetButtonState(SAPP_KEYCODE_S);
+        bool d_button_down = Input::GetButtonState(SAPP_KEYCODE_D);
+
+        v3 forward{ dir.X, 0.0f, dir.Z };
+        v3 left{ -right.X, 0.0f, -right.Z };
+
+        // Update state from keyboard input
+        if (w_button_down)
         {
-            case SAPP_EVENTTYPE_MOUSE_MOVE:
-            {
-                float dx = Event->mouse_dx;
-                float dy = Event->mouse_dy;
-                m4 rotate = HMM_M4D(1.0f);
-                if ((dx < 0.0f ? -dx : dx) > 0.0f)
-                {
-                    rotate = rotate * HMM_Rotate_RH(dx * default_cam_turn_speed, cam_global_up);
-                }
-                if ((dy < 0.0f ? -dy : dy) > 0.0f)
-                {
-                    rotate = rotate * HMM_Rotate_RH(dy * default_cam_turn_speed, -right);
-                }
-                v4 new_dir = { dir.X, dir.Y, dir.Z, 0.0f };
-                new_dir = HMM_Mul(rotate, new_dir);
-                Init(cam_pos, new_dir.XYZ);
-            } break;
-            case SAPP_EVENTTYPE_MOUSE_ENTER:
-            case SAPP_EVENTTYPE_MOUSE_LEAVE:
-            case SAPP_EVENTTYPE_MOUSE_SCROLL:
-            case SAPP_EVENTTYPE_MOUSE_DOWN:
-            case SAPP_EVENTTYPE_MOUSE_UP:
-            {
-                // ...
-            } break;
+            cam_pos += forward * default_cam_move_speed;
         }
-    }
-
-    void FPSView::HandleKeyInput(const sapp_event* Event)
-    {
-        THEPIT_ASSERT(Event);
-        switch (Event->type)
+        if (a_button_down)
         {
-            case SAPP_EVENTTYPE_KEY_DOWN:
-            {
-                v3 forward{ dir.X, 0.0f, dir.Z };
-                v3 left{ -right.X, 0.0f, -right.Z };
-
-                if (SAPP_KEYCODE_W == Event->key_code)
-                {
-                    cam_pos += forward * default_cam_move_speed;
-                }
-                else if (SAPP_KEYCODE_A == Event->key_code)
-                {
-                    cam_pos += left * default_cam_move_speed;
-                }
-                else if (SAPP_KEYCODE_S == Event->key_code)
-                {
-                    cam_pos -= forward * default_cam_move_speed;
-                }
-                else if (SAPP_KEYCODE_D == Event->key_code)
-                {
-                    cam_pos -= left * default_cam_move_speed;
-                }
-                UpdateCamera();
-            } break;
-            case SAPP_EVENTTYPE_KEY_UP:
-            default:
-            {
-            } break;
+            cam_pos += left * default_cam_move_speed;
         }
-    }
+        if (s_button_down)
+        {
+            cam_pos -= forward * default_cam_move_speed;
+        }
+        if (d_button_down)
+        {
+            cam_pos -= left * default_cam_move_speed;
+        }
 
+        // Update state from mouse input
+        {
+            float dx = 0.0f, dy = 0.0f;
+            Input::GetMouseDelta(dx, dy);
+
+            m4 rotate = HMM_M4D(1.0f);
+            if ((dx < 0.0f ? -dx : dx) > 0.0f)
+            {
+                rotate = rotate * HMM_Rotate_RH(dx * default_cam_turn_speed, cam_global_up);
+            }
+            if ((dy < 0.0f ? -dy : dy) > 0.0f)
+            {
+                rotate = rotate * HMM_Rotate_RH(dy * default_cam_turn_speed, -right);
+            }
+            v4 new_dir = HMM_Mul(rotate, v4{ dir.X, dir.Y, dir.Z, 0.0f });
+            Init(cam_pos, new_dir.XYZ);
+        }
+
+        UpdateCamera();
+    }
 }
