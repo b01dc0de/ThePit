@@ -5,6 +5,7 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "DrawState.h"
+#include "Camera.h"
 
 namespace thepit
 {
@@ -19,6 +20,8 @@ namespace thepit
 		DrawStateT* col_drawstate = nullptr;
 
 		GeometryT* singlecolorcube = nullptr;
+
+		FPSView shooter;
 	};
 	extern GlobalState_t GlobalState;
 
