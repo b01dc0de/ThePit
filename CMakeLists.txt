@@ -14,6 +14,7 @@ set(SRC_FILES
 		${SRC_DIR}/Engine.cpp
 		${SRC_DIR}/FileUtils.cpp
 		${SRC_DIR}/Geometry.cpp
+		${SRC_DIR}/Graphics.cpp
 		${SRC_DIR}/Input.cpp
 		${SRC_DIR}/Material.cpp
 		${SRC_DIR}/Mesh.cpp
