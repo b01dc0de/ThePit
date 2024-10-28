@@ -6,7 +6,8 @@
 
 extern sapp_desc sokol_main(int argc, char* argv[])
 {
-	thepit::HandleCmdLine(argc, argv);
+	thepit::global_argc = argc;
+	thepit::global_argv = argv;
 
 	sapp_desc thepit_desc = {};
 	{

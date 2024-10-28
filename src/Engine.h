@@ -34,9 +34,6 @@ namespace thepit
 	void Cleanup();
 	void HandleEvent(const sapp_event* Event);
 
-	void HandleCmdLine(int argc, char** argv);
-	const char* GetProjectDir();
-
     const int WindowWidth = 640;
     const int WindowHeight = 480;
 }

@@ -164,30 +164,3 @@ void thepit::HandleEvent(const sapp_event* Event)
         default: { } break;
     }
 }
-
-void thepit::HandleCmdLine(int argc, char** argv)
-{
-	global_argc = argc;
-	global_argv = argv;
-}
-
-// CKA_NOTE: This currently tries to find the base project directory using a naive method
-//      - This function parses for the first instance of 'ThePit' in the executable filename
-//      - If thepit executable file is '/home/username/wrk/ThePit/out/build/platform/thepit'
-//      - Then this function would return "/home/username/wrk/ThePit"
-const char* thepit::GetProjectDir()
-{
-    static const char* project_name = "ThePit";
-    static const char* project_dir = nullptr;
-    static std::string project_dir_str;
-    if (!project_dir)
-    {
-        THEPIT_ASSERT(0 < global_argc);
-        project_dir_str = global_argv[0];
-        size_t ThePitDir = project_dir_str.find(project_name);
-        project_dir_str = project_dir_str.substr(0, ThePitDir + strlen(project_name));
-        project_dir = project_dir_str.c_str();
-    }
-    return project_dir;
-}
-

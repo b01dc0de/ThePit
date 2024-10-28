@@ -2,6 +2,14 @@
 
 namespace thepit
 {
+
+#define ENABLE_INPUT_DBGPRINT() (1)
+#if ENABLE_INPUT_DBGPRINT()
+    #define INPUT_DBGPRINT(...) printf(__VA_ARGS__)
+#else // !ENABLE_INPUT_DBGPRINT()
+    #define INPUT_DBGPRINT(...) (void)0
+#endif // ENABLE_INPUT_DBGPRINT()
+
     static const int max_active_buttons = 8;
     ButtonStateT active_buttons[max_active_buttons];
 

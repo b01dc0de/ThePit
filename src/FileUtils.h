@@ -14,6 +14,8 @@ namespace thepit
     };
 
     void ReadFileContents(FileContentsT* out_contents);
+
+	const char* GetProjectDir();
 }
 
 #endif // THEPIT_FILEUTILS_H
