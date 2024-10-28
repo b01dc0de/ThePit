@@ -16,16 +16,21 @@ namespace thepit
 
     sg_pass default_pass = {};
     const sg_color default_clear_color = { 0.25f, 0.5f, 0.75f, 1.0f };
+    const float default_clear_depth = 1.0f;
     sg_pass* GetDefaultSGPass()
     {
         static bool binit_default_pass = false;
         if (!binit_default_pass)
         {
             default_pass.action.colors[0].load_action = SG_LOADACTION_CLEAR;
+            default_pass.action.colors[0].store_action = SG_STOREACTION_STORE;
             default_pass.action.colors[0].clear_value = default_clear_color;
-            default_pass.swapchain = sglue_swapchain();
+            default_pass.action.depth.load_action = SG_LOADACTION_CLEAR;
+            default_pass.action.depth.store_action = SG_STOREACTION_STORE;
+            default_pass.action.depth.clear_value = default_clear_depth;
             binit_default_pass = true;
         }
+        default_pass.swapchain = sglue_swapchain();
         return &default_pass;
     }
 
@@ -108,17 +113,15 @@ namespace thepit
 
     void Draw(DrawStateT* InState, MeshDrawT* InMesh, sg_range& in_vsparams_range)
     {
-        if (!InState || !InMesh) { return; } // TODO: Actually handle this as an error
+        THEPIT_ASSERT(nullptr != InState);
+        THEPIT_ASSERT(nullptr != InMesh);
 
         InState->bind.vertex_buffers[0] = InMesh->vertex_buffer;
         InState->bind.index_buffer = InMesh->index_buffer;
 
-        sg_begin_pass(GetDefaultSGPass());
         sg_apply_pipeline(InState->pip);
         sg_apply_bindings(&InState->bind);
         sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, &in_vsparams_range);
         sg_draw(0, (int)InMesh->element_count, 1);
-        sg_end_pass();
-        sg_commit();
     }
 }

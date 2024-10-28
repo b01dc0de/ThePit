@@ -78,6 +78,19 @@ void thepit::Frame()
         mvp = GlobalState.shooter.GetMVP();
         mvp_range = SG_RANGE(mvp);
     }
+    
+    auto BeginFrameHelper = []() -> void
+    {
+        sg_begin_pass(GetDefaultSGPass());
+    };
+
+    auto EndFrameHelper = []() -> void
+    {
+        sg_end_pass();
+        sg_commit();
+    };
+
+    BeginFrameHelper();
 
     switch (curr_drawpass)
     {
@@ -104,7 +117,9 @@ void thepit::Frame()
         Draw(GlobalState.tex_drawstate, GlobalState.floormesh, mvp_range);
     }
 
-    Input::ClearMouseState();
+    EndFrameHelper();
+
+    Input::ClearMouseState(); // CKA_TODO: Figure out a nicer way of doing this
 }
 
 void thepit::Cleanup()
