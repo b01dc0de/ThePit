@@ -3,7 +3,7 @@
 
 #include "Common.h"
 
-namespace thepit
+namespace ThePit
 {
     using ByteT = unsigned char;
 
@@ -16,6 +16,6 @@ namespace thepit
     void ReadFileContents(FileContentsT* out_contents);
 
 	const char* GetProjectDir();
-}
+} // namespace ThePit
 
 #endif // THEPIT_FILEUTILS_H

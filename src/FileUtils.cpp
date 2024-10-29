@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <string>
 
-namespace thepit
+namespace ThePit
 {
     void ReadFileContents(FileContentsT* out_contents)
     {
@@ -55,4 +55,4 @@ namespace thepit
         }
         return project_dir;
     }
-}
+} // namespace ThePit

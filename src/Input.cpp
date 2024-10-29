@@ -1,6 +1,6 @@
 #include "Input.h"
 
-namespace thepit
+namespace ThePit
 {
 
 #define ENABLE_INPUT_DBGPRINT() (1)
@@ -127,4 +127,4 @@ namespace thepit
             }
         }
     }
-}
+} // namespace ThePit

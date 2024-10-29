@@ -1,7 +1,7 @@
 #include "Cube.h"
 #include "Geometry.h"
 
-namespace thepit
+namespace ThePit
 {
     ColorT color_yellow{ 1.0f, 1.0f, 0.0f, 1.0f };
     ColorT color_white{ 1.0f, 1.0f, 1.0f, 1.0f };
@@ -168,4 +168,4 @@ namespace thepit
 
         return pnew_geometry;
     }
-}
+} // namespace ThePit

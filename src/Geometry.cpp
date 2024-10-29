@@ -1,6 +1,6 @@
 #include "Geometry.h"
 
-namespace thepit
+namespace ThePit
 {
     sg_buffer MakeVxBuffer(const float* p_vxs, size_t vx_size, size_t vx_count)
     {
@@ -28,4 +28,4 @@ namespace thepit
 
         return sg_make_buffer(&ixbuff_desc);
     }
-}
+} // namespace ThePit

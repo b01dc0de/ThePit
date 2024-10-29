@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-namespace thepit
+namespace ThePit
 {
     Transform InitDefaultTransform()
     {
@@ -61,4 +61,4 @@ namespace thepit
         // Apply bindings and draw the geometry
         sg_draw(0, (int)mesh->geometry->element_count, 1);
     }
-}
+} // namespace ThePit

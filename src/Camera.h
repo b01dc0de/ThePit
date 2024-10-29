@@ -3,7 +3,7 @@
 
 #include "Common.h"
 
-namespace thepit
+namespace ThePit
 {
     // Perspective camera
     struct CameraP
@@ -39,6 +39,6 @@ namespace thepit
 
     extern const HMM_Vec3 cam_global_up;
     extern const float cam_fov_degrees;
-}
+} // namespace ThePit
 
 #endif // THEPIT_CAMERA_H

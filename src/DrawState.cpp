@@ -3,7 +3,7 @@
 //#include "glsl/cube-sapp.glsl.h"
 //#include "glsl/texcube-sapp.glsl.h"
 
-namespace thepit
+namespace ThePit
 {
     const uint32_t px_width = 4;
     const uint32_t px_height = 4;
@@ -124,4 +124,4 @@ namespace thepit
         sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, &in_vsparams_range);
         sg_draw(0, (int)InMesh->element_count, 1);
     }
-}
+} // namespace ThePit

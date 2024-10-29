@@ -4,9 +4,9 @@
 #include "Common.h"
 #include "Geometry.h";
 
-namespace thepit
+namespace ThePit
 {
     GeometryT* InitNewFloorMesh();
-}
+} // namespace ThePit
 
 #endif // THEPIT_MESHUTILS_H

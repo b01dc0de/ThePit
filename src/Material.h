@@ -3,7 +3,7 @@
 
 #include "Common.h"
 
-namespace thepit
+namespace ThePit
 {
     // Struct to store material data
     struct Material
@@ -12,6 +12,6 @@ namespace thepit
     };
 
     Material* InitNewCubeMaterial();
-}
+} // namespace ThePit
 
 #endif

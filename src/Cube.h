@@ -4,11 +4,11 @@
 #include "Common.h"
 #include "Geometry.h"
 
-namespace thepit
+namespace ThePit
 {
     GeometryT* InitNewCubeColorGeometry();
     GeometryT* InitNewCubeSingleColorGeometry(const ColorT& in_color);
     GeometryT* InitNewCubeTexGeometry();
-}
+} // namespace ThePit
 
 #endif

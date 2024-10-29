@@ -1,6 +1,6 @@
 #include "MeshUtils.h"
 
-namespace thepit
+namespace ThePit
 {
     GeometryT* InitNewFloorMesh()
     {
@@ -29,4 +29,4 @@ namespace thepit
 
         return result;
     }
-}
+} // ThePit

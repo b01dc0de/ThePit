@@ -4,7 +4,7 @@
 #include "Common.h"
 #include "Geometry.h"
 
-namespace thepit
+namespace ThePit
 {
     // State needed to draw a specific mesh
     using MeshDrawT = GeometryT;
@@ -20,6 +20,6 @@ namespace thepit
     DrawStateT* InitNewTexturePipeline();
     DrawStateT* InitNewColorPipeline();
     void Draw(DrawStateT* InState, MeshDrawT* InMesh, sg_range& in_vsparams_range);
-}
+} // namespace ThePit
 
 #endif // THEPIT_DRAWSTATE_H

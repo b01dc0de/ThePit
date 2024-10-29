@@ -1,9 +1,9 @@
 #include "Graphics.h"
 
-namespace thepit
+namespace ThePit
 {
     namespace Graphics
     {
 
-    }
-}
+    } // namespace Graphics
+} // namespace ThePit

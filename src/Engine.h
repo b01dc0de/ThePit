@@ -7,7 +7,7 @@
 #include "DrawState.h"
 #include "Camera.h"
 
-namespace thepit
+namespace ThePit
 {
     struct GlobalState_t
     {
@@ -36,6 +36,6 @@ namespace thepit
 
     const int WindowWidth = 640;
     const int WindowHeight = 480;
-}
+} // namespace ThePit
 
 #endif // ENGINE_H

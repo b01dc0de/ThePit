@@ -5,7 +5,7 @@
 #include "Material.h"
 #include "Geometry.h"
 
-namespace thepit
+namespace ThePit
 {
     // Struct to represent a 3D transformation
     struct Transform
@@ -32,6 +32,6 @@ namespace thepit
 
     // Draw the mesh
     void DrawMesh(const Mesh* mesh);
-}
+} // namespace ThePit
 
 #endif  // THEPIT_ENGINE_MESH_H

@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include "Input.h"
 
-namespace thepit
+namespace ThePit
 {
     extern const HMM_Vec3 cam_global_up = { 0.0f, 1.0f, 0.0f };
     extern const float cam_fov_degrees = 61.5f;
@@ -88,4 +88,4 @@ namespace thepit
 
         UpdateCamera();
     }
-}
+} // namespace ThePit

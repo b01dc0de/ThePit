@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "FileUtils.h"
 
-namespace thepit
+namespace ThePit
 {
     void GetVxColorShaderDesc(sg_shader_desc& out_desc)
     {
@@ -60,4 +60,4 @@ namespace thepit
     {
         // TODO: Implement
     }
-}
+} // namespace ThePit

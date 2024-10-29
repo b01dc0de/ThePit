@@ -3,11 +3,11 @@
 
 #include "Common.h"
 
-namespace thepit
+namespace ThePit
 {
     void GetVxColorShaderDesc(sg_shader_desc& out_desc);
     void GetVxTextureShaderDesc(sg_shader_desc& out_desc);
     void GetVxUniformColorShaderDesc(sg_shader_desc& out_desc);
-}
+} // namespace ThePit
 
 #endif // THEPIT_SHADER_H

@@ -3,7 +3,7 @@
 
 #include "Common.h"
 
-namespace thepit
+namespace ThePit
 {
     struct ButtonStateT
     {
@@ -27,6 +27,6 @@ namespace thepit
         static void ClearMouseState();
         static void HandleMouseEvent(const sapp_event* in_event);
     };
-}
+} // namespace ThePit
 
 #endif // THEPIT_INPUT_H

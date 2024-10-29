@@ -3,7 +3,7 @@
  
 #include "Common.h"
 
-namespace thepit
+namespace ThePit
 {
     // Vertex format for v3 position + v4 color
 #pragma pack(push, 1)
@@ -20,7 +20,7 @@ namespace thepit
         float b;
         float a;
     };
-    struct TexUVT
+    struct TexCoordT
     {
         float u;
         float v;
@@ -34,7 +34,13 @@ namespace thepit
     struct VxTexture
     {
         PosT pos;
-        TexUVT uv;
+        TexCoordT uv;
+    };
+    struct VxAllAttrs
+    {
+        PosT pos;
+        ColorT color;
+        TexCoordT texcoord;
     };
 #pragma pack(pop)
 
@@ -57,6 +63,6 @@ namespace thepit
 
     sg_buffer MakeVxBuffer(const float* p_vxs, size_t vx_size, size_t vx_count);
     sg_buffer MakeIxBuffer(const TriInds* p_inds, size_t ix_count);
-}
+} // namespace ThePit
 
 #endif // THEPIT_ENGINE_GEOMETRY_H
