@@ -7,6 +7,7 @@ namespace ThePit
 {
     void GetVxColorShaderDesc(sg_shader_desc& out_desc);
     void GetVxTextureShaderDesc(sg_shader_desc& out_desc);
+    void GetVxColorTextureShaderDesc(sg_shader_desc& out_desc);
     void GetVxUniformColorShaderDesc(sg_shader_desc& out_desc);
 } // namespace ThePit
 

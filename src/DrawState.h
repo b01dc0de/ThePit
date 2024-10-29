@@ -19,6 +19,7 @@ namespace ThePit
     sg_pass* GetDefaultSGPass();
     DrawStateT* InitNewTexturePipeline();
     DrawStateT* InitNewColorPipeline();
+    DrawStateT* InitNewColorTexturePipeline();
     void Draw(DrawStateT* InState, MeshDrawT* InMesh, sg_range& in_vsparams_range);
 } // namespace ThePit
 

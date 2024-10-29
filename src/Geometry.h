@@ -25,6 +25,12 @@ namespace ThePit
         float u;
         float v;
     };
+    struct NormT
+    {
+        float x;
+        float y;
+        float z;
+    };
 
     struct VxColor
     {
@@ -36,11 +42,18 @@ namespace ThePit
         PosT pos;
         TexCoordT uv;
     };
+    struct VxColorTexture
+    {
+        PosT pos;
+        ColorT color;
+        TexCoordT tex;
+    };
     struct VxAllAttrs
     {
         PosT pos;
         ColorT color;
         TexCoordT texcoord;
+        NormT normal;
     };
 #pragma pack(pop)
 

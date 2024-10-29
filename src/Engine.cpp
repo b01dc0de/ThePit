@@ -31,6 +31,8 @@ namespace ThePit
         GlobalState.colcube_geometry = cube;
         GlobalState.col_drawstate = InitNewColorPipeline();
 
+        GlobalState.coltex_drawstate = InitNewColorTexturePipeline();
+
         ColorT red_color = { 1.0f, 0.0f, 0.0f, 1.0f };
         GlobalState.singlecolorcube = InitNewCubeSingleColorGeometry(red_color);
         GlobalState.floormesh = InitNewFloorMesh();
@@ -38,6 +40,7 @@ namespace ThePit
         v3 fps_cam_pos{ 0.0f, -2.5f, -5.0f };
         v3 fps_init_lookdir{ 0.0f, 0.0f, 1.0f };
         GlobalState.shooter.Init(fps_cam_pos, fps_init_lookdir);
+        GlobalState.skyboxmesh = InitNewSkyboxMesh();
 
         sapp_lock_mouse(true);
     }
@@ -114,6 +117,11 @@ namespace ThePit
         if (bFloor)
         {
             Draw(GlobalState.tex_drawstate, GlobalState.floormesh, mvp_range);
+        }
+        static bool bSkybox = true;
+        if (bSkybox)
+        {
+            Draw(GlobalState.coltex_drawstate, GlobalState.skyboxmesh, mvp_range);
         }
 
         EndFrameHelper();

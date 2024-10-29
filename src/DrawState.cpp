@@ -1,7 +1,5 @@
 #include "DrawState.h"
 #include "Shader.h"
-//#include "glsl/cube-sapp.glsl.h"
-//#include "glsl/texcube-sapp.glsl.h"
 
 namespace ThePit
 {
@@ -109,6 +107,49 @@ namespace ThePit
         delete[] vxtexture_desc.fs.source;
 
         return pnew_drawstate;
+    }
+
+    DrawStateT* InitNewColorTexturePipeline()
+    {
+        sg_image_desc img_desc = {};
+        img_desc.width = px_width;
+        img_desc.height = px_height;
+        img_desc.data.subimage[0][0] = SG_RANGE(default_texture_pixels);
+
+        // Default sampler state
+        sg_sampler_desc sampler_desc = {};
+
+        sg_shader_desc colortexture_desc = {};
+        GetVxColorTextureShaderDesc(colortexture_desc);
+
+        static const int ATTR_vs_pos = (0);
+        static const int ATTR_vs_color0 = (1);
+        static const int ATTR_vs_texcoord0 = (2);
+        static const int SLOT_vs_params = (0);
+        static const int SLOT_tex = (0);
+        static const int SLOT_smp = (0);
+
+        sg_pipeline_desc pipeline_desc = {};
+        pipeline_desc.layout.attrs[ATTR_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
+        pipeline_desc.layout.attrs[ATTR_vs_color0].format = SG_VERTEXFORMAT_FLOAT4;
+        pipeline_desc.layout.attrs[ATTR_vs_texcoord0].format = SG_VERTEXFORMAT_FLOAT2;
+        pipeline_desc.shader = sg_make_shader(colortexture_desc);
+        pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
+        pipeline_desc.cull_mode = SG_CULLMODE_BACK;
+        pipeline_desc.depth.compare = SG_COMPAREFUNC_LESS_EQUAL;
+        pipeline_desc.depth.write_enabled = true;
+        pipeline_desc.label = "vxcolortexture";
+
+        DrawStateT* new_coltex_pipeline = new DrawStateT;
+        new_coltex_pipeline->bind = {};
+        new_coltex_pipeline->bind.fs.images[SLOT_tex] = sg_make_image(&img_desc);
+        new_coltex_pipeline->bind.fs.samplers[SLOT_smp] = sg_make_sampler(&sampler_desc);
+        new_coltex_pipeline->pip = sg_make_pipeline(pipeline_desc);
+
+        delete[] colortexture_desc.vs.source;
+        delete[] colortexture_desc.fs.source;
+
+        return new_coltex_pipeline;
     }
 
     void Draw(DrawStateT* InState, MeshDrawT* InMesh, sg_range& in_vsparams_range)

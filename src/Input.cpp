@@ -3,13 +3,6 @@
 namespace ThePit
 {
 
-#define ENABLE_INPUT_DBGPRINT() (1)
-#if ENABLE_INPUT_DBGPRINT()
-    #define INPUT_DBGPRINT(...) printf(__VA_ARGS__)
-#else // !ENABLE_INPUT_DBGPRINT()
-    #define INPUT_DBGPRINT(...) (void)0
-#endif // ENABLE_INPUT_DBGPRINT()
-
     static const int max_active_buttons = 8;
     ButtonStateT active_buttons[max_active_buttons];
 
@@ -29,8 +22,10 @@ namespace ThePit
 
     void Input::UpdateButtonState()
     {
+        DBG_LOGF("\t%s\n", "Input::UpdateButtonState");
         for (int idx = 0; idx < max_active_buttons; idx++)
         {
+            DBG_LOGF("\t\t%s\n", "Inc active_buttons[%d].state (Key: %d)", idx, active_buttons[idx].key);
             if (SAPP_KEYCODE_INVALID != active_buttons[idx].key)
             {
                 active_buttons[idx].state++;

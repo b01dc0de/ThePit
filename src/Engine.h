@@ -19,8 +19,11 @@ namespace ThePit
         MeshDrawT* colcube_geometry = nullptr;
         DrawStateT* col_drawstate = nullptr;
 
+        DrawStateT* coltex_drawstate = nullptr;
+
         GeometryT* singlecolorcube = nullptr;
         GeometryT* floormesh = nullptr;
+        GeometryT* skyboxmesh = nullptr;
 
         FPSView shooter;
     };
