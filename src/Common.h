@@ -31,12 +31,9 @@
 #endif
 /* -----  END  COMPILER SPECIFIC DEFINES ----- */
 
-
 // CKA_TODO: Implement different printf
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 #define LOGF(...) printf(__VA_ARGS__)
-#define DBG_LOGF(...) LOGF(__VA_ARGS__)
-#define DBG_BREAKPOINT() PLATFORM_DBG_BREAKPOINT()
 #define THEPIT_ASSERT(Expr) \
 	if (!(Expr)) \
 	{ \
@@ -44,6 +41,16 @@
 		DBG_BREAKPOINT(); \
 	}
 #define THEPIT_UNUSED(Var) (void)Var
+
+/* ----- BEGIN CONFIG SPECIFIC DEFINES ----- */
+#if THEPIT_CONFIG_DEBUG()
+    #define DBG_LOGF(...) LOGF(__VA_ARGS__)
+    #define DBG_BREAKPOINT() PLATFORM_DBG_BREAKPOINT()
+#else THEPIT_CONFIG_RELEASE()
+    #define DBG_LOGF(...) (void)0
+    #define DBG_BREAKPOINT() (void)0
+#endif // THEPIT_CONFIG
+/* -----  END  CONFIG SPECIFIC DEFINES ----- */
 
 #define SOKOL_GLCORE
 /*	NOTE: Other Sokol graphics libs: SOKOL_GLES3, SOKOL_D3D11, SOKOL_METAL, SOKOL_WGPU, SOKOL_NOAPI */

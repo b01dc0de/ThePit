@@ -29,4 +29,4 @@ namespace ThePit
 
         return result;
     }
-} // ThePit
+} // namespace ThePit
