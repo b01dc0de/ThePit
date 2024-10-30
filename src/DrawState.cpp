@@ -152,17 +152,21 @@ namespace ThePit
         return new_coltex_pipeline;
     }
 
-    void Draw(DrawStateT* InState, MeshDrawT* InMesh, sg_range& in_vsparams_range)
+    void Draw(DrawStateT* draw_state, MeshDrawStateT* mesh_state, HMM_Mat4& view_proj)
     {
-        THEPIT_ASSERT(nullptr != InState);
-        THEPIT_ASSERT(nullptr != InMesh);
+        THEPIT_ASSERT(nullptr != draw_state);
+        THEPIT_ASSERT(nullptr != mesh_state);
+        THEPIT_ASSERT(nullptr != mesh_state->geo);
 
-        InState->bind.vertex_buffers[0] = InMesh->vertex_buffer;
-        InState->bind.index_buffer = InMesh->index_buffer;
+        draw_state->bind.vertex_buffers[0] = mesh_state->geo->vertex_buffer;
+        draw_state->bind.index_buffer = mesh_state->geo->index_buffer;
 
-        sg_apply_pipeline(InState->pip);
-        sg_apply_bindings(&InState->bind);
-        sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, &in_vsparams_range);
-        sg_draw(0, (int)InMesh->element_count, 1);
+        HMM_Mat4 mvp = mesh_state->model_to_world * view_proj;
+        sg_range mvp_range = SG_RANGE(mvp);
+
+        sg_apply_pipeline(draw_state->pip);
+        sg_apply_bindings(&draw_state->bind);
+        sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, &mvp_range);
+        sg_draw(0, (int)mesh_state->geo->element_count, 1);
     }
 } // namespace ThePit

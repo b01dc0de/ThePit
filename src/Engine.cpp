@@ -72,6 +72,13 @@ namespace ThePit
         HMM_Mat4 model = HMM_Rotate_RH(rx, UnitX) * HMM_Rotate_RH(ry, UnitY);
         HMM_Mat4 mvp = HMM_Mul(camera_persp.vp, model);
         sg_range mvp_range = SG_RANGE(mvp);
+        HMM_Mat4 model_to_world = HMM_M4D(1.0f);
+
+        MeshDrawStateT colcube_meshdrawstate{ GlobalState.colcube_geometry, model_to_world };
+        MeshDrawStateT singlecolorcube_meshdrawstate{ GlobalState.singlecolorcube, model_to_world };
+        MeshDrawStateT texcube_meshdrawstate{ GlobalState.texcube_geometry, model_to_world };
+        MeshDrawStateT floor_meshdrawstate{ GlobalState.floormesh, model_to_world };
+        MeshDrawStateT skybox_meshdrawstate{ GlobalState.skyboxmesh, model_to_world };
         
         static bool bFPS = true;
         if (bFPS)
@@ -97,15 +104,15 @@ namespace ThePit
         {
             case DrawPassType::DRAWPASS_COLOR:
             {
-                Draw(GlobalState.col_drawstate, GlobalState.colcube_geometry, mvp_range);
+                Draw(GlobalState.col_drawstate, &colcube_meshdrawstate, mvp);
             } break;
             case DrawPassType::DRAWPASS_SINGLECOLOR:
             {
-                Draw(GlobalState.col_drawstate, GlobalState.singlecolorcube, mvp_range);
+                Draw(GlobalState.col_drawstate, &singlecolorcube_meshdrawstate, mvp);
             } break;
             case DrawPassType::DRAWPASS_TEXTURE:
             {
-                Draw(GlobalState.tex_drawstate, GlobalState.texcube_geometry, mvp_range);
+                Draw(GlobalState.tex_drawstate, &texcube_meshdrawstate, mvp);
             } break;
             default:
             {
@@ -115,12 +122,12 @@ namespace ThePit
         static bool bFloor = true;
         if (bFloor)
         {
-            Draw(GlobalState.tex_drawstate, GlobalState.floormesh, mvp_range);
+            Draw(GlobalState.tex_drawstate, &floor_meshdrawstate, mvp);
         }
         static bool bSkybox = true;
         if (bSkybox)
         {
-            Draw(GlobalState.coltex_drawstate, GlobalState.skyboxmesh, mvp_range);
+            Draw(GlobalState.coltex_drawstate, &skybox_meshdrawstate, mvp);
         }
 
         EndFrameHelper();

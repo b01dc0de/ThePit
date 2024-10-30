@@ -7,7 +7,11 @@
 namespace ThePit
 {
     // State needed to draw a specific mesh
-    using MeshDrawT = GeometryT;
+    struct MeshDrawStateT
+    {
+        GeometryT* geo;
+        HMM_Mat4 model_to_world;
+    };
 
     // State needed for a GL draw call
     struct DrawStateT
@@ -20,7 +24,7 @@ namespace ThePit
     DrawStateT* InitNewTexturePipeline();
     DrawStateT* InitNewColorPipeline();
     DrawStateT* InitNewColorTexturePipeline();
-    void Draw(DrawStateT* InState, MeshDrawT* InMesh, sg_range& in_vsparams_range);
+    void Draw(DrawStateT* draw_state, MeshDrawStateT* mesh_state, HMM_Mat4& view_proj);
 } // namespace ThePit
 
 #endif // THEPIT_DRAWSTATE_H

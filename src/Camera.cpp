@@ -53,7 +53,7 @@ namespace ThePit
         bool s_button_down = Input::GetButtonState(SAPP_KEYCODE_S);
         bool d_button_down = Input::GetButtonState(SAPP_KEYCODE_D);
 
-        v3 forward{ dir.X, 0.0f, dir.Z };
+        v3 forward = HMM_NormV3({ dir.X, 0.0f, dir.Z });
         v3 left{ -right.X, 0.0f, -right.Z };
 
         // Update state from keyboard input
