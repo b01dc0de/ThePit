@@ -4,7 +4,6 @@
 #include "DrawState.h"
 #include "Input.h"
 #include "MeshUtils.h"
-#include "Shader.h"
 #include <string>
 
 namespace ThePit

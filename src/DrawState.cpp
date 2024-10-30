@@ -1,5 +1,5 @@
 #include "DrawState.h"
-#include "Shader.h"
+#include "Graphics.h"
 
 namespace ThePit
 {
@@ -38,7 +38,7 @@ namespace ThePit
     {
         //sg_shader col_shader = sg_make_shader(cube_shader_desc(sg_query_backend()));
         sg_shader_desc vxcolor_desc = {};
-        GetVxColorShaderDesc(vxcolor_desc);
+        Graphics::GetVxColorShaderDesc(vxcolor_desc);
         sg_shader vxcolor_shader = sg_make_shader(vxcolor_desc);
 
         // Previously from sokol-generated .glsl.h
@@ -77,7 +77,7 @@ namespace ThePit
 
         //sg_shader texshader = sg_make_shader(texcube_shader_desc(sg_query_backend()));
         sg_shader_desc vxtexture_desc = {};
-        GetVxTextureShaderDesc(vxtexture_desc);
+        Graphics::GetVxTextureShaderDesc(vxtexture_desc);
         sg_shader vxtexture_shader = sg_make_shader(vxtexture_desc);
 
         // Previously from sokol-generated .glsl.h
@@ -120,7 +120,7 @@ namespace ThePit
         sg_sampler_desc sampler_desc = {};
 
         sg_shader_desc colortexture_desc = {};
-        GetVxColorTextureShaderDesc(colortexture_desc);
+        Graphics::GetVxColorTextureShaderDesc(colortexture_desc);
 
         static const int ATTR_vs_pos = (0);
         static const int ATTR_vs_color0 = (1);

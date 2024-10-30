@@ -5,7 +5,8 @@
 
 /*----- BEGIN PLATFORM INCLUDES -----*/
 #if THEPIT_PLATFORM_WINDOWS()
-	// NOTE: N/A for now
+    #define WIN32_LEAN_AND_MEAN
+    #include <windows.h>
 #elif THEPIT_PLATFORM_MACOS()
     #include <signal.h>
 #elif THEPIT_PLATFORM_LINUX()
@@ -13,7 +14,7 @@
 #endif // PLATFORM INLCUDES
 /*----- BEGIN PLATFORM INCLUDES -----*/
 /* ----- BEGIN PLATFORM SPECIFIC DEFINES ----- */
-// TODO: Define?
+// TODO: ...?
 #if THEPIT_PLATFORM_WINDOWS()
 #elif THEPIT_PLATFORM_MACOS()
 #elif THEPIT_PLATFORM_LINUX()
@@ -33,21 +34,19 @@
 
 // CKA_TODO: Implement different printf
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
-#define LOGF(...) printf(__VA_ARGS__)
-#define THEPIT_ASSERT(Expr) \
-	if (!(Expr)) \
-	{ \
-		DBG_LOGF("ASSERT FAILED!\n\tExpression: %s\n\tFile: %s, Line: %d\n", #Expr, __FILE__, __LINE__); \
-		DBG_BREAKPOINT(); \
-	}
+#define LOG(msg) ThePit::Log(msg)
+#define LOGF(...) ThePit::Logf(__VA_ARGS__)
+#define THEPIT_ASSERT(expr) ThePit::Assertf((expr), #expr, __FILE__, __LINE__)
 #define THEPIT_UNUSED(Var) (void)Var
 
 /* ----- BEGIN CONFIG SPECIFIC DEFINES ----- */
 #if THEPIT_CONFIG_DEBUG()
     #define DBG_LOGF(...) LOGF(__VA_ARGS__)
+    #define DBG_LOG(...) LOG(__VA_ARGS__)
     #define DBG_BREAKPOINT() PLATFORM_DBG_BREAKPOINT()
 #else THEPIT_CONFIG_RELEASE()
     #define DBG_LOGF(...) (void)0
+    #define DBG_LOG(...) (void)0
     #define DBG_BREAKPOINT() (void)0
 #endif // THEPIT_CONFIG
 /* -----  END  CONFIG SPECIFIC DEFINES ----- */
@@ -66,26 +65,29 @@
 	- SOKOL_DLL
 */
 
+// ThePit Common Includes
+#include "Log.h"
+#include "Math.h"
+// ThePit Common Includes
+
 /*-----BEGIN LIBS-----*/
 // Sokol
 #include "sokol_app.h"
 #include "sokol_gfx.h"
-#include "sokol_time.h"
 #include "sokol_audio.h"
 #include "sokol_log.h"
+#include "sokol_time.h"
 //#include "sokol_fetch.h"
 #include "sokol_glue.h"
 // HandmadeMath
 #include "lib/HandmadeMath.h"
 /*------END  LIBS-----*/
 /*-----BEGIN STD LIBS-----*/
+#include <stdarg.h>
+#include <stdlib.h> 
 #include <stdio.h>
 #include <stdint.h>
-#include <stdlib.h> 
 #include <string.h>
 /*------END  STD LIBS-----*/
-
-// ThePit 
-#include "Math.h"
 
 #endif // THEPIT_COMMON_H

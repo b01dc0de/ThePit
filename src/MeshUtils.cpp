@@ -19,14 +19,11 @@ namespace ThePit
             {2, 3, 1}
         };
         GeometryT* result = new GeometryT;
-
         result->vertex_buffer = MakeVxBuffer((const float*)floor_vxs, sizeof(VxTexture), ARRAY_SIZE(floor_vxs));
         result->index_buffer = MakeIxBuffer(floor_ixs, ARRAY_SIZE(floor_ixs));
-
         result->vertices = (const float*)floor_vxs;
         result->indices = floor_ixs;
         result->element_count = (int)(ARRAY_SIZE(floor_ixs) * TriIdxCount);
-
         return result;
     }
 
@@ -96,7 +93,6 @@ namespace ThePit
         result->vertices = (const float*)cubetexture_vxs;
         result->indices = skybox_inds;
         result->element_count = (int)(ARRAY_SIZE(skybox_inds) * TriIdxCount);
-
         return result;
     }
 } // namespace ThePit
