@@ -152,6 +152,10 @@ namespace ThePit
 
         switch (Event->type)
         {
+            case SAPP_EVENTTYPE_INVALID:
+            {
+                THEPIT_ASSERT(false);
+            } break;
             case SAPP_EVENTTYPE_KEY_DOWN:
             case SAPP_EVENTTYPE_KEY_UP:
             {
@@ -167,7 +171,28 @@ namespace ThePit
             {
                 Input::HandleMouseEvent(Event);
             } break;
-            default: { } break;
+            case SAPP_EVENTTYPE_RESTORED:
+            case SAPP_EVENTTYPE_FOCUSED:
+            case SAPP_EVENTTYPE_RESUMED:
+            {
+                sapp_lock_mouse(true);
+            } break;
+            case SAPP_EVENTTYPE_CHAR:
+            case SAPP_EVENTTYPE_TOUCHES_BEGAN:
+            case SAPP_EVENTTYPE_TOUCHES_MOVED:
+            case SAPP_EVENTTYPE_TOUCHES_ENDED:
+            case SAPP_EVENTTYPE_TOUCHES_CANCELLED:
+            case SAPP_EVENTTYPE_RESIZED:
+            case SAPP_EVENTTYPE_ICONIFIED:
+            case SAPP_EVENTTYPE_UNFOCUSED:
+            case SAPP_EVENTTYPE_SUSPENDED:
+            case SAPP_EVENTTYPE_QUIT_REQUESTED:
+            case SAPP_EVENTTYPE_CLIPBOARD_PASTED:
+            case SAPP_EVENTTYPE_FILES_DROPPED:
+            default:
+            {
+                // Unhandled
+            } break;
         }
     }
 } // namespace ThePit

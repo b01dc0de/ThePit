@@ -2,16 +2,15 @@
 
 namespace ThePit
 {
-
-    static const int max_active_buttons = 8;
-    ButtonStateT active_buttons[max_active_buttons];
-
 #define ENABLE_INPUT_DBGPRINT() (THEPIT_CONFIG_DEBUG() && 0)
 #if ENABLE_INPUT_DBGPRINT()
     #define INPUT_DBGPRINT(...) DBG_LOGF(__VA_ARGS)
 #else // ENABLE_INPUT_DBGPRINT()
     #define INPUT_DBGPRINT(...) THEPIT_NOOP()
 #endif // ENABLE_INPUT_DBGPRINT()
+
+    static const int max_active_buttons = 8;
+    ButtonStateT active_buttons[max_active_buttons];
 
     bool Input::GetButtonState(sapp_keycode key)
     {
