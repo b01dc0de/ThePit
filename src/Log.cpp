@@ -8,7 +8,7 @@ void Platform_LogMsg(const char* msg)
 #if THEPIT_PLATFORM_WINDOWS()
     OutputDebugString(msg);
 #elif THEPIT_PLATFORM_MACOS()
-    std::puts(msg);
+    puts(msg);
 #elif THEPIT_PLATFORM_LINUX()
     std::puts(msg);
 #endif // THEPIT_PLATFORM_
