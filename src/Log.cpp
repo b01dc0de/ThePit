@@ -28,6 +28,8 @@ void Logf(const char* fmt, ...)
     va_start(args, fmt);
     int num_chars_write = vsnprintf(fmt_msg, max_msg_length, fmt, args);
     va_end(args);
+
+    LogMsg(fmt_msg);
 }
 
 void Assertf(bool condition, const char* expr, const char* filename, int line)

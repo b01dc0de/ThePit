@@ -6,6 +6,13 @@ namespace ThePit
     static const int max_active_buttons = 8;
     ButtonStateT active_buttons[max_active_buttons];
 
+#define ENABLE_INPUT_DBGPRINT() (THEPIT_CONFIG_DEBUG() && 0)
+#if ENABLE_INPUT_DBGPRINT()
+    #define INPUT_DBGPRINT(...) DBG_LOGF(__VA_ARGS)
+#else // ENABLE_INPUT_DBGPRINT()
+    #define INPUT_DBGPRINT(...) THEPIT_NOOP()
+#endif // ENABLE_INPUT_DBGPRINT()
+
     bool Input::GetButtonState(sapp_keycode key)
     {
         bool result = false;
@@ -22,12 +29,11 @@ namespace ThePit
 
     void Input::UpdateButtonState()
     {
-        DBG_LOGF("\t%s\n", "Input::UpdateButtonState");
         for (int idx = 0; idx < max_active_buttons; idx++)
         {
-            DBG_LOGF("\t\t%s\n", "Inc active_buttons[%d].state (Key: %d)", idx, active_buttons[idx].key);
             if (SAPP_KEYCODE_INVALID != active_buttons[idx].key)
             {
+                INPUT_DBGPRINT("\t\t++active_buttons[%d].state (%d) (Key: %d)\n", idx, active_buttons[idx].state, active_buttons[idx].key);
                 active_buttons[idx].state++;
             }
         }
@@ -49,27 +55,19 @@ namespace ThePit
 
     void Input::HandleMouseEvent(const sapp_event* in_event)
     {
-        static bool b_init = false;
-        if (!b_init)
-        {
-            global_mouse_state.dx = 0.0f;
-            global_mouse_state.dy = 0.0f;
-            b_init = true;
-        }
-
         THEPIT_ASSERT(in_event);
         switch (in_event->type)
         {
             case SAPP_EVENTTYPE_MOUSE_MOVE:
-            {
-                global_mouse_state.dx = in_event->mouse_dx;
-                global_mouse_state.dy = in_event->mouse_dy;
-            } break;
             case SAPP_EVENTTYPE_MOUSE_ENTER:
             case SAPP_EVENTTYPE_MOUSE_LEAVE:
             case SAPP_EVENTTYPE_MOUSE_SCROLL:
             case SAPP_EVENTTYPE_MOUSE_DOWN:
             case SAPP_EVENTTYPE_MOUSE_UP:
+            {
+                global_mouse_state.dx = in_event->mouse_dx;
+                global_mouse_state.dy = in_event->mouse_dy;
+            } break;
             default:
             {
                 global_mouse_state.dx = 0.0f;
@@ -83,12 +81,12 @@ namespace ThePit
         static bool b_init = false;
         if (!b_init)
         {
+            b_init = true;
             for (int idx = 0; idx < max_active_buttons; idx++)
             {
                 active_buttons[idx].key = SAPP_KEYCODE_INVALID;
                 active_buttons[idx].state = 0;
             }
-            b_init = true;
         }
 
         THEPIT_ASSERT(in_event);
@@ -103,18 +101,20 @@ namespace ThePit
             {
                 if (SAPP_KEYCODE_INVALID == active_buttons[idx].key)
                 {
+                    INPUT_DBGPRINT("\t\tSet active_buttons[%d].state == 1, (Key: %d)\n", idx, active_buttons[idx].key);
                     active_buttons[idx].key = key;
                     active_buttons[idx].state = 1;
                     break;
                 }
             }
         }
-        else if (key_state)
+        else if (!button_down && key_state)
         {
             for (int idx = 0; idx < max_active_buttons; idx++)
             {
                 if (key == active_buttons[idx].key)
                 {
+                    INPUT_DBGPRINT("\t\tCleared active_buttons[%d], (Key: %d)\n", idx, active_buttons[idx].key);
                     active_buttons[idx].key = SAPP_KEYCODE_INVALID;
                     active_buttons[idx].state = 0;
                     break;

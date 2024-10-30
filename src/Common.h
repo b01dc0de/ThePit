@@ -38,6 +38,7 @@
 #define LOGF(...) ThePit::Logf(__VA_ARGS__)
 #define THEPIT_ASSERT(expr) ThePit::Assertf((expr), #expr, __FILE__, __LINE__)
 #define THEPIT_UNUSED(Var) (void)Var
+#define THEPIT_NOOP() (void)0
 
 /* ----- BEGIN CONFIG SPECIFIC DEFINES ----- */
 #if THEPIT_CONFIG_DEBUG()
@@ -45,9 +46,9 @@
     #define DBG_LOG(...) LOG(__VA_ARGS__)
     #define DBG_BREAKPOINT() PLATFORM_DBG_BREAKPOINT()
 #else THEPIT_CONFIG_RELEASE()
-    #define DBG_LOGF(...) (void)0
-    #define DBG_LOG(...) (void)0
-    #define DBG_BREAKPOINT() (void)0
+    #define DBG_LOGF(...) THEPIT_NOOP()
+    #define DBG_LOG(...) THEPIT_NOOP()
+    #define DBG_BREAKPOINT() THEPIT_NOOP() 
 #endif // THEPIT_CONFIG
 /* -----  END  CONFIG SPECIFIC DEFINES ----- */
 
