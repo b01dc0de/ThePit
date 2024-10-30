@@ -10,7 +10,7 @@ void Platform_LogMsg(const char* msg)
 #elif THEPIT_PLATFORM_MACOS()
     puts(msg);
 #elif THEPIT_PLATFORM_LINUX()
-    std::puts(msg);
+    puts(msg);
 #endif // THEPIT_PLATFORM_
 }
 
@@ -36,7 +36,7 @@ void Assertf(bool condition, const char* expr, const char* filename, int line)
 {
     if (!condition)
     {
-		DBG_LOGF("ASSERT FAILED!\n\tExpression: %s\n\tFile: %s, Line: %d\n", expr, filename, line);
+        DBG_LOGF("ASSERT FAILED!\n\tExpression: %s\n\tFile: %s, Line: %d\n", expr, filename, line);
         DBG_BREAKPOINT();
     }
 }
