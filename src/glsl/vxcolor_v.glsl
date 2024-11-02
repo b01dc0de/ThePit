@@ -7,8 +7,8 @@ layout(location = 1) in vec4 color0;
 
 void main()
 {
-	gl_Position = mat4(vs_params[0], vs_params[1], vs_params[2], vs_params[3]) * position;
-	color = color0;
+    gl_Position = mat4(vs_params[0], vs_params[1], vs_params[2], vs_params[3]) * position;
+    color = color0;
 }
 
 /*

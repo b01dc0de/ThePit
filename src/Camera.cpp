@@ -53,6 +53,21 @@ namespace ThePit
         bool s_button_down = Input::GetButtonState(SAPP_KEYCODE_S);
         bool d_button_down = Input::GetButtonState(SAPP_KEYCODE_D);
 
+        static bool god_mode_enabled = true;
+        if (god_mode_enabled)
+        {
+            bool q_button_down = Input::GetButtonState(SAPP_KEYCODE_Q);
+            bool e_button_down = Input::GetButtonState(SAPP_KEYCODE_E);
+
+            v3 up{ 0.0f, 1.0f, 0.0f };
+
+            if (q_button_down != e_button_down)
+            {
+                if (q_button_down) { cam_pos += up * default_cam_move_speed; }
+                else if (e_button_down) { cam_pos -= up * default_cam_move_speed; }
+            }
+        }
+
         v3 forward = HMM_NormV3({ dir.X, 0.0f, dir.Z });
         v3 left{ -right.X, 0.0f, -right.Z };
 

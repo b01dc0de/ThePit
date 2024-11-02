@@ -10,8 +10,8 @@ namespace ThePit
 {
     GlobalState_t GlobalState;
 
-	int global_argc = 0;
-	char** global_argv = nullptr;
+    int global_argc = 0;
+    char** global_argv = nullptr;
 
     const HMM_Vec3 Origin{ 0.0f, 0.0f, 0.0f };
     const HMM_Vec3 CamPos{ 0.0f, 1.5f, 10.0f };

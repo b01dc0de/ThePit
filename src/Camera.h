@@ -15,8 +15,8 @@ namespace ThePit
 
     static const v3 default_cam_pos{ 0.0f, 0.0f, 0.0f };
     static const v3 default_look_dir{ 0.0f, 0.0f, 1.0f };
-    static const float default_cam_move_speed = 0.125f;
-    static const float default_cam_turn_speed = 0.005f;
+    static const float default_cam_move_speed = 0.25f;
+    static const float default_cam_turn_speed = 0.0125f;
     struct FPSView
     {
         v3 cam_pos;

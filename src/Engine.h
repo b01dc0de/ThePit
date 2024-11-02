@@ -37,8 +37,10 @@ namespace ThePit
     void Cleanup();
     void HandleEvent(const sapp_event* Event);
 
-    const int WindowWidth = 640;
-    const int WindowHeight = 480;
+    //const int WindowWidth = 640;
+    //const int WindowHeight = 480;
+    const int WindowWidth = 1280;
+    const int WindowHeight = 960;
 } // namespace ThePit
 
 #endif // ENGINE_H
