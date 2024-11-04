@@ -41,6 +41,9 @@ namespace ThePit
         GlobalState.shooter.Init(fps_cam_pos, fps_init_lookdir);
         GlobalState.skyboxmesh = InitNewSkyboxMesh();
 
+        GlobalState.unicolor_drawstate = InitNewUnicolorPipeline();
+        GlobalState.unicolorcube = InitNewCubeColorGeometry();
+
         sapp_lock_mouse(true);
     }
 
@@ -79,6 +82,7 @@ namespace ThePit
         MeshDrawStateT texcube_meshdrawstate{ GlobalState.texcube_geometry, model_to_world };
         MeshDrawStateT floor_meshdrawstate{ GlobalState.floormesh, model_to_world };
         MeshDrawStateT skybox_meshdrawstate{ GlobalState.skyboxmesh, model_to_world };
+        MeshDrawStateT unicolorcube_meshdrawstate{ GlobalState.unicolorcube, HMM_Translate(HMM_Vec3{5.0f, 25.0f, 5.0f}) };
         
         static bool bFPS = true;
         if (bFPS)
@@ -128,6 +132,11 @@ namespace ThePit
         if (bSkybox)
         {
             Draw(GlobalState.coltex_drawstate, &skybox_meshdrawstate, mvp);
+        }
+        static bool bUnicolorCube = true;
+        if (bUnicolorCube)
+        {
+            DrawUnicolor(GlobalState.unicolor_drawstate, &unicolorcube_meshdrawstate, mvp);
         }
 
         EndFrameHelper();

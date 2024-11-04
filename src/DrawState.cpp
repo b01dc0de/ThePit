@@ -109,6 +109,16 @@ namespace ThePit
         return pnew_drawstate;
     }
 
+    void GetDefaultPipelineDesc(sg_pipeline_desc& out_pipeline_desc)
+    {
+        out_pipeline_desc = {};
+        out_pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
+        out_pipeline_desc.cull_mode = SG_CULLMODE_BACK;
+        out_pipeline_desc.depth.compare = SG_COMPAREFUNC_LESS_EQUAL;
+        out_pipeline_desc.depth.write_enabled = true;
+
+    }
+
     DrawStateT* InitNewColorTexturePipeline()
     {
         sg_image_desc img_desc = {};
@@ -125,11 +135,12 @@ namespace ThePit
         static const int ATTR_vs_pos = (0);
         static const int ATTR_vs_color0 = (1);
         static const int ATTR_vs_texcoord0 = (2);
-        static const int SLOT_vs_params = (0);
         static const int SLOT_tex = (0);
         static const int SLOT_smp = (0);
 
-        sg_pipeline_desc pipeline_desc = {};
+        sg_pipeline_desc pipeline_desc;
+        GetDefaultPipelineDesc(pipeline_desc);
+        pipeline_desc.layout.buffers[0].stride = sizeof(v3) + sizeof(v4) + sizeof(v2);
         pipeline_desc.layout.attrs[ATTR_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
         pipeline_desc.layout.attrs[ATTR_vs_color0].format = SG_VERTEXFORMAT_FLOAT4;
         pipeline_desc.layout.attrs[ATTR_vs_texcoord0].format = SG_VERTEXFORMAT_FLOAT2;
@@ -152,6 +163,28 @@ namespace ThePit
         return new_coltex_pipeline;
     }
 
+    DrawStateT* InitNewUnicolorPipeline()
+    {
+        sg_shader_desc unicolor_desc = {};
+        Graphics::GetVxUniformColorShaderDesc(unicolor_desc);
+
+        static const int ATTR_vs_pos = (0);
+
+        sg_pipeline_desc pipeline_desc;
+        GetDefaultPipelineDesc(pipeline_desc);
+        pipeline_desc.layout.buffers[0].stride = sizeof(v3);
+        pipeline_desc.layout.attrs[ATTR_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
+        pipeline_desc.shader = sg_make_shader(unicolor_desc);
+        pipeline_desc.label = "vxunicolor";
+
+        DrawStateT* new_unicolor_pipeline = new DrawStateT;
+        new_unicolor_pipeline->bind = {};
+        new_unicolor_pipeline->pip = sg_make_pipeline(pipeline_desc);
+
+        return new_unicolor_pipeline;
+
+    }
+
     void Draw(DrawStateT* draw_state, MeshDrawStateT* mesh_state, HMM_Mat4& view_proj)
     {
         THEPIT_ASSERT(nullptr != draw_state);
@@ -167,6 +200,33 @@ namespace ThePit
         sg_apply_pipeline(draw_state->pip);
         sg_apply_bindings(&draw_state->bind);
         sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, &mvp_range);
+        sg_draw(0, (int)mesh_state->geo->element_count, 1);
+    }
+
+    void DrawUnicolor(DrawStateT* draw_state, MeshDrawStateT* mesh_state, HMM_Mat4& view_proj)
+    {
+        THEPIT_ASSERT(nullptr != draw_state);
+        THEPIT_ASSERT(nullptr != mesh_state);
+        THEPIT_ASSERT(nullptr != mesh_state->geo);
+
+        draw_state->bind.vertex_buffers[0] = mesh_state->geo->vertex_buffer;
+        draw_state->bind.index_buffer = mesh_state->geo->index_buffer;
+
+        struct vs_params
+        {
+            HMM_Mat4 mvp;
+            HMM_Vec4 color;
+        };
+        vs_params vps;
+        vps.mvp = mesh_state->model_to_world * view_proj;
+        vps.color = { 0.8f, 0.4f, 0.6f, 1.0f };
+        sg_range vs_params_range = {};
+        vs_params_range.ptr = (const void*)&vps;
+        vs_params_range.size = sizeof(HMM_Mat4) + sizeof(HMM_Vec4);
+
+        sg_apply_pipeline(draw_state->pip);
+        sg_apply_bindings(&draw_state->bind);
+        sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, &vs_params_range);
         sg_draw(0, (int)mesh_state->geo->element_count, 1);
     }
 } // namespace ThePit

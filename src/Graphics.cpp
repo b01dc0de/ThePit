@@ -92,7 +92,22 @@ void GetVxColorTextureShaderDesc(sg_shader_desc& out_desc)
 
 void GetVxUniformColorShaderDesc(sg_shader_desc& out_desc)
 {
-    // TODO: Implement
+    FileContentsT v_file{ "src/glsl/vxunicolor_v.glsl", nullptr };
+    FileContentsT f_file{ "src/glsl/vxunicolor_f.glsl", nullptr };
+    ReadFileContents(&v_file);
+    ReadFileContents(&f_file);
+
+    out_desc.attrs[0].name = "pos";
+    out_desc.vs.source = (const char*)v_file.contents;
+    out_desc.vs.entry = "main";
+    out_desc.vs.uniform_blocks[0].size = sizeof(HMM_Mat4) + sizeof(HMM_Vec4);
+    out_desc.vs.uniform_blocks[0].layout = SG_UNIFORMLAYOUT_STD140;
+    out_desc.vs.uniform_blocks[0].uniforms[0].name = "vs_params";
+    out_desc.vs.uniform_blocks[0].uniforms[0].type = SG_UNIFORMTYPE_FLOAT4;
+    out_desc.vs.uniform_blocks[0].uniforms[0].array_count = 5;
+    out_desc.fs.source = (const char*)f_file.contents;
+    out_desc.fs.entry = "main";
+    out_desc.label = "vxunicolor";
 }
 
 } // namespace Graphics

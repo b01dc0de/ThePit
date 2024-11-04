@@ -32,6 +32,10 @@ namespace ThePit
         float z;
     };
 
+    struct VxMin
+    {
+        PosT pos;
+    };
     struct VxColor
     {
         PosT pos;

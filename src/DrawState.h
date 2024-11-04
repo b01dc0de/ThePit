@@ -24,7 +24,9 @@ namespace ThePit
     DrawStateT* InitNewTexturePipeline();
     DrawStateT* InitNewColorPipeline();
     DrawStateT* InitNewColorTexturePipeline();
+    DrawStateT* InitNewUnicolorPipeline();
     void Draw(DrawStateT* draw_state, MeshDrawStateT* mesh_state, HMM_Mat4& view_proj);
+    void DrawUnicolor(DrawStateT* draw_state, MeshDrawStateT* mesh_state, HMM_Mat4& view_proj);
 } // namespace ThePit
 
 #endif // THEPIT_DRAWSTATE_H

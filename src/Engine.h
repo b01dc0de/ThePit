@@ -14,16 +14,19 @@ namespace ThePit
         Material* cube_material = nullptr;
         Mesh* cube_mesh = nullptr;
 
-        GeometryT* texcube_geometry = nullptr;
         DrawStateT* tex_drawstate = nullptr;
-        GeometryT* colcube_geometry = nullptr;
         DrawStateT* col_drawstate = nullptr;
-
         DrawStateT* coltex_drawstate = nullptr;
+        DrawStateT* unicolor_drawstate = nullptr;
+
+        GeometryT* texcube_geometry = nullptr;
+        GeometryT* colcube_geometry = nullptr;
+
 
         GeometryT* singlecolorcube = nullptr;
         GeometryT* floormesh = nullptr;
         GeometryT* skyboxmesh = nullptr;
+        GeometryT* unicolorcube = nullptr;
 
         FPSView shooter;
     };
