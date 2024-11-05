@@ -58,11 +58,9 @@ namespace ThePit
 
     void Frame()
     {
-        const int width = sapp_width();
-        const int height = sapp_height();
         simgui_frame_desc_t imgui_frame_desc = {};
-        imgui_frame_desc.width = width;
-        imgui_frame_desc.height = height;
+        imgui_frame_desc.width = sapp_width();
+        imgui_frame_desc.height = sapp_height();
         imgui_frame_desc.delta_time = sapp_frame_duration();
         imgui_frame_desc.dpi_scale = sapp_dpi_scale();
         simgui_new_frame(&imgui_frame_desc);
@@ -96,6 +94,7 @@ namespace ThePit
         MeshDrawStateT floor_meshdrawstate{ GlobalState.floormesh, model_to_world };
         MeshDrawStateT skybox_meshdrawstate{ GlobalState.skyboxmesh, model_to_world };
         MeshDrawStateT unicolorcube_meshdrawstate{ GlobalState.unicolorcube, glm::translate(glm::mat4(1.0f), glm::vec3{5.0f, 5.0f, 5.0f}) };
+        glm::vec4 color_peachy{ 0.8f, 0.4f, 0.6f, 1.0f };
         
         static bool bFPS = true;
         if (bFPS)
@@ -126,7 +125,7 @@ namespace ThePit
             } break;
             case DrawPassType::DRAWPASS_SINGLECOLOR:
             {
-                DrawUnicolor(GlobalState.unicolor_drawstate, &unicube_meshdrawstate, mvp);
+                DrawUnicolor(GlobalState.unicolor_drawstate, &unicube_meshdrawstate, mvp, color_peachy);
             } break;
             case DrawPassType::DRAWPASS_TEXTURE:
             {
@@ -150,7 +149,21 @@ namespace ThePit
         static bool bUnicolorCube = true;
         if (bUnicolorCube)
         {
-            DrawUnicolor(GlobalState.unicolor_drawstate, &unicolorcube_meshdrawstate, mvp);
+            DrawUnicolor(GlobalState.unicolor_drawstate, &unicolorcube_meshdrawstate, mvp, color_peachy);
+        }
+
+        static bool bDrawAxis = true;
+        if (bDrawAxis)
+        {
+            float axis_length = 1000.0f;
+            float axis_width = 0.05f;
+            MeshDrawStateT xaxis_meshdrawstate{ GlobalState.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_length, axis_width, axis_width}) };
+            MeshDrawStateT yaxis_meshdrawstate{ GlobalState.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_width, axis_length, axis_width}) };
+            MeshDrawStateT zaxis_meshdrawstate{ GlobalState.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_width, axis_width, axis_length}) };
+
+            DrawUnicolor(GlobalState.unicolor_drawstate, &xaxis_meshdrawstate, mvp, glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
+            DrawUnicolor(GlobalState.unicolor_drawstate, &yaxis_meshdrawstate, mvp, glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+            DrawUnicolor(GlobalState.unicolor_drawstate, &zaxis_meshdrawstate, mvp, glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f });
         }
 
         EndFrameHelper();

@@ -205,7 +205,7 @@ namespace ThePit
         sg_draw(0, (int)mesh_state->geo->element_count, 1);
     }
 
-    void DrawUnicolor(DrawStateT* draw_state, MeshDrawStateT* mesh_state, glm::mat4& view_proj)
+    void DrawUnicolor(DrawStateT* draw_state, MeshDrawStateT* mesh_state, glm::mat4& view_proj, glm::vec4& unicolor)
     {
         THEPIT_ASSERT(nullptr != draw_state);
         THEPIT_ASSERT(nullptr != mesh_state);
@@ -221,7 +221,7 @@ namespace ThePit
         };
         vs_params vps;
         vps.mvp = view_proj * mesh_state->model_to_world;
-        vps.color = { 0.8f, 0.4f, 0.6f, 1.0f };
+        vps.color = unicolor;
         sg_range vs_params_range = {};
         vs_params_range.ptr = (const void*)&vps;
         vs_params_range.size = sizeof(glm::mat4) + sizeof(glm::vec4);
