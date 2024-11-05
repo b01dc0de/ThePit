@@ -175,9 +175,6 @@ namespace ThePit
         simgui_shutdown();
         sg_shutdown();
 
-        delete GlobalState.cube_mesh;
-        delete GlobalState.cube_material;
-
         delete GlobalState.texcube_geometry;
         delete GlobalState.tex_drawstate;
         delete GlobalState.col_drawstate;

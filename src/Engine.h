@@ -3,17 +3,12 @@
 
 #include "Common.h"
 #include "Camera.h"
-#include "Material.h"
-#include "Mesh.h"
 #include "Graphics.h"
 
 namespace ThePit
 {
     struct GlobalState_t
     {
-        Material* cube_material = nullptr;
-        Mesh* cube_mesh = nullptr;
-
         DrawStateT* tex_drawstate = nullptr;
         DrawStateT* col_drawstate = nullptr;
         DrawStateT* coltex_drawstate = nullptr;

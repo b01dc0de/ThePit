@@ -6,14 +6,6 @@
 
 namespace ThePit
 {
-    namespace Graphics
-    {
-        void GetVxColorShaderDesc(sg_shader_desc& out_desc);
-        void GetVxTextureShaderDesc(sg_shader_desc& out_desc);
-        void GetVxColorTextureShaderDesc(sg_shader_desc& out_desc);
-        void GetVxUniformColorShaderDesc(sg_shader_desc& out_desc);
-    } // namespace Graphics
-
     // State needed to draw a specific mesh
     struct MeshDrawStateT
     {
@@ -35,6 +27,20 @@ namespace ThePit
     DrawStateT* InitNewUnicolorPipeline();
     void Draw(DrawStateT* draw_state, MeshDrawStateT* mesh_state, glm::mat4& view_proj);
     void DrawUnicolor(DrawStateT* draw_state, MeshDrawStateT* mesh_state, glm::mat4& view_proj, glm::vec4& in_color);
+
+    namespace Graphics
+    {
+        struct StateT
+        {
+        };
+
+        extern StateT GraphicsState;
+
+        void Init();
+        void DrawFrame();
+        void Term();
+    } // namespace Graphics
+
 } // namespace ThePit
 
 #endif // THEPIT_GRAPHICS_H
