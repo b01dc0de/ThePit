@@ -15,6 +15,8 @@ namespace ThePit
     };
 
     GeometryT* GetCubeGeometry(DebugShapeGeometryE in_geo_type);
+    GeometryT* InitNewFloorMesh();
+    GeometryT* InitNewSkyboxMesh();
 }
 
 #endif // THEPIT_DEBUGSHAPES_H

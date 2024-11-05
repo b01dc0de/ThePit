@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "FileUtils.h"
 #include "Geometry.h"
+#include "DebugGraphics.h"
 
 namespace ThePit
 {
@@ -340,19 +341,29 @@ namespace ThePit
 
     namespace Graphics
     {
-        StateT GraphicsState;
+        void StateT::Init()
+        {
+            texcube_geometry = GetCubeGeometry(DebugShapeGeometryE::Texture);
+            tex_drawstate = InitNewTexturePipeline();
+            colcube_geometry = GetCubeGeometry(DebugShapeGeometryE::Color);
+            col_drawstate = InitNewColorPipeline();
 
-        void Init()
+            coltex_drawstate = InitNewColorTexturePipeline();
+
+            floormesh = InitNewFloorMesh();
+
+            skyboxmesh = InitNewSkyboxMesh();
+
+            unicolor_drawstate = InitNewUnicolorPipeline();
+            unicolorcube = GetCubeGeometry(DebugShapeGeometryE::Unicolor);
+        }
+
+        void StateT::DrawFrame()
         {
 
         }
 
-        void DrawFrame()
-        {
-
-        }
-
-        void Term()
+        void StateT::Term()
         {
 
         }

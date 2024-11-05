@@ -3,7 +3,6 @@
 #include "Camera.h"
 #include "DebugGraphics.h"
 #include "Input.h"
-#include "MeshUtils.h"
 
 namespace ThePit
 {
@@ -26,22 +25,11 @@ namespace ThePit
         imgui_setup.logger.func = slog_func;
         simgui_setup(&imgui_setup);
 
-        GlobalState.texcube_geometry = GetCubeGeometry(DebugShapeGeometryE::Texture);
-        GlobalState.tex_drawstate = InitNewTexturePipeline();
-        GlobalState.colcube_geometry = GetCubeGeometry(DebugShapeGeometryE::Color);
-        GlobalState.col_drawstate = InitNewColorPipeline();
-
-        GlobalState.coltex_drawstate = InitNewColorTexturePipeline();
-
-        GlobalState.floormesh = InitNewFloorMesh();
-
         glm::vec3 fps_cam_pos{ 0.0f, -2.5f, -5.0f };
         glm::vec3 fps_init_lookdir{ 0.0f, 0.0f, 1.0f };
         GlobalState.shooter.Init(fps_cam_pos, fps_init_lookdir);
-        GlobalState.skyboxmesh = InitNewSkyboxMesh();
 
-        GlobalState.unicolor_drawstate = InitNewUnicolorPipeline();
-        GlobalState.unicolorcube = GetCubeGeometry(DebugShapeGeometryE::Unicolor);
+        GlobalState.gfx.Init();
 
         sapp_lock_mouse(true);
     }
@@ -87,12 +75,12 @@ namespace ThePit
         sg_range mvp_range = SG_RANGE(mvp);
         glm::mat4 model_to_world = glm::mat4(1.0f);
 
-        MeshDrawStateT colcube_meshdrawstate{ GlobalState.colcube_geometry, model_to_world };
-        MeshDrawStateT unicube_meshdrawstate{ GlobalState.unicolorcube, model_to_world };
-        MeshDrawStateT texcube_meshdrawstate{ GlobalState.texcube_geometry, model_to_world };
-        MeshDrawStateT floor_meshdrawstate{ GlobalState.floormesh, model_to_world };
-        MeshDrawStateT skybox_meshdrawstate{ GlobalState.skyboxmesh, model_to_world };
-        MeshDrawStateT unicolorcube_meshdrawstate{ GlobalState.unicolorcube, glm::translate(glm::mat4(1.0f), glm::vec3{5.0f, 5.0f, 5.0f}) };
+        MeshDrawStateT colcube_meshdrawstate{ GlobalState.gfx.colcube_geometry, model_to_world };
+        MeshDrawStateT unicube_meshdrawstate{ GlobalState.gfx.unicolorcube, model_to_world };
+        MeshDrawStateT texcube_meshdrawstate{ GlobalState.gfx.texcube_geometry, model_to_world };
+        MeshDrawStateT floor_meshdrawstate{ GlobalState.gfx.floormesh, model_to_world };
+        MeshDrawStateT skybox_meshdrawstate{ GlobalState.gfx.skyboxmesh, model_to_world };
+        MeshDrawStateT unicolorcube_meshdrawstate{ GlobalState.gfx.unicolorcube, glm::translate(glm::mat4(1.0f), glm::vec3{5.0f, 5.0f, 5.0f}) };
         glm::vec4 color_peachy{ 0.8f, 0.4f, 0.6f, 1.0f };
         
         static bool bFPS = true;
@@ -120,15 +108,15 @@ namespace ThePit
         {
             case DrawPassType::DRAWPASS_COLOR:
             {
-                Draw(GlobalState.col_drawstate, &colcube_meshdrawstate, mvp);
+                Draw(GlobalState.gfx.col_drawstate, &colcube_meshdrawstate, mvp);
             } break;
             case DrawPassType::DRAWPASS_SINGLECOLOR:
             {
-                DrawUnicolor(GlobalState.unicolor_drawstate, &unicube_meshdrawstate, mvp, color_peachy);
+                DrawUnicolor(GlobalState.gfx.unicolor_drawstate, &unicube_meshdrawstate, mvp, color_peachy);
             } break;
             case DrawPassType::DRAWPASS_TEXTURE:
             {
-                Draw(GlobalState.tex_drawstate, &texcube_meshdrawstate, mvp);
+                Draw(GlobalState.gfx.tex_drawstate, &texcube_meshdrawstate, mvp);
             } break;
             default:
             {
@@ -138,17 +126,17 @@ namespace ThePit
         static bool bFloor = true;
         if (bFloor)
         {
-            Draw(GlobalState.tex_drawstate, &floor_meshdrawstate, mvp);
+            Draw(GlobalState.gfx.tex_drawstate, &floor_meshdrawstate, mvp);
         }
         static bool bSkybox = true;
         if (bSkybox)
         {
-            Draw(GlobalState.coltex_drawstate, &skybox_meshdrawstate, mvp);
+            Draw(GlobalState.gfx.coltex_drawstate, &skybox_meshdrawstate, mvp);
         }
         static bool bUnicolorCube = true;
         if (bUnicolorCube)
         {
-            DrawUnicolor(GlobalState.unicolor_drawstate, &unicolorcube_meshdrawstate, mvp, color_peachy);
+            DrawUnicolor(GlobalState.gfx.unicolor_drawstate, &unicolorcube_meshdrawstate, mvp, color_peachy);
         }
 
         static bool bDrawAxis = true;
@@ -156,13 +144,13 @@ namespace ThePit
         {
             float axis_length = 1000.0f;
             float axis_width = 0.05f;
-            MeshDrawStateT xaxis_meshdrawstate{ GlobalState.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_length, axis_width, axis_width}) };
-            MeshDrawStateT yaxis_meshdrawstate{ GlobalState.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_width, axis_length, axis_width}) };
-            MeshDrawStateT zaxis_meshdrawstate{ GlobalState.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_width, axis_width, axis_length}) };
+            MeshDrawStateT xaxis_meshdrawstate{ GlobalState.gfx.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_length, axis_width, axis_width}) };
+            MeshDrawStateT yaxis_meshdrawstate{ GlobalState.gfx.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_width, axis_length, axis_width}) };
+            MeshDrawStateT zaxis_meshdrawstate{ GlobalState.gfx.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_width, axis_width, axis_length}) };
 
-            DrawUnicolor(GlobalState.unicolor_drawstate, &xaxis_meshdrawstate, mvp, glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
-            DrawUnicolor(GlobalState.unicolor_drawstate, &yaxis_meshdrawstate, mvp, glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
-            DrawUnicolor(GlobalState.unicolor_drawstate, &zaxis_meshdrawstate, mvp, glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f });
+            DrawUnicolor(GlobalState.gfx.unicolor_drawstate, &xaxis_meshdrawstate, mvp, glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
+            DrawUnicolor(GlobalState.gfx.unicolor_drawstate, &yaxis_meshdrawstate, mvp, glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+            DrawUnicolor(GlobalState.gfx.unicolor_drawstate, &zaxis_meshdrawstate, mvp, glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f });
         }
 
         EndFrameHelper();
@@ -175,9 +163,9 @@ namespace ThePit
         simgui_shutdown();
         sg_shutdown();
 
-        delete GlobalState.texcube_geometry;
-        delete GlobalState.tex_drawstate;
-        delete GlobalState.col_drawstate;
+        delete GlobalState.gfx.texcube_geometry;
+        delete GlobalState.gfx.tex_drawstate;
+        delete GlobalState.gfx.col_drawstate;
     }
 
     void HandleEvent(const sapp_event* Event)

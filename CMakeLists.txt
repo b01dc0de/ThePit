@@ -22,8 +22,7 @@ set(SRC_FILES
 		${SRC_DIR}/Geometry.cpp
 		${SRC_DIR}/Graphics.cpp
 		${SRC_DIR}/Input.cpp
-		${SRC_DIR}/Log.cpp
-		${SRC_DIR}/MeshUtils.cpp)
+		${SRC_DIR}/Log.cpp)
 
 add_executable(ThePit ${SRC_FILES} ${IMGUI_SRC_FILES})
 

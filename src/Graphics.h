@@ -32,13 +32,22 @@ namespace ThePit
     {
         struct StateT
         {
+            DrawStateT* tex_drawstate = nullptr;
+            DrawStateT* col_drawstate = nullptr;
+            DrawStateT* coltex_drawstate = nullptr;
+            DrawStateT* unicolor_drawstate = nullptr;
+
+            GeometryT* texcube_geometry = nullptr;
+            GeometryT* colcube_geometry = nullptr;
+            GeometryT* unicolorcube = nullptr;
+
+            GeometryT* floormesh = nullptr;
+            GeometryT* skyboxmesh = nullptr;
+
+            void Init();
+            void DrawFrame();
+            void Term();
         };
-
-        extern StateT GraphicsState;
-
-        void Init();
-        void DrawFrame();
-        void Term();
     } // namespace Graphics
 
 } // namespace ThePit

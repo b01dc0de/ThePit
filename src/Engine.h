@@ -9,20 +9,9 @@ namespace ThePit
 {
     struct GlobalState_t
     {
-        DrawStateT* tex_drawstate = nullptr;
-        DrawStateT* col_drawstate = nullptr;
-        DrawStateT* coltex_drawstate = nullptr;
-        DrawStateT* unicolor_drawstate = nullptr;
-
-        GeometryT* texcube_geometry = nullptr;
-        GeometryT* colcube_geometry = nullptr;
-        GeometryT* unicolorcube = nullptr;
-
-        GeometryT* floormesh = nullptr;
-        GeometryT* skyboxmesh = nullptr;
-
         FPSView shooter;
         bool lock_mouse = true;
+        Graphics::StateT gfx;
     };
     extern GlobalState_t GlobalState;
 
@@ -34,10 +23,8 @@ namespace ThePit
     void Cleanup();
     void HandleEvent(const sapp_event* Event);
 
-    //const int WindowWidth = 640;
-    //const int WindowHeight = 480;
-    const int WindowWidth = 1280;
-    const int WindowHeight = 960;
+    const int WindowWidth = 1280; // 640
+    const int WindowHeight = 960; // 480
 } // namespace ThePit
 
 #endif // ENGINE_H
