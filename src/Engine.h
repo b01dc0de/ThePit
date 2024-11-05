@@ -29,6 +29,7 @@ namespace ThePit
         GeometryT* unicolorcube = nullptr;
 
         FPSView shooter;
+        bool lock_mouse = true;
     };
     extern GlobalState_t GlobalState;
 

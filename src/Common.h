@@ -2,6 +2,8 @@
 #define THEPIT_COMMON_H
 
 #include "Platform.h"
+#include "Log.h"
+#include "Math.h"
 
 /*----- BEGIN PLATFORM INCLUDES -----*/
 #if THEPIT_PLATFORM_WINDOWS()
@@ -66,12 +68,9 @@
 	- SOKOL_DLL
 */
 
-// ThePit Common Includes
-#include "Log.h"
-#include "Math.h"
-// ThePit Common Includes
-
 /*-----BEGIN LIBS-----*/
+// ImGUI
+#include "imgui.h"
 // Sokol
 #include "sokol_app.h"
 #include "sokol_gfx.h"
@@ -80,6 +79,7 @@
 #include "sokol_time.h"
 //#include "sokol_fetch.h"
 #include "sokol_glue.h"
+#include "util/sokol_imgui.h"
 // GLM
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
