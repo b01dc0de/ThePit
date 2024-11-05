@@ -16,8 +16,7 @@ set(SRC_DIR src)
 set(SRC_FILES
 		${SRC_DIR}/Main.cpp
 		${SRC_DIR}/Camera.cpp
-		${SRC_DIR}/DebugShapes.cpp
-		${SRC_DIR}/DrawState.cpp
+		${SRC_DIR}/DebugGraphics.cpp
 		${SRC_DIR}/Engine.cpp
 		${SRC_DIR}/FileUtils.cpp
 		${SRC_DIR}/Geometry.cpp

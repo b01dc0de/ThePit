@@ -2,10 +2,10 @@
 #define THEPIT_ENGINE_H
 
 #include "Common.h"
+#include "Camera.h"
 #include "Material.h"
 #include "Mesh.h"
-#include "DrawState.h"
-#include "Camera.h"
+#include "Graphics.h"
 
 namespace ThePit
 {

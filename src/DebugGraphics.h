@@ -1,5 +1,5 @@
-#ifndef THEPIT_DEBUGSHAPES_H
-#define THEPIT_DEBUGSHAPES_H
+#ifndef THEPIT_DEBUGGRAPHICS_H
+#define THEPIT_DEBUGGRAPHICS_H
 
 #include "Common.h"
 #include "Geometry.h"

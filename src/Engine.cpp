@@ -1,8 +1,7 @@
 #include "Common.h"
 #include "Engine.h"
 #include "Camera.h"
-#include "DebugShapes.h"
-#include "DrawState.h"
+#include "DebugGraphics.h"
 #include "Input.h"
 #include "MeshUtils.h"
 
