@@ -13,6 +13,15 @@ namespace ThePit
         glm::mat4 model_to_world;
     };
 
+    enum struct DrawStateTypeE
+    {
+        Color,
+        Texture,
+        ColorTexture,
+        Unicolor,
+        Num
+    };
+
     // State needed for a GL draw call
     struct DrawStateT
     {
@@ -21,6 +30,7 @@ namespace ThePit
     };
 
     sg_pass* GetDefaultSGPass();
+    DrawStateT* GetDrawState(DrawStateTypeE draw_state_type);
     DrawStateT* InitNewTexturePipeline();
     DrawStateT* InitNewColorPipeline();
     DrawStateT* InitNewColorTexturePipeline();
@@ -45,7 +55,7 @@ namespace ThePit
             GeometryT* skyboxmesh = nullptr;
 
             void Init();
-            void DrawFrame();
+            void DrawFrame(const glm::mat4& vp);
             void Term();
         };
     } // namespace Graphics

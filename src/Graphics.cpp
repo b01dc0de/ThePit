@@ -139,6 +139,18 @@ namespace ThePit
         return &default_pass;
     }
 
+    sg_pipeline_desc GetDefaultPipelineDesc()
+    {
+        sg_pipeline_desc result = {};
+
+        result.index_type = SG_INDEXTYPE_UINT16;
+        result.cull_mode = SG_CULLMODE_BACK;
+        result.depth.compare = SG_COMPAREFUNC_LESS_EQUAL;
+        result.depth.write_enabled = true;
+
+        return result;
+    }
+
     static const int SLOT_vs_params = 0;
 
     DrawStateT* InitNewColorPipeline()
@@ -152,15 +164,11 @@ namespace ThePit
         static const int ATTR_vs_position = 0;
         static const int ATTR_vs_color0 = 1;
 
-        sg_pipeline_desc pipeline_desc = {};
+        sg_pipeline_desc pipeline_desc = GetDefaultPipelineDesc();
         pipeline_desc.layout.buffers[0].stride = sizeof(v3) + sizeof(v4);
         pipeline_desc.layout.attrs[ATTR_vs_position].format = SG_VERTEXFORMAT_FLOAT3;
         pipeline_desc.layout.attrs[ATTR_vs_color0].format = SG_VERTEXFORMAT_FLOAT4;
         pipeline_desc.shader = vxcolor_shader;
-        pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
-        pipeline_desc.cull_mode = SG_CULLMODE_BACK;
-        pipeline_desc.depth.write_enabled = true;
-        pipeline_desc.depth.compare = SG_COMPAREFUNC_LESS_EQUAL;
 
         DrawStateT* pnew_drawstate = new DrawStateT;
         pnew_drawstate->bind = {};
@@ -182,7 +190,6 @@ namespace ThePit
         // Default sampler state
         sg_sampler_desc sampler_desc = {};
 
-        //sg_shader texshader = sg_make_shader(texcube_shader_desc(sg_query_backend()));
         sg_shader_desc vxtexture_desc = {};
         GetVxTextureShaderDesc(vxtexture_desc);
         sg_shader vxtexture_shader = sg_make_shader(vxtexture_desc);
@@ -216,16 +223,6 @@ namespace ThePit
         return pnew_drawstate;
     }
 
-    void GetDefaultPipelineDesc(sg_pipeline_desc& out_pipeline_desc)
-    {
-        out_pipeline_desc = {};
-        out_pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
-        out_pipeline_desc.cull_mode = SG_CULLMODE_BACK;
-        out_pipeline_desc.depth.compare = SG_COMPAREFUNC_LESS_EQUAL;
-        out_pipeline_desc.depth.write_enabled = true;
-
-    }
-
     DrawStateT* InitNewColorTexturePipeline()
     {
         sg_image_desc img_desc = {};
@@ -245,8 +242,7 @@ namespace ThePit
         static const int SLOT_tex = (0);
         static const int SLOT_smp = (0);
 
-        sg_pipeline_desc pipeline_desc;
-        GetDefaultPipelineDesc(pipeline_desc);
+        sg_pipeline_desc pipeline_desc = GetDefaultPipelineDesc();
         pipeline_desc.layout.buffers[0].stride = sizeof(v3) + sizeof(v4) + sizeof(v2);
         pipeline_desc.layout.attrs[ATTR_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
         pipeline_desc.layout.attrs[ATTR_vs_color0].format = SG_VERTEXFORMAT_FLOAT4;
@@ -277,8 +273,7 @@ namespace ThePit
 
         static const int ATTR_vs_pos = (0);
 
-        sg_pipeline_desc pipeline_desc;
-        GetDefaultPipelineDesc(pipeline_desc);
+        sg_pipeline_desc pipeline_desc = GetDefaultPipelineDesc();
         pipeline_desc.layout.buffers[0].stride = sizeof(v3);
         pipeline_desc.layout.attrs[ATTR_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
         pipeline_desc.shader = sg_make_shader(unicolor_desc);
@@ -339,10 +334,32 @@ namespace ThePit
         sg_draw(0, (int)mesh_state->geo->element_count, 1);
     }
 
+    enum struct DrawPassType
+    {
+        DRAWPASS_COLOR,
+        DRAWPASS_SINGLECOLOR,
+        DRAWPASS_TEXTURE,
+        DRAWPASS_NUM
+    };
+    static DrawPassType curr_drawpass = DrawPassType::DRAWPASS_COLOR;
+
     namespace Graphics
     {
         void StateT::Init()
         {
+            { // sokol_gfx setup
+                sg_desc setup = {};
+                setup.environment = sglue_environment();
+                setup.logger.func = slog_func;
+                sg_setup(&setup);
+            }
+
+            { // Imgui setup
+                simgui_desc_t imgui_setup = {};
+                imgui_setup.logger.func = slog_func;
+                simgui_setup(&imgui_setup);
+            }
+
             texcube_geometry = GetCubeGeometry(DebugShapeGeometryE::Texture);
             tex_drawstate = InitNewTexturePipeline();
             colcube_geometry = GetCubeGeometry(DebugShapeGeometryE::Color);
@@ -358,16 +375,110 @@ namespace ThePit
             unicolorcube = GetCubeGeometry(DebugShapeGeometryE::Unicolor);
         }
 
-        void StateT::DrawFrame()
+        void StateT::DrawFrame(const glm::mat4& vp)
         {
+            simgui_frame_desc_t imgui_frame_desc = {};
+            imgui_frame_desc.width = sapp_width();
+            imgui_frame_desc.height = sapp_height();
+            imgui_frame_desc.delta_time = sapp_frame_duration();
+            imgui_frame_desc.dpi_scale = sapp_dpi_scale();
+            simgui_new_frame(&imgui_frame_desc);
 
+            if (ImGui::Button("Change Draw Pass Type")) {
+                curr_drawpass = (DrawPassType)(((int)curr_drawpass + 1) % (int)DrawPassType::DRAWPASS_NUM);
+            }
+
+            glm::mat4 model_to_world = glm::mat4(1.0f);
+            glm::mat4 mvp = vp;
+
+            MeshDrawStateT colcube_meshdrawstate{ GlobalState.gfx.colcube_geometry, model_to_world };
+            MeshDrawStateT unicube_meshdrawstate{ GlobalState.gfx.unicolorcube, model_to_world };
+            MeshDrawStateT texcube_meshdrawstate{ GlobalState.gfx.texcube_geometry, model_to_world };
+            MeshDrawStateT floor_meshdrawstate{ GlobalState.gfx.floormesh, model_to_world };
+            MeshDrawStateT skybox_meshdrawstate{ GlobalState.gfx.skyboxmesh, model_to_world };
+            MeshDrawStateT unicolorcube_meshdrawstate{ GlobalState.gfx.unicolorcube, glm::translate(glm::mat4(1.0f), glm::vec3{5.0f, 5.0f, 5.0f}) };
+            glm::vec4 color_peachy{ 0.8f, 0.4f, 0.6f, 1.0f };
+
+            auto BeginFrameHelper = []() -> void
+            {
+                sg_begin_pass(GetDefaultSGPass());
+            };
+
+            auto EndFrameHelper = []() -> void
+            {
+                simgui_render();
+                sg_end_pass();
+                sg_commit();
+            };
+
+            BeginFrameHelper();
+
+            switch (curr_drawpass)
+            {
+                case DrawPassType::DRAWPASS_COLOR:
+                {
+                    Draw(GlobalState.gfx.col_drawstate, &colcube_meshdrawstate, mvp);
+                } break;
+                case DrawPassType::DRAWPASS_SINGLECOLOR:
+                {
+                    DrawUnicolor(GlobalState.gfx.unicolor_drawstate, &unicube_meshdrawstate, mvp, color_peachy);
+                } break;
+                case DrawPassType::DRAWPASS_TEXTURE:
+                {
+                    Draw(GlobalState.gfx.tex_drawstate, &texcube_meshdrawstate, mvp);
+                } break;
+                default:
+                {
+                    THEPIT_ASSERT(false);
+                } break;
+            }
+            static bool bFloor = true;
+            if (bFloor)
+            {
+                Draw(GlobalState.gfx.tex_drawstate, &floor_meshdrawstate, mvp);
+            }
+            static bool bSkybox = true;
+            if (bSkybox)
+            {
+                Draw(GlobalState.gfx.coltex_drawstate, &skybox_meshdrawstate, mvp);
+            }
+            static bool bUnicolorCube = true;
+            if (bUnicolorCube)
+            {
+                DrawUnicolor(GlobalState.gfx.unicolor_drawstate, &unicolorcube_meshdrawstate, mvp, color_peachy);
+            }
+
+            static bool bDrawAxis = true;
+            if (bDrawAxis)
+            {
+                float axis_length = 1000.0f;
+                float axis_width = 0.05f;
+                MeshDrawStateT xaxis_meshdrawstate{ GlobalState.gfx.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_length, axis_width, axis_width}) };
+                MeshDrawStateT yaxis_meshdrawstate{ GlobalState.gfx.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_width, axis_length, axis_width}) };
+                MeshDrawStateT zaxis_meshdrawstate{ GlobalState.gfx.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_width, axis_width, axis_length}) };
+
+                DrawUnicolor(GlobalState.gfx.unicolor_drawstate, &xaxis_meshdrawstate, mvp, glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
+                DrawUnicolor(GlobalState.gfx.unicolor_drawstate, &yaxis_meshdrawstate, mvp, glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+                DrawUnicolor(GlobalState.gfx.unicolor_drawstate, &zaxis_meshdrawstate, mvp, glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f });
+            }
+
+            EndFrameHelper();
         }
 
         void StateT::Term()
         {
+            simgui_shutdown();
+            sg_shutdown();
 
+            delete texcube_geometry;
+            delete tex_drawstate;
+            delete colcube_geometry;
+            delete col_drawstate;
+            delete coltex_drawstate;
+            delete floormesh;
+            delete skyboxmesh;
+            delete unicolor_drawstate;
+            delete unicolorcube;
         }
     } // namespace Graphics
-
-
 } // namespace ThePit
