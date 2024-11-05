@@ -13,9 +13,6 @@ namespace ThePit
         int global_argc = 0;
         char** global_argv = nullptr;
 
-        const glm::vec3 Origin{ 0.0f, 0.0f, 0.0f };
-        const glm::vec3 CamPos{ 0.0f, 1.5f, 10.0f };
-
         void Init()
         {
             glm::vec3 fps_cam_pos{ 0.0f, -2.5f, -5.0f };
@@ -32,28 +29,8 @@ namespace ThePit
             Input::UpdateButtonState();
             Engine::GlobalState.shooter.UpdateState();
 
-            const glm::vec3 UnitX{ 1.0f, 0.0f, 0.0f };
-            const glm::vec3 UnitY{ 0.0f, 1.0f, 0.0f };
-
-            static float rx = 0.0f;
-            static float ry = 0.0f;
-            const float frame_time = (float)sapp_frame_duration();
-            rx += 1.0f * frame_time;
-            ry += 2.0f * frame_time;
-
-            CameraP camera_persp;
-            camera_persp.LookAt(CamPos, Origin);
-            glm::mat4 model = glm::rotate(glm::mat4(1.0f), rx, UnitX) * glm::rotate(glm::mat4(1.0f), ry, UnitY);
-            glm::mat4 mvp = camera_persp.vp * model;
-            sg_range mvp_range = SG_RANGE(mvp);
+            glm::mat4 mvp = Engine::GlobalState.shooter.GetMVP();
             glm::mat4 model_to_world = glm::mat4(1.0f);
-
-            static bool bFPS = true;
-            if (bFPS)
-            {
-                mvp = Engine::GlobalState.shooter.GetMVP();
-                mvp_range = SG_RANGE(mvp);
-            }
 
             Engine::GlobalState.gfx.DrawFrame(mvp);
 
