@@ -1,10 +1,10 @@
+#include "Common.h"
 #include "Engine.h"
 #include "Camera.h"
 #include "Cube.h"
 #include "DrawState.h"
 #include "Input.h"
 #include "MeshUtils.h"
-#include <string>
 
 namespace ThePit
 {
@@ -22,6 +22,10 @@ namespace ThePit
         setup.environment = sglue_environment();
         setup.logger.func = slog_func;
         sg_setup(&setup);
+
+        simgui_desc_t imgui_setup = {};
+        imgui_setup.logger.func = slog_func;
+        simgui_setup(&imgui_setup);
 
         GeometryT* cube = InitNewCubeColorGeometry();
 
@@ -58,6 +62,19 @@ namespace ThePit
 
     void Frame()
     {
+        const int width = sapp_width();
+        const int height = sapp_height();
+        simgui_frame_desc_t imgui_frame_desc = {};
+        imgui_frame_desc.width = width;
+        imgui_frame_desc.height = height;
+        imgui_frame_desc.delta_time = sapp_frame_duration();
+        imgui_frame_desc.dpi_scale = sapp_dpi_scale();
+        simgui_new_frame(&imgui_frame_desc);
+
+        if(ImGui::Button("Change Draw Pass Type")) {
+            curr_drawpass = (DrawPassType)(((int)curr_drawpass + 1) % (int)DrawPassType::DRAWPASS_NUM);
+        }
+
         Input::UpdateButtonState();
         GlobalState.shooter.UpdateState();
 
@@ -98,6 +115,7 @@ namespace ThePit
 
         auto EndFrameHelper = []() -> void
         {
+            simgui_render();
             sg_end_pass();
             sg_commit();
         };
@@ -146,6 +164,7 @@ namespace ThePit
 
     void Cleanup()
     {
+        simgui_shutdown();
         sg_shutdown();
 
         delete GlobalState.cube_mesh;
@@ -158,6 +177,7 @@ namespace ThePit
 
     void HandleEvent(const sapp_event* Event)
     {
+        simgui_handle_event(Event);
         auto HandleDemoSpacebar = [&](const sapp_event* Event) -> void
         {
             if (SAPP_EVENTTYPE_KEY_DOWN == Event->type && 0 == Event->key_repeat && SAPP_KEYCODE_SPACE == Event->key_code)
@@ -177,6 +197,12 @@ namespace ThePit
             {
                 HandleDemoSpacebar(Event);
                 Input::HandleKeyEvent(Event);
+
+                // Special way to get the mouse back to os control/to use imgui is F1
+                if(Event->key_code == SAPP_KEYCODE_F1 && Event->type == SAPP_EVENTTYPE_KEY_UP) {
+                    GlobalState.lock_mouse = !GlobalState.lock_mouse;
+                    sapp_lock_mouse(GlobalState.lock_mouse);
+                }
             } break;
             case SAPP_EVENTTYPE_MOUSE_MOVE:
             case SAPP_EVENTTYPE_MOUSE_ENTER:
@@ -191,7 +217,7 @@ namespace ThePit
             case SAPP_EVENTTYPE_FOCUSED:
             case SAPP_EVENTTYPE_RESUMED:
             {
-                sapp_lock_mouse(true);
+                sapp_lock_mouse(GlobalState.lock_mouse);
             } break;
             case SAPP_EVENTTYPE_CHAR:
             case SAPP_EVENTTYPE_TOUCHES_BEGAN:

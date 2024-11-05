@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "Input.h"
+#include "Engine.h"
 
 namespace ThePit
 {
@@ -23,8 +24,10 @@ namespace ThePit
 
     void FPSView::UpdateCamera()
     {
-        glm::vec3 lookat_obj = cam_pos + dir;
-        cam.LookAt(cam_pos, lookat_obj);
+        if(ThePit::GlobalState.lock_mouse) {
+            glm::vec3 lookat_obj = cam_pos + dir;
+            cam.LookAt(cam_pos, lookat_obj);
+        }
     }
 
     void FPSView::Init(const glm::vec3& in_cam_pos, const glm::vec3& in_lookdir)

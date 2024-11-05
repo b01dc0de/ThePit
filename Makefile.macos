@@ -31,6 +31,7 @@ endif
 PATH_LIB         = libs
 PATH_SOKOL       = $(PATH_LIB)/sokol
 PATH_GLM         = $(PATH_LIB)/glm
+PATH_IMGUI       = $(PATH_LIB)/imgui
 PATH_SOKOL_TOOLS = $(PATH_LIB)/sokol-tools-bin
 PATH_STB         = $(PATH_LIB)/stb
 
@@ -56,7 +57,7 @@ endif
 # Compiler flags
 CCFLAGS += -std=c++17 -Wall -Wextra
 LDFLAGS += -lstdc++
-INCFLAGS = -iquote src -iquote util -I$(PATH_SOKOL) -I$(PATH_STB) -I$(PATH_GLM)
+INCFLAGS = -iquote src -iquote util -I$(PATH_SOKOL) -I$(PATH_STB) -I$(PATH_GLM) -I$(PATH_IMGUI)
 
 # Release or debug configuration
 ifdef RELEASE
@@ -102,8 +103,21 @@ $(OBJ_CPP): $(BIN)/%.o: %.cpp
 $(OBJ_OBJC): $(BIN)/%.o: %.mm
 	$(CC) -x objective-c++ -o $@ -MMD -c $(CCFLAGS) $(INCFLAGS) $<
 
-build: $(OBJ_CPP) $(OBJ_OBJC)
-	$(LD) -o $(OUT) $(OBJ_CPP) $(OBJ_OBJC) $(LDFLAGS)
+IMGUI_FILES := imgui.cpp \
+               imgui_draw.cpp \
+               imgui_tables.cpp \
+               imgui_widgets.cpp
+
+# Define object files for ImGui with correct paths
+IMGUI_OBJS := $(patsubst %.cpp,$(BIN)/%.o,$(IMGUI_FILES))
+
+# Rule to compile each ImGui file
+$(BIN)/%.o: $(PATH_LIB)/imgui/%.cpp
+	$(CC) -o $@ -MMD -c $(CCFLAGS) $(INCFLAGS) $<
+
+# Target to build all components including ImGui
+build: $(OBJ_CPP) $(IMGUI_OBJS) $(OBJ_OBJC)
+	$(LD) -o $(OUT) $(OBJ_CPP) $(IMGUI_OBJS) $(OBJ_OBJC) $(LDFLAGS)
 
 clean:
 	rm -rf $(BIN)/*
