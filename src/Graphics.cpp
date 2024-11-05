@@ -17,7 +17,7 @@ void GetVxColorShaderDesc(sg_shader_desc& out_desc)
     out_desc.attrs[1].name = "color0";
     out_desc.vs.source = (const char*)v_file.contents;
     out_desc.vs.entry = "main";
-    out_desc.vs.uniform_blocks[0].size = sizeof(HMM_Mat4);
+    out_desc.vs.uniform_blocks[0].size = sizeof(glm::mat4);
     out_desc.vs.uniform_blocks[0].layout = SG_UNIFORMLAYOUT_STD140;
     out_desc.vs.uniform_blocks[0].uniforms[0].name = "vs_params";
     out_desc.vs.uniform_blocks[0].uniforms[0].type = SG_UNIFORMTYPE_FLOAT4;
@@ -38,7 +38,7 @@ void GetVxTextureShaderDesc(sg_shader_desc& out_desc)
     out_desc.attrs[1].name = "texcoord0";
     out_desc.vs.source = (const char*)v_file.contents;
     out_desc.vs.entry = "main";
-    out_desc.vs.uniform_blocks[0].size = sizeof(HMM_Mat4);
+    out_desc.vs.uniform_blocks[0].size = sizeof(glm::mat4);
     out_desc.vs.uniform_blocks[0].layout = SG_UNIFORMLAYOUT_STD140;
     out_desc.vs.uniform_blocks[0].uniforms[0].name = "vs_params";
     out_desc.vs.uniform_blocks[0].uniforms[0].type = SG_UNIFORMTYPE_FLOAT4;
@@ -100,7 +100,7 @@ void GetVxUniformColorShaderDesc(sg_shader_desc& out_desc)
     out_desc.attrs[0].name = "pos";
     out_desc.vs.source = (const char*)v_file.contents;
     out_desc.vs.entry = "main";
-    out_desc.vs.uniform_blocks[0].size = sizeof(HMM_Mat4) + sizeof(HMM_Vec4);
+    out_desc.vs.uniform_blocks[0].size = sizeof(glm::mat4) + sizeof(glm::vec4);
     out_desc.vs.uniform_blocks[0].layout = SG_UNIFORMLAYOUT_STD140;
     out_desc.vs.uniform_blocks[0].uniforms[0].name = "vs_params";
     out_desc.vs.uniform_blocks[0].uniforms[0].type = SG_UNIFORMTYPE_FLOAT4;
