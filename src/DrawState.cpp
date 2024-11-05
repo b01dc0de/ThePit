@@ -181,6 +181,9 @@ namespace ThePit
         new_unicolor_pipeline->bind = {};
         new_unicolor_pipeline->pip = sg_make_pipeline(pipeline_desc);
 
+        delete[] unicolor_desc.vs.source;
+        delete[] unicolor_desc.fs.source;
+
         return new_unicolor_pipeline;
     }
 
