@@ -32,7 +32,7 @@ namespace ThePit
         float z;
     };
 
-    struct VxMin
+    struct VxBase
     {
         PosT pos;
     };

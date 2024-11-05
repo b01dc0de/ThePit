@@ -9,7 +9,7 @@ namespace ThePit
     GeometryT* InitNewCubeColorGeometry();
     GeometryT* InitNewCubeSingleColorGeometry(const ColorT& in_color);
     GeometryT* InitNewCubeTexGeometry();
-    GeometryT* InitNewCubeUnicolor();
+    GeometryT* InitNewCubeUnicolorGeometry();
 } // namespace ThePit
 
 #endif

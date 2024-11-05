@@ -75,7 +75,7 @@ namespace ThePit
         {  1.0f,  1.0f, -1.0f,  0.0f, 1.0f },
     };
 
-    VxMin cubeunicolor_vxs[] =
+    VxBase cubeunicolor_vxs[] =
     {
         {-1.0, -1.0, -1.0},
         {1.0, -1.0, -1.0},
@@ -203,7 +203,7 @@ namespace ThePit
         return pnew_geometry;
     }
 
-    GeometryT* InitNewCubeUnicolor()
+    GeometryT* InitNewCubeUnicolorGeometry()
     {
         sg_buffer_desc vxbuff_desc = {};
         vxbuff_desc.data = SG_RANGE(cubeunicolor_vxs);
@@ -223,7 +223,7 @@ namespace ThePit
         pnew_geometry->vertex_buffer = MakeVxBuffer
         (
             (const float*)cubeunicolor_vxs,
-            sizeof(VxColor),
+            sizeof(VxBase),
             ARRAY_SIZE(cubeunicolor_vxs)
         );
         pnew_geometry->index_buffer = MakeIxBuffer

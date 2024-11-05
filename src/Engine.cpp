@@ -42,7 +42,7 @@ namespace ThePit
         GlobalState.skyboxmesh = InitNewSkyboxMesh();
 
         GlobalState.unicolor_drawstate = InitNewUnicolorPipeline();
-        GlobalState.unicolorcube = InitNewCubeColorGeometry();
+        GlobalState.unicolorcube = InitNewCubeUnicolorGeometry();
 
         sapp_lock_mouse(true);
     }
@@ -82,7 +82,7 @@ namespace ThePit
         MeshDrawStateT texcube_meshdrawstate{ GlobalState.texcube_geometry, model_to_world };
         MeshDrawStateT floor_meshdrawstate{ GlobalState.floormesh, model_to_world };
         MeshDrawStateT skybox_meshdrawstate{ GlobalState.skyboxmesh, model_to_world };
-        MeshDrawStateT unicolorcube_meshdrawstate{ GlobalState.unicolorcube, HMM_Translate(HMM_Vec3{5.0f, 25.0f, 5.0f}) };
+        MeshDrawStateT unicolorcube_meshdrawstate{ GlobalState.unicolorcube, HMM_Translate(HMM_Vec3{5.0f, 5.0f, 5.0f}) };
         
         static bool bFPS = true;
         if (bFPS)
