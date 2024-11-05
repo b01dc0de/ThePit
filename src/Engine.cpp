@@ -1,7 +1,7 @@
 #include "Common.h"
 #include "Engine.h"
 #include "Camera.h"
-#include "Cube.h"
+#include "DebugShapes.h"
 #include "DrawState.h"
 #include "Input.h"
 #include "MeshUtils.h"
@@ -27,17 +27,13 @@ namespace ThePit
         imgui_setup.logger.func = slog_func;
         simgui_setup(&imgui_setup);
 
-        GeometryT* cube = InitNewCubeColorGeometry();
-
-        GlobalState.texcube_geometry = InitNewCubeTexGeometry();
+        GlobalState.texcube_geometry = GetCubeGeometry(DebugShapeGeometryE::Texture);
         GlobalState.tex_drawstate = InitNewTexturePipeline();
-        GlobalState.colcube_geometry = cube;
+        GlobalState.colcube_geometry = GetCubeGeometry(DebugShapeGeometryE::Color);
         GlobalState.col_drawstate = InitNewColorPipeline();
 
         GlobalState.coltex_drawstate = InitNewColorTexturePipeline();
 
-        ColorT red_color = { 1.0f, 0.0f, 0.0f, 1.0f };
-        GlobalState.singlecolorcube = InitNewCubeSingleColorGeometry(red_color);
         GlobalState.floormesh = InitNewFloorMesh();
 
         glm::vec3 fps_cam_pos{ 0.0f, -2.5f, -5.0f };
@@ -46,7 +42,7 @@ namespace ThePit
         GlobalState.skyboxmesh = InitNewSkyboxMesh();
 
         GlobalState.unicolor_drawstate = InitNewUnicolorPipeline();
-        GlobalState.unicolorcube = InitNewCubeUnicolorGeometry();
+        GlobalState.unicolorcube = GetCubeGeometry(DebugShapeGeometryE::Unicolor);
 
         sapp_lock_mouse(true);
     }
@@ -95,11 +91,11 @@ namespace ThePit
         glm::mat4 model_to_world = glm::mat4(1.0f);
 
         MeshDrawStateT colcube_meshdrawstate{ GlobalState.colcube_geometry, model_to_world };
-        MeshDrawStateT singlecolorcube_meshdrawstate{ GlobalState.singlecolorcube, model_to_world };
+        MeshDrawStateT unicube_meshdrawstate{ GlobalState.unicolorcube, model_to_world };
         MeshDrawStateT texcube_meshdrawstate{ GlobalState.texcube_geometry, model_to_world };
         MeshDrawStateT floor_meshdrawstate{ GlobalState.floormesh, model_to_world };
         MeshDrawStateT skybox_meshdrawstate{ GlobalState.skyboxmesh, model_to_world };
-        MeshDrawStateT unicolorcube_meshdrawstate{ GlobalState.unicolorcube, glm::translate(glm::mat4(1.0f), glm::vec3 {5.0f, 5.0f, 5.0f}) };
+        MeshDrawStateT unicolorcube_meshdrawstate{ GlobalState.unicolorcube, glm::translate(glm::mat4(1.0f), glm::vec3{5.0f, 5.0f, 5.0f}) };
         
         static bool bFPS = true;
         if (bFPS)
@@ -130,7 +126,7 @@ namespace ThePit
             } break;
             case DrawPassType::DRAWPASS_SINGLECOLOR:
             {
-                Draw(GlobalState.col_drawstate, &singlecolorcube_meshdrawstate, mvp);
+                DrawUnicolor(GlobalState.unicolor_drawstate, &unicube_meshdrawstate, mvp);
             } break;
             case DrawPassType::DRAWPASS_TEXTURE:
             {
@@ -178,14 +174,6 @@ namespace ThePit
     void HandleEvent(const sapp_event* Event)
     {
         simgui_handle_event(Event);
-        auto HandleDemoSpacebar = [&](const sapp_event* Event) -> void
-        {
-            if (SAPP_EVENTTYPE_KEY_DOWN == Event->type && 0 == Event->key_repeat && SAPP_KEYCODE_SPACE == Event->key_code)
-            {
-                curr_drawpass = (DrawPassType)(((int)curr_drawpass + 1) % (int)DrawPassType::DRAWPASS_NUM);
-            }
-        };
-
         switch (Event->type)
         {
             case SAPP_EVENTTYPE_INVALID:
@@ -195,7 +183,6 @@ namespace ThePit
             case SAPP_EVENTTYPE_KEY_DOWN:
             case SAPP_EVENTTYPE_KEY_UP:
             {
-                HandleDemoSpacebar(Event);
                 Input::HandleKeyEvent(Event);
 
                 // Special way to get the mouse back to os control/to use imgui is F1

@@ -21,12 +21,10 @@ namespace ThePit
 
         GeometryT* texcube_geometry = nullptr;
         GeometryT* colcube_geometry = nullptr;
+        GeometryT* unicolorcube = nullptr;
 
-
-        GeometryT* singlecolorcube = nullptr;
         GeometryT* floormesh = nullptr;
         GeometryT* skyboxmesh = nullptr;
-        GeometryT* unicolorcube = nullptr;
 
         FPSView shooter;
         bool lock_mouse = true;
