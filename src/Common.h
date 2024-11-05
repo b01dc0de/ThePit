@@ -80,8 +80,9 @@
 #include "sokol_time.h"
 //#include "sokol_fetch.h"
 #include "sokol_glue.h"
-// HandmadeMath
-#include "lib/HandmadeMath.h"
+// GLM
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 /*------END  LIBS-----*/
 /*-----BEGIN STD LIBS-----*/
 #include <stdarg.h>

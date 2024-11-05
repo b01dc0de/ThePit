@@ -13,8 +13,8 @@ namespace ThePit
     int global_argc = 0;
     char** global_argv = nullptr;
 
-    const HMM_Vec3 Origin{ 0.0f, 0.0f, 0.0f };
-    const HMM_Vec3 CamPos{ 0.0f, 1.5f, 10.0f };
+    const glm::vec3 Origin{ 0.0f, 0.0f, 0.0f };
+    const glm::vec3 CamPos{ 0.0f, 1.5f, 10.0f };
 
     void Init()
     {
@@ -36,8 +36,8 @@ namespace ThePit
         GlobalState.singlecolorcube = InitNewCubeSingleColorGeometry(red_color);
         GlobalState.floormesh = InitNewFloorMesh();
 
-        v3 fps_cam_pos{ 0.0f, -2.5f, -5.0f };
-        v3 fps_init_lookdir{ 0.0f, 0.0f, 1.0f };
+        glm::vec3 fps_cam_pos{ 0.0f, -2.5f, -5.0f };
+        glm::vec3 fps_init_lookdir{ 0.0f, 0.0f, 1.0f };
         GlobalState.shooter.Init(fps_cam_pos, fps_init_lookdir);
         GlobalState.skyboxmesh = InitNewSkyboxMesh();
 
@@ -61,8 +61,8 @@ namespace ThePit
         Input::UpdateButtonState();
         GlobalState.shooter.UpdateState();
 
-        const HMM_Vec3 UnitX{ 1.0f, 0.0f, 0.0f };
-        const HMM_Vec3 UnitY{ 0.0f, 1.0f, 0.0f };
+        const glm::vec3 UnitX{ 1.0f, 0.0f, 0.0f };
+        const glm::vec3 UnitY{ 0.0f, 1.0f, 0.0f };
 
         static float rx = 0.0f;
         static float ry = 0.0f;
@@ -72,17 +72,17 @@ namespace ThePit
 
         CameraP camera_persp;
         camera_persp.LookAt(CamPos, Origin);
-        HMM_Mat4 model = HMM_Rotate_RH(rx, UnitX) * HMM_Rotate_RH(ry, UnitY);
-        HMM_Mat4 mvp = HMM_Mul(camera_persp.vp, model);
+        glm::mat4 model = glm::rotate(glm::mat4(1.0f), rx, UnitX) * glm::rotate(glm::mat4(1.0f), ry, UnitY);
+        glm::mat4 mvp = camera_persp.vp * model;
         sg_range mvp_range = SG_RANGE(mvp);
-        HMM_Mat4 model_to_world = HMM_M4D(1.0f);
+        glm::mat4 model_to_world = glm::mat4(1.0f);
 
         MeshDrawStateT colcube_meshdrawstate{ GlobalState.colcube_geometry, model_to_world };
         MeshDrawStateT singlecolorcube_meshdrawstate{ GlobalState.singlecolorcube, model_to_world };
         MeshDrawStateT texcube_meshdrawstate{ GlobalState.texcube_geometry, model_to_world };
         MeshDrawStateT floor_meshdrawstate{ GlobalState.floormesh, model_to_world };
         MeshDrawStateT skybox_meshdrawstate{ GlobalState.skyboxmesh, model_to_world };
-        MeshDrawStateT unicolorcube_meshdrawstate{ GlobalState.unicolorcube, HMM_Translate(HMM_Vec3{5.0f, 5.0f, 5.0f}) };
+        MeshDrawStateT unicolorcube_meshdrawstate{ GlobalState.unicolorcube, glm::translate(glm::mat4(1.0f), glm::vec3 {5.0f, 5.0f, 5.0f}) };
         
         static bool bFPS = true;
         if (bFPS)
