@@ -184,7 +184,7 @@ namespace ThePit
         return new_unicolor_pipeline;
     }
 
-    void Draw(DrawStateT* draw_state, MeshDrawStateT* mesh_state, HMM_Mat4& view_proj)
+    void Draw(DrawStateT* draw_state, MeshDrawStateT* mesh_state, glm::mat4& view_proj)
     {
         THEPIT_ASSERT(nullptr != draw_state);
         THEPIT_ASSERT(nullptr != mesh_state);
@@ -193,7 +193,7 @@ namespace ThePit
         draw_state->bind.vertex_buffers[0] = mesh_state->geo->vertex_buffer;
         draw_state->bind.index_buffer = mesh_state->geo->index_buffer;
 
-        HMM_Mat4 mvp = view_proj * mesh_state->model_to_world;
+        glm::mat4 mvp = view_proj * mesh_state->model_to_world;
         sg_range mvp_range = SG_RANGE(mvp);
 
         sg_apply_pipeline(draw_state->pip);
@@ -202,7 +202,7 @@ namespace ThePit
         sg_draw(0, (int)mesh_state->geo->element_count, 1);
     }
 
-    void DrawUnicolor(DrawStateT* draw_state, MeshDrawStateT* mesh_state, HMM_Mat4& view_proj)
+    void DrawUnicolor(DrawStateT* draw_state, MeshDrawStateT* mesh_state, glm::mat4& view_proj)
     {
         THEPIT_ASSERT(nullptr != draw_state);
         THEPIT_ASSERT(nullptr != mesh_state);
@@ -213,15 +213,15 @@ namespace ThePit
 
         struct vs_params
         {
-            HMM_Mat4 mvp;
-            HMM_Vec4 color;
+            glm::mat4 mvp;
+            glm::vec4 color;
         };
         vs_params vps;
         vps.mvp = view_proj * mesh_state->model_to_world;
         vps.color = { 0.8f, 0.4f, 0.6f, 1.0f };
         sg_range vs_params_range = {};
         vs_params_range.ptr = (const void*)&vps;
-        vs_params_range.size = sizeof(HMM_Mat4) + sizeof(HMM_Vec4);
+        vs_params_range.size = sizeof(glm::mat4) + sizeof(glm::vec4);
 
         sg_apply_pipeline(draw_state->pip);
         sg_apply_bindings(&draw_state->bind);

@@ -3,32 +3,31 @@
 
 namespace ThePit
 {
-    extern const HMM_Vec3 cam_global_up = { 0.0f, 1.0f, 0.0f };
+    extern const glm::vec3 cam_global_up = { 0.0f, 1.0f, 0.0f };
     extern const float cam_fov_degrees = 61.5f;
 
-    void CameraP::LookAt(const HMM_Vec3& in_cam_pos, const HMM_Vec3& in_lookat_obj)
+    void CameraP::LookAt(const glm::vec3& in_cam_pos, const glm::vec3& in_lookat_obj)
     {
-        const float aspect_ratio = sapp_widthf() / sapp_heightf();
         const float z_near = 0.1f;
         const float z_far = 1000.0f;
-
-        HMM_Mat4 proj = HMM_Perspective_RH_NO(cam_fov_degrees, aspect_ratio, z_near, z_far);
-        HMM_Mat4 view = HMM_LookAt_RH(in_cam_pos, in_lookat_obj, cam_global_up);
+        
+        glm::mat4 proj = glm::perspectiveFovRH_NO(cam_fov_degrees, sapp_widthf(), sapp_heightf(), z_near, z_far);
+        glm::mat4 view = glm::lookAtRH(in_cam_pos, in_lookat_obj, cam_global_up);
         vp = proj * view;
     }
 
-    HMM_Mat4 FPSView::GetMVP()
+    glm::mat4 FPSView::GetMVP()
     {
         return cam.vp;
     }
 
     void FPSView::UpdateCamera()
     {
-        v3 lookat_obj = cam_pos + dir;
+        glm::vec3 lookat_obj = cam_pos + dir;
         cam.LookAt(cam_pos, lookat_obj);
     }
 
-    void FPSView::Init(const v3& in_cam_pos, const v3& in_lookdir)
+    void FPSView::Init(const glm::vec3& in_cam_pos, const glm::vec3& in_lookdir)
     {
         fov_degrees = 45.0f;
         near_z = 0.1f;
@@ -37,11 +36,11 @@ namespace ThePit
         cam_pos = in_cam_pos;
 
         dir = in_lookdir;
-        dir = HMM_Norm(dir);
-        right = HMM_Cross(cam_global_up, dir);
-        right = HMM_Norm(right);
-        up = HMM_Cross(dir, right);
-        up = HMM_Norm(up);
+        dir = glm::normalize(dir);
+        right = glm::cross(cam_global_up, dir);
+        right = glm::normalize(right);
+        up = glm::cross(dir, right);
+        up = glm::normalize(up);
 
         UpdateCamera();
     }
@@ -59,7 +58,7 @@ namespace ThePit
             bool q_button_down = Input::GetButtonState(SAPP_KEYCODE_Q);
             bool e_button_down = Input::GetButtonState(SAPP_KEYCODE_E);
 
-            v3 up{ 0.0f, 1.0f, 0.0f };
+            glm::vec3 up{ 0.0f, 1.0f, 0.0f };
 
             if (q_button_down != e_button_down)
             {
@@ -68,8 +67,8 @@ namespace ThePit
             }
         }
 
-        v3 forward = HMM_NormV3({ dir.X, 0.0f, dir.Z });
-        v3 left{ -right.X, 0.0f, -right.Z };
+        glm::vec3 forward = glm::normalize(glm::vec3 { dir.x, 0.0f, dir.z });
+        glm::vec3 left = { -right.x, 0.0f, -right.z };
 
         // Update state from keyboard input
         if (w_button_down != s_button_down)
@@ -88,17 +87,17 @@ namespace ThePit
             float dx = 0.0f, dy = 0.0f;
             Input::GetMouseDelta(dx, dy);
 
-            m4 rotate = HMM_M4D(1.0f);
+            glm::mat4 rotate = glm::mat4(1.0f);
             if ((dx < 0.0f ? -dx : dx) > 0.0f)
             {
-                rotate = rotate * HMM_Rotate_RH(dx * default_cam_turn_speed, cam_global_up);
+                rotate = glm::rotate(rotate, dx * default_cam_turn_speed, cam_global_up);
             }
             if ((dy < 0.0f ? -dy : dy) > 0.0f)
             {
-                rotate = rotate * HMM_Rotate_RH(dy * default_cam_turn_speed, -right);
+                rotate = glm::rotate(rotate, dy * default_cam_turn_speed, -right);
             }
-            v4 new_dir = HMM_Mul(rotate, v4{ dir.X, dir.Y, dir.Z, 0.0f });
-            Init(cam_pos, new_dir.XYZ);
+            glm::vec4 new_dir = rotate * glm::vec4{ dir.x, dir.y, dir.z, 0.0f };
+            Init(cam_pos, glm::vec3(new_dir));
         }
 
         UpdateCamera();

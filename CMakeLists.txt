@@ -24,7 +24,8 @@ set(SRC_FILES
 add_executable(ThePit ${SRC_FILES})
 
 set(LIB_SOKOL_DIR ./libs/sokol)
-target_include_directories(ThePit PUBLIC ${LIB_SOKOL_DIR})
+set(LIB_GLM_DIR ./libs/glm)
+target_include_directories(ThePit PUBLIC ${LIB_SOKOL_DIR} ${LIB_GLM_DIR})
 
 if (WIN32)
 endif ()

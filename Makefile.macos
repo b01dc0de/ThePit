@@ -30,6 +30,7 @@ endif
 # Library paths
 PATH_LIB         = libs
 PATH_SOKOL       = $(PATH_LIB)/sokol
+PATH_GLM         = $(PATH_LIB)/glm
 PATH_SOKOL_TOOLS = $(PATH_LIB)/sokol-tools-bin
 PATH_STB         = $(PATH_LIB)/stb
 
@@ -55,7 +56,7 @@ endif
 # Compiler flags
 CCFLAGS += -std=c++17 -Wall -Wextra
 LDFLAGS += -lstdc++
-INCFLAGS = -iquote src -iquote util -Ilibs/sokol -I$(PATH_STB)
+INCFLAGS = -iquote src -iquote util -I$(PATH_SOKOL) -I$(PATH_STB) -I$(PATH_GLM)
 
 # Release or debug configuration
 ifdef RELEASE

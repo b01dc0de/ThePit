@@ -3,16 +3,16 @@
 
 // #include "Common.h"
 // NOTE: Math.h is included in Common.h
-#include "lib/HandmadeMath.h"
+#include "glm/glm.hpp"
 
 namespace ThePit
 {
-    using v2 = HMM_Vec2;
-    using v3 = HMM_Vec3;
-    using v4 = HMM_Vec4;
-    using m2 = HMM_Mat2;
-    using m3 = HMM_Mat3;
-    using m4 = HMM_Mat4;
+    using v2 = glm::vec2;
+    using v3 = glm::vec3;
+    using v4 = glm::vec4;
+    using m2 = glm::mat2;
+    using m3 = glm::mat3;
+    using m4 = glm::mat4;
 } // namespace ThePit
 
 #endif // THEPIT_MATH_H
