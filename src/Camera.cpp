@@ -24,7 +24,7 @@ namespace ThePit
 
     void FPSView::UpdateCamera()
     {
-        if(ThePit::GlobalState.lock_mouse) {
+        if(ThePit::Engine::GlobalState.lock_mouse) {
             glm::vec3 lookat_obj = cam_pos + dir;
             cam.LookAt(cam_pos, lookat_obj);
         }

@@ -7,24 +7,28 @@
 
 namespace ThePit
 {
-    struct GlobalState_t
+    namespace Engine
     {
-        FPSView shooter;
-        bool lock_mouse = true;
-        Graphics::StateT gfx;
-    };
-    extern GlobalState_t GlobalState;
+        struct StateT
+        {
+            FPSView shooter;
+            bool lock_mouse = true;
 
-    extern int global_argc;
-    extern char** global_argv;
+            Graphics::StateT gfx;
+        };
+        extern StateT GlobalState;
+        extern int global_argc;
+        extern char** global_argv;
 
-    void Init();
-    void Frame();
-    void Cleanup();
-    void HandleEvent(const sapp_event* Event);
+        void Init();
+        void Frame();
+        void Cleanup();
+        void HandleEvent(const sapp_event* Event);
 
-    const int WindowWidth = 1280; // 640
-    const int WindowHeight = 960; // 480
+        const int WindowWidth = 1280; // 640
+        const int WindowHeight = 960; // 480
+
+    } // namespace Engine
 } // namespace ThePit
 
 #endif // ENGINE_H

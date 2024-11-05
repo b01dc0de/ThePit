@@ -47,8 +47,8 @@ namespace ThePit
         static std::string project_dir_str;
         if (!project_dir)
         {
-            THEPIT_ASSERT(0 < global_argc);
-            project_dir_str = global_argv[0];
+            THEPIT_ASSERT(0 < Engine::global_argc);
+            project_dir_str = Engine::global_argv[0];
             size_t ThePitDir = project_dir_str.find(project_name);
             project_dir_str = project_dir_str.substr(0, ThePitDir + strlen(project_name));
             project_dir = project_dir_str.c_str();
