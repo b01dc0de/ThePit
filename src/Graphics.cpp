@@ -457,9 +457,28 @@ namespace ThePit
                 MeshDrawStateT yaxis_meshdrawstate{ Engine::GlobalState.gfx.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_width, axis_length, axis_width}) };
                 MeshDrawStateT zaxis_meshdrawstate{ Engine::GlobalState.gfx.unicolorcube, glm::scale(glm::mat4{1.0f}, glm::vec3{axis_width, axis_width, axis_length}) };
 
-                DrawUnicolor(Engine::GlobalState.gfx.unicolor_drawstate, &xaxis_meshdrawstate, mvp, glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
-                DrawUnicolor(Engine::GlobalState.gfx.unicolor_drawstate, &yaxis_meshdrawstate, mvp, glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
-                DrawUnicolor(Engine::GlobalState.gfx.unicolor_drawstate, &zaxis_meshdrawstate, mvp, glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f });
+                glm::vec4 xaxis_color{ 1.0f, 0.0f, 0.0f, 1.0f };
+                glm::vec4 yaxis_color{ 0.0f, 1.0f, 0.0f, 1.0f };
+                glm::vec4 zaxis_color{ 0.0f, 0.0f, 1.0f, 1.0f };
+
+                DrawUnicolor(
+                    Engine::GlobalState.gfx.unicolor_drawstate,
+                    &xaxis_meshdrawstate,
+                    mvp,
+                    xaxis_color
+                );
+                DrawUnicolor(
+                    Engine::GlobalState.gfx.unicolor_drawstate,
+                    &yaxis_meshdrawstate,
+                    mvp,
+                    yaxis_color
+                );
+                DrawUnicolor(
+                    Engine::GlobalState.gfx.unicolor_drawstate,
+                    &zaxis_meshdrawstate, 
+                    mvp, 
+                    zaxis_color
+                );
             }
 
             EndFrameHelper();
