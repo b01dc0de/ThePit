@@ -2,9 +2,6 @@
 #define THEPIT_COMMON_H
 
 #include "Platform.h"
-#include "Log.h"
-#include "Math.h"
-
 /*----- BEGIN PLATFORM INCLUDES -----*/
 #if THEPIT_PLATFORM_WINDOWS()
     #define WIN32_LEAN_AND_MEAN
@@ -53,6 +50,12 @@
     #define DBG_BREAKPOINT() THEPIT_NOOP() 
 #endif // THEPIT_CONFIG
 /* -----  END  CONFIG SPECIFIC DEFINES ----- */
+
+/* ----- BEGIN THEPIT COMMON INCLUDES ----- */
+#include "DataTypes.h"
+#include "Log.h"
+#include "Math.h"
+/* -----  END  THEPIT COMMON INCLUDES ----- */
 
 #define SOKOL_GLCORE
 /*	NOTE: Other Sokol graphics libs: SOKOL_GLES3, SOKOL_D3D11, SOKOL_METAL, SOKOL_WGPU, SOKOL_NOAPI */

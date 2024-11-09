@@ -3,25 +3,48 @@
 
 namespace ThePit
 {
-    using DArraySizeT = int;
-    using DArrayIncFactorT = float;
-
-    static const DArraySizeT dynamicarray_default_capacity = 16;
-    static const DArrayIncFactorT dynamicarray_default_inc_factor = 2.0f;
+    using SizeT = long long;
 
     template <typename ItemT>
-    struct DynamicArray
+    struct FixedArray
     {
-        DArraySizeT capacity;
-        DArraySizeT num_items;
-        DArrayIncFactorT inc_factor;
-        ItemT* data;
+        static const SizeT default_capacity = 32;
 
-        DynamicArray();
-        DynamicArray(DArraySizeT init_capacity);
-        DynamicArray(const DynamicArray& other) = delete;
-        DynamicArray& operator=(const DynamicArray& other) = delete;
-        ~DynamicArray();
+        SizeT capacity;
+        ItemT* items;
+
+        FixedArray(SizeT in_capacity = default_capacity)
+            : capacity(in_capacity)
+            , items(new ItemT[in_capacity])
+        {
+        }
+        FixedArray(const FixedArray& other) = delete;
+        FixedArray& operator=(const FixedArray& other) = delete;
+        ~FixedArray()
+        {
+            if (items)
+            {
+                delete[] items;
+            }
+        }
+        FixedArray(FixedArray&& other)
+        {
+            *this = other;
+        }
+        FixedArray& operator=(FixedArray&& other)
+        {
+            this->capacity = other.capacity;
+            this->items = other.items;
+            other.capacity = 0;
+            other.items = nullptr;
+        }
+
+        ItemT& operator[](SizeT idx)
+        {
+            THEPIT_ASSERT(idx >= 0);
+            THEPIT_ASSERT(idx < capacity);
+            return items[idx];
+        }
     };
 } // namespace ThePit 
 
