@@ -1,4 +1,5 @@
 #include "Input.h"
+#include "AudioManager.h"
 
 namespace ThePit
 {
@@ -62,6 +63,7 @@ namespace ThePit
             case SAPP_EVENTTYPE_MOUSE_LEAVE:
             case SAPP_EVENTTYPE_MOUSE_SCROLL:
             case SAPP_EVENTTYPE_MOUSE_DOWN:
+                ThePit::AudioManager::play(AUDIO_ASSETS::SHOOT);
             case SAPP_EVENTTYPE_MOUSE_UP:
             {
                 global_mouse_state.dx = in_event->mouse_dx;

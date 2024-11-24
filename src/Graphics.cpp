@@ -3,6 +3,7 @@
 #include "FileUtils.h"
 #include "Geometry.h"
 #include "DebugGraphics.h"
+#include "AudioManager.h"
 
 namespace ThePit
 {
@@ -386,6 +387,16 @@ namespace ThePit
 
             if (ImGui::Button("Change Draw Pass Type")) {
                 curr_drawpass = (DrawPassType)(((int)curr_drawpass + 1) % (int)DrawPassType::DRAWPASS_NUM);
+            }
+
+            if (ImGui::Button("Toggle Play Song")) {
+                if (!ThePit::Engine::GlobalState.playing_music) {
+                    ThePit::Engine::GlobalState.playing_music = true;
+                    AudioManager::play(AUDIO_ASSETS::MUSIC);
+                } else {
+                    ThePit::Engine::GlobalState.playing_music = false;
+                    AudioManager::stop(AUDIO_ASSETS::MUSIC);
+                }
             }
 
             glm::mat4 model_to_world = glm::mat4(1.0f);

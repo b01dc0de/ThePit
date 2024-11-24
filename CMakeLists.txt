@@ -5,6 +5,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 project ("ThePit")
 
+set(SOLOUD_SRC_DIR libs/soloud/src)
+set(SOLOUD_SRC_FILES
+		${SOLOUD_SRC_DIR}/core/soloud.cpp
+		${SOLOUD_SRC_DIR}/audiosource/wav/soloud_wav.cpp
+		${SOLOUD_SRC_DIR}/backend/miniaudio/soloud_miniaudio.cpp)
+
 set(IMGUI_SRC_DIR libs/imgui)
 set(IMGUI_SRC_FILES
 		${IMGUI_SRC_DIR}/imgui.cpp
@@ -22,14 +28,16 @@ set(SRC_FILES
 		${SRC_DIR}/Geometry.cpp
 		${SRC_DIR}/Graphics.cpp
 		${SRC_DIR}/Input.cpp
+		${SRC_DIR}/AudioManager.cpp
 		${SRC_DIR}/Log.cpp)
 
-add_executable(ThePit ${SRC_FILES} ${IMGUI_SRC_FILES})
+add_executable(ThePit ${SRC_FILES} ${IMGUI_SRC_FILES} ${SOLOUD_SRC_FILES})
 
 set(LIB_SOKOL_DIR ./libs/sokol)
 set(LIB_GLM_DIR ./libs/glm)
 set(LIB_IMGUI_DIR ./libs/imgui)
-target_include_directories(ThePit PUBLIC ${LIB_SOKOL_DIR} ${LIB_GLM_DIR} ${LIB_IMGUI_DIR})
+set(LIB_SOLOUD_DIR ./libs/soloud)
+target_include_directories(ThePit PUBLIC ${LIB_SOKOL_DIR} ${LIB_GLM_DIR} ${LIB_IMGUI_DIR} ${LIB_SOLOUD_DIR}/include)
 
 if (WIN32)
 endif ()

@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "DebugGraphics.h"
 #include "Input.h"
+#include "AudioManager.h"
 
 namespace ThePit
 {
@@ -20,6 +21,10 @@ namespace ThePit
             Engine::GlobalState.shooter.Init(fps_cam_pos, fps_init_lookdir);
 
             Engine::GlobalState.gfx.Init();
+
+            AudioManager::init_audio_manager();
+            AudioManager::load(ThePit::AUDIO_ASSETS::MUSIC, "sounds/GIRL-HELL-1999.mp3");
+            AudioManager::load(ThePit::AUDIO_ASSETS::SHOOT, "gun-gunshot-01.mp3");
 
             sapp_lock_mouse(true);
         }
@@ -40,6 +45,7 @@ namespace ThePit
         void Cleanup()
         {
             Engine::GlobalState.gfx.Term();
+            AudioManager::deinit_audio_manager();
         }
 
         void HandleEvent(const sapp_event* Event)

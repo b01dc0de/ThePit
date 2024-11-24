@@ -13,6 +13,7 @@ namespace ThePit
         {
             FPSView shooter;
             bool lock_mouse = true;
+            bool playing_music = false;
 
             Graphics::StateT gfx;
         };

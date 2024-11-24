@@ -71,6 +71,9 @@
 	- SOKOL_DLL
 */
 
+// SoLoud Audio Backend...
+#define WITH_MINIAUDIO
+
 /*-----BEGIN LIBS-----*/
 // ImGUI
 #include "imgui.h"
@@ -86,6 +89,9 @@
 // GLM
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+//SoLoud
+#include "soloud.h"
+#include "soloud_wav.h"
 /*------END  LIBS-----*/
 /*-----BEGIN STD LIBS-----*/
 #include <stdarg.h>
